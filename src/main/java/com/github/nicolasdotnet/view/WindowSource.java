@@ -20,7 +20,9 @@ public class WindowSource extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600, 400);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        
+        // param to enable WindowSource visibility 
+//        this.setVisible(true);
         
     }
 

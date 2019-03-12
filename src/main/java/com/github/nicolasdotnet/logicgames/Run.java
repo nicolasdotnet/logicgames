@@ -6,6 +6,9 @@
 package com.github.nicolasdotnet.logicgames;
 
 import com.github.nicolasdotnet.view.WindowHome;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
  *
@@ -20,8 +23,12 @@ public class Run {
      * 
      * @param args : default param
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException {
         
+        // Apply a look'n feel
+        UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        
+        // Strat Window Home
         WindowHome LogicGames = new WindowHome();
         
     }
