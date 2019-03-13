@@ -30,7 +30,7 @@ public class WindowMain extends WindowSource {
         contentPanel.setLayout(new BorderLayout());
 
         contentPanel.add(gamesMenu(), BorderLayout.WEST);
-        contentPanel.add(gamesPanel(), BorderLayout.CENTER); // gameWindow ; gameOptions
+        contentPanel.add(gamesPanel(), BorderLayout.CENTER);
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
 
         this.setVisible(true);
@@ -50,11 +50,10 @@ public class WindowMain extends WindowSource {
     }
 
     /**
-     * Create xxxx panel.
+     * Create game buttons panel.
      *
-     * @return panel with xxxxxx.
+     * @return panel with game buttons.
      */
-    
     private JPanel games() {
 
         JPanel games = new JPanel();
@@ -81,13 +80,12 @@ public class WindowMain extends WindowSource {
 
         return gamesPanel;
     }
-    
+
     /**
-     * Create xxxx panel.
+     * Create games options panel with description options panel.
      *
-     * @return panel with xxxxxx.
+     * @return games options panel.
      */
-    
     private JPanel gamesOptions() {
 
         JPanel gamesOptions = new JPanel();
@@ -96,13 +94,12 @@ public class WindowMain extends WindowSource {
         gamesOptions.add(new JLabel("Régles du jeux"));
         return gamesOptions;
     }
-    
+
     /**
-     * Create xxxx panel.
+     * Create button games options panel.
      *
-     * @return panel with xxxxxx.
+     * @return panel with button games options.
      */
-    
     private JPanel Options() {
 
         JPanel Options = new JPanel();
@@ -111,17 +108,14 @@ public class WindowMain extends WindowSource {
         Options.add(new JButton("Défenseur"));
         Options.add(new JButton("Duel"));
 
-
         return Options;
     }
-    
-    
+
     /**
      * Create options panel.
      *
      * @return panel with Options Button.
      */
-
     private JPanel optionsPanel() {
 
         JPanel optionPanel = new JPanel();
@@ -131,7 +125,5 @@ public class WindowMain extends WindowSource {
         return optionPanel;
 
     }
-
-
 
 }
