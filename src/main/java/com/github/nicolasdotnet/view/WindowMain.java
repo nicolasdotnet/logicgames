@@ -6,8 +6,11 @@
 package com.github.nicolasdotnet.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,17 +27,28 @@ import javax.swing.JTextArea;
  */
 public class WindowMain extends WindowSource {
 
+    private int searchMoreOrLess = 0;
+    private int mastermind = 0;
+
     public WindowMain() {
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
 
         contentPanel.add(gamesMenu(), BorderLayout.WEST);
-        contentPanel.add(gamesPanel(), BorderLayout.CENTER);
+        contentPanel.add(gamePanel(), BorderLayout.CENTER);
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
 
         this.setVisible(true);
 
+    }
+
+    public void setSearchMoreOrLess(int searchMoreOrLess) {
+        this.searchMoreOrLess = searchMoreOrLess;
+    }
+
+    public void setMastermind(int mastermind) {
+        this.mastermind = mastermind;
     }
 
     /**
@@ -59,8 +73,31 @@ public class WindowMain extends WindowSource {
         JPanel games = new JPanel();
 
         games.setLayout(new GridLayout(2, 1, 40, 40));
-        games.add(new JButton("MasterMind"));
-        games.add(new JButton("Recherche +/-"));
+        JButton mastermindB = new JButton("MasterMind");
+        games.add(mastermindB);
+        mastermindB.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+            searchMoreOrLess = 0;
+            mastermind = 1;
+
+            }
+        });
+        
+        JButton searchMoreOrLessB = new JButton("Recherche +/-");
+        games.add(searchMoreOrLessB);
+        searchMoreOrLessB.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                searchMoreOrLess = 1;
+                mastermind = 0;
+
+            }
+        });
 
         return games;
 
@@ -71,14 +108,16 @@ public class WindowMain extends WindowSource {
      *
      * @return panel.
      */
-    private JPanel gamesPanel() {
+    private JPanel gamePanel() {
 
-        JPanel gamesPanel = new JPanel();
-        gamesPanel.setLayout(new GridLayout(2, 1, 40, 40));
-        gamesPanel.add(new JTextArea());
-        gamesPanel.add(gamesOptions());
+        JPanel gamePanel = new JPanel();
+        gamePanel.setLayout(new GridLayout(2, 1, 40, 40));
 
-        return gamesPanel;
+        gamePanel.add(new JTextArea("Sélectionnez un mode jeux "));
+
+        gamePanel.add(gamesOptions());
+
+        return gamePanel;
     }
 
     /**
@@ -89,9 +128,70 @@ public class WindowMain extends WindowSource {
     private JPanel gamesOptions() {
 
         JPanel gamesOptions = new JPanel();
+        JLabel label = new JLabel("Sélectionnez un mode de jeux ");
         gamesOptions.setLayout(new GridLayout(1, 2, 40, 40));
-        gamesOptions.add(Options());
-        gamesOptions.add(new JLabel("Régles du jeux"));
+        JPanel buttons = Options();
+        gamesOptions.add(buttons);
+
+        Component[] component = buttons.getComponents();
+        for (int i = 0; i < component.length; i++) {
+
+            JButton button = (JButton) component[i];
+
+            if (button.getText().equals("Challenger")) {
+
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        label.setText("régles challenger");
+
+                        if (searchMoreOrLess == 1) {
+
+                        } else {
+
+                        }
+
+                    }
+                });
+
+            } else if (button.getText().equals("Défenseur")) {
+
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        label.setText("régles Défenseur");
+
+                        if (searchMoreOrLess == 1) {
+
+                        } else {
+
+                        }
+                    }
+                });
+
+            } else {
+
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        label.setText("régles Duel");
+
+                        if (searchMoreOrLess == 1) {
+
+                        } else {
+
+                        }
+                    }
+                });
+
+            }
+
+        }
+
+        gamesOptions.add(label);
         return gamesOptions;
     }
 
@@ -125,5 +225,5 @@ public class WindowMain extends WindowSource {
         return optionPanel;
 
     }
-
+    
 }

@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
  * @since 2019
  */
 public class WindowHome extends WindowSource {
-
+    
     public WindowHome() {
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -44,8 +46,39 @@ public class WindowHome extends WindowSource {
         JPanel choiceGames = new JPanel();
 
         choiceGames.setLayout(new GridLayout(1, 2, 40, 40));
-        choiceGames.add(new JButton("MasterMind"));
-        choiceGames.add(new JButton("Recherche +/-"));
+        JButton mastermind = new JButton("MasterMind");
+        
+        mastermind.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                WindowMain windowMain = new WindowMain();
+                windowMain.setMastermind(1);
+                windowMain.setSearchMoreOrLess(0);
+                WindowHome.super.dispose();
+                
+
+            }
+        });
+        choiceGames.add(mastermind);
+
+        JButton searchMoreOrless = new JButton("Recherche +/-");
+
+        searchMoreOrless.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                WindowMain windowMain = new WindowMain();
+                windowMain.setSearchMoreOrLess(1);
+                windowMain.setMastermind(0);
+                WindowHome.super.dispose();
+
+            }
+        });
+        choiceGames.add(searchMoreOrless);
+       
 
         return choiceGames;
     }
