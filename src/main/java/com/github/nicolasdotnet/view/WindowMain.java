@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -27,28 +26,51 @@ import javax.swing.JTextArea;
  */
 public class WindowMain extends WindowSource {
 
-    private int searchMoreOrLess = 0;
-    private int mastermind = 0;
+    private int searchMoreOrLess;
+    private int mastermind;
+    private String breadcrumb;
 
-    public WindowMain() {
-
-        JPanel contentPanel = (JPanel) this.getContentPane();
-        contentPanel.setLayout(new BorderLayout());
-
-        contentPanel.add(gamesMenu(), BorderLayout.WEST);
-        contentPanel.add(gamePanel(), BorderLayout.CENTER);
-        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
-
-        this.setVisible(true);
-
+    public int getSearchMoreOrLess() {
+        return searchMoreOrLess;
     }
 
     public void setSearchMoreOrLess(int searchMoreOrLess) {
         this.searchMoreOrLess = searchMoreOrLess;
     }
 
+    public int getMastermind() {
+        return mastermind;
+    }
+
     public void setMastermind(int mastermind) {
         this.mastermind = mastermind;
+    }
+
+    public String getBreadcrumb() {
+        return breadcrumb;
+    }
+
+    public void setBreadcrumb(String breadcrumb) {
+        this.breadcrumb = breadcrumb;
+    }
+
+
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb) {
+        
+        this.searchMoreOrLess = searchMoreOrLess;
+        this.mastermind = mastermind;
+        this.breadcrumb = breadcrumb;
+        this.setTitle("Jeux de logique -> "+breadcrumb);
+
+        JPanel contentPanel = (JPanel) this.getContentPane();
+        contentPanel.setLayout(new BorderLayout());
+
+//        contentPanel.add(gamesMenu(), BorderLayout.WEST);
+        contentPanel.add(breadcrumbPanel(), BorderLayout.NORTH);
+        contentPanel.add(gamePanel(), BorderLayout.CENTER);
+        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
+
+        this.setVisible(true);
     }
 
     /**
@@ -80,12 +102,12 @@ public class WindowMain extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-            searchMoreOrLess = 0;
-            mastermind = 1;
+                searchMoreOrLess = 0;
+                mastermind = 1;
 
             }
         });
-        
+
         JButton searchMoreOrLessB = new JButton("Recherche +/-");
         games.add(searchMoreOrLessB);
         searchMoreOrLessB.addActionListener(new ActionListener() {
@@ -109,14 +131,16 @@ public class WindowMain extends WindowSource {
      * @return panel.
      */
     private JPanel gamePanel() {
-
+        
         JPanel gamePanel = new JPanel();
-        gamePanel.setLayout(new GridLayout(2, 1, 40, 40));
-
-        gamePanel.add(new JTextArea("Sélectionnez un mode jeux "));
-
+        gamePanel.setLayout(new GridLayout(2, 1, 5, 5));
+        
+        JTextArea instructional = new JTextArea("Sélectionnez un mode de jeu parmis les 3 modes proposés ci-dessous : ");
+        instructional.setEditable(false);
+        gamePanel.add(instructional);
+        
         gamePanel.add(gamesOptions());
-
+        
         return gamePanel;
     }
 
@@ -128,10 +152,13 @@ public class WindowMain extends WindowSource {
     private JPanel gamesOptions() {
 
         JPanel gamesOptions = new JPanel();
-        JLabel label = new JLabel("Sélectionnez un mode de jeux ");
-        gamesOptions.setLayout(new GridLayout(1, 2, 40, 40));
-        JPanel buttons = Options();
+        gamesOptions.setLayout(new GridLayout(1, 2, 10, 0));
+
+        JPanel buttons = options();
         gamesOptions.add(buttons);
+
+        JPanel optionsDescription = optionsDescription();
+        gamesOptions.add(optionsDescription);
 
         Component[] component = buttons.getComponents();
         for (int i = 0; i < component.length; i++) {
@@ -144,7 +171,6 @@ public class WindowMain extends WindowSource {
 
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        label.setText("régles challenger");
 
                         if (searchMoreOrLess == 1) {
 
@@ -161,7 +187,6 @@ public class WindowMain extends WindowSource {
 
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        label.setText("régles Défenseur");
 
                         if (searchMoreOrLess == 1) {
 
@@ -177,7 +202,6 @@ public class WindowMain extends WindowSource {
 
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        label.setText("régles Duel");
 
                         if (searchMoreOrLess == 1) {
 
@@ -191,7 +215,6 @@ public class WindowMain extends WindowSource {
 
         }
 
-        gamesOptions.add(label);
         return gamesOptions;
     }
 
@@ -200,15 +223,15 @@ public class WindowMain extends WindowSource {
      *
      * @return panel with button games options.
      */
-    private JPanel Options() {
+    private JPanel options() {
 
-        JPanel Options = new JPanel();
-        Options.setLayout(new GridLayout(3, 1, 40, 40));
-        Options.add(new JButton("Challenger"));
-        Options.add(new JButton("Défenseur"));
-        Options.add(new JButton("Duel"));
+        JPanel options = new JPanel();
+        options.setLayout(new GridLayout(3, 1, 20, 20));
+        options.add(new JButton("Challenger"));
+        options.add(new JButton("Défenseur"));
+        options.add(new JButton("Duel"));
 
-        return Options;
+        return options;
     }
 
     /**
@@ -226,4 +249,54 @@ public class WindowMain extends WindowSource {
 
     }
     
+    /**
+     * Create games options description panel.
+     *
+     * @return panel with games options description.
+     */
+
+    private JPanel optionsDescription() {
+
+        JPanel optionsDescription = new JPanel();
+        optionsDescription.setLayout(new GridLayout(3, 1, 5, 5));
+
+//        Option description challenger
+        optionsDescription.add(new JTextArea("En mode challenger, vous devez trouver\nla combinaison secrète de l'ordinateur."));
+//        Option description Défenseur
+        optionsDescription.add(new JTextArea("En mode défenseur, c'est à l'ordinateur\nde trouver votre combinaison secrète."));
+//        Option description Duel
+        optionsDescription.add(new JTextArea("En mode duel, l'ordinateur et vous jouez\ntour à tour. Le premier à trouver la\ncombinaison secrète de l'autre a gagné !"));
+
+        return optionsDescription;
+
+    }
+    
+    /**
+     * Create breadcrumb description panel.
+     *
+     * @return panel with return button to WhindowHome.
+     */
+
+    private JPanel breadcrumbPanel() {
+
+        JPanel breadcrumbPanel = new JPanel();
+        breadcrumbPanel.setLayout(new FlowLayout());
+        JButton returnButton = new JButton("Retour au choix de jeux logique");
+        returnButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                WindowHome windowHome = new WindowHome();
+                WindowMain.super.dispose();
+
+            }
+        });
+
+        breadcrumbPanel.add(returnButton);
+
+        return breadcrumbPanel;
+
+    }
+
 }

@@ -18,7 +18,7 @@ public class WindowSource extends JFrame {
     public WindowSource() {
         super("Jeux de logique");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(600, 400);
+        this.setSize(580, 500);
         this.setLocationRelativeTo(null);
         
         // param to enable WindowSource visibility 

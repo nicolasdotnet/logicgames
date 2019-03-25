@@ -45,7 +45,7 @@ public class WindowHome extends WindowSource {
 
         JPanel choiceGames = new JPanel();
 
-        choiceGames.setLayout(new GridLayout(1, 2, 40, 40));
+        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
         JButton mastermind = new JButton("MasterMind");
         
         mastermind.addActionListener(new ActionListener() {
@@ -53,9 +53,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain();
-                windowMain.setMastermind(1);
-                windowMain.setSearchMoreOrLess(0);
+                WindowMain windowMain = new WindowMain(0,1,"Mastermind");
                 WindowHome.super.dispose();
                 
 
@@ -70,9 +68,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain();
-                windowMain.setSearchMoreOrLess(1);
-                windowMain.setMastermind(0);
+                WindowMain windowMain = new WindowMain(1,0,"Recherche +/-");
                 WindowHome.super.dispose();
 
             }
@@ -90,8 +86,8 @@ public class WindowHome extends WindowSource {
      */
     private JLabel welcomeMessage() {
 
-        JLabel welcomeMessage = new JLabel("Welcome");
-        Font police = new Font("Tahoma", Font.BOLD, 25);
+        JLabel welcomeMessage = new JLabel("Bienvenue dans les Jeux de logiques");
+        Font police = new Font("Tahoma", Font.BOLD, 15);
         welcomeMessage.setFont(police);
         welcomeMessage.setHorizontalAlignment(JLabel.CENTER);
 
