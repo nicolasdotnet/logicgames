@@ -19,7 +19,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- *
+ * SearchMoreOrLessChallengerLite est la classe qui représente la fenêtre de jeux
+ * Recherche +/- en mode Challenger.
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
