@@ -186,6 +186,8 @@ public class WindowMain extends WindowSource {
                             System.out.println(getNbrCombinaison());
 
                         } else {
+                            
+                            MastermindChallengerLite run = new MastermindChallengerLite(nbrCombinaison);
 
                         }
 
