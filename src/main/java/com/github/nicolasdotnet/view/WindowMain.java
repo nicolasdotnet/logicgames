@@ -183,7 +183,7 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
-                            System.out.println(getNbrCombinaison());
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison());
 
                         } else {
                             
@@ -202,6 +202,8 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
+
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison());
 
                         } else {
 
