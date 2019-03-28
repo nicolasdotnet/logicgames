@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
  * @since 2019
  */
 public class WindowHome extends WindowSource {
-
+    
     public WindowHome() {
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -43,9 +45,36 @@ public class WindowHome extends WindowSource {
 
         JPanel choiceGames = new JPanel();
 
-        choiceGames.setLayout(new GridLayout(1, 2, 40, 40));
-        choiceGames.add(new JButton("MasterMind"));
-        choiceGames.add(new JButton("Recherche +/-"));
+        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
+        JButton mastermind = new JButton("MasterMind");
+        
+        mastermind.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                WindowMain windowMain = new WindowMain(0,1,"Mastermind");
+                WindowHome.super.dispose();
+                
+
+            }
+        });
+        choiceGames.add(mastermind);
+
+        JButton searchMoreOrless = new JButton("Recherche +/-");
+
+        searchMoreOrless.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                WindowMain windowMain = new WindowMain(1,0,"Recherche +/-");
+                WindowHome.super.dispose();
+
+            }
+        });
+        choiceGames.add(searchMoreOrless);
+       
 
         return choiceGames;
     }
@@ -57,8 +86,8 @@ public class WindowHome extends WindowSource {
      */
     private JLabel welcomeMessage() {
 
-        JLabel welcomeMessage = new JLabel("Welcome");
-        Font police = new Font("Tahoma", Font.BOLD, 25);
+        JLabel welcomeMessage = new JLabel("Bienvenue dans les Jeux de logiques");
+        Font police = new Font("Tahoma", Font.BOLD, 15);
         welcomeMessage.setFont(police);
         welcomeMessage.setHorizontalAlignment(JLabel.CENTER);
 
