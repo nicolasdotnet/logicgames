@@ -201,6 +201,8 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison());
+
                         } else {
 
                         }
