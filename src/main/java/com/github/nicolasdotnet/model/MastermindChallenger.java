@@ -6,12 +6,13 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 /**
  *
- * MastermindChallenger est la classe du jeux Mastermind en mode
- * Challenger
+ * MastermindChallenger est la classe du jeux Mastermind en mode Challenger
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -39,7 +40,7 @@ public class MastermindChallenger {
      * @param randomLimit max number limit and mini number limit for generate
      * random number
      * @param nbrCombinaison number of digts of the combination
-     * @return random number int 
+     * @return random number int
      */
     public ArrayList<Integer> inputMachine(int[][] randomLimit, int nbrCombinaison) {
 
@@ -64,8 +65,8 @@ public class MastermindChallenger {
     public ArrayList<Integer> convertStringToArrayList(String inputUser) {
 
         ArrayList<Integer> convert = new ArrayList<Integer>();
-        
-         int length = inputUser.length();
+
+        int length = inputUser.length();
 
         // Cast String to Int
         for (int i = 0; i <= length - 1; i++) {
@@ -82,15 +83,15 @@ public class MastermindChallenger {
     /**
      *
      * @param nbrCombinaison number of digts of the combination
-     * @param attac
-     * @param def
-     * @return
+     * @param attac Value table of the Attaquant
+     * @param def Value table of the Defenseur
+     * @return Result hasmap with number place and number present
      */
     public HashMap<String, String> comparaisonChallenger(int nbrCombinaison, ArrayList<Integer> attac, ArrayList<Integer> def) {
 
         HashMap<String, String> result = new HashMap<String, String>();
         result.put("place", "0");
-        result.put("present", "Error 404 ;)");
+        result.put("present", "0");
 
         int place = 0;
 
@@ -105,8 +106,8 @@ public class MastermindChallenger {
                 if (attac.get(i) == def.get(j)) {
 
                     if (i == j) {
-                        
-                        place ++;
+
+                        place++;
 
                         result.replace("place", Integer.toString(place));
 
@@ -150,11 +151,53 @@ public class MastermindChallenger {
      * @return result to String
      */
     public String convertArrayListToString(ArrayList<String> result) {
-        
-        String convert = String.join(" ",result);
+
+        String convert = String.join(" ", result);
 
         return convert;
 
+    }
+
+    /**
+     * display result according to place value and present value
+     *
+     * @param result Result hasmap of the comparison() function
+     * @return a string for display
+     */
+    public String displayResult(HashMap<String, String> result) {
+
+        StringBuilder sb = new StringBuilder();
+
+        Enumeration<String> toStringKey = Collections.enumeration(result.keySet());
+        Enumeration<String> toStringValue = Collections.enumeration(result.values());
+
+        while (toStringKey.hasMoreElements() && toStringValue.hasMoreElements()) {
+
+            String key = toStringKey.nextElement();
+
+            String value = toStringValue.nextElement();
+
+            if (key == "present" && value == "0") {
+
+                sb.append("");
+
+            } else if (key == "present" && value != "0") {
+
+                sb.append(value + " présent ");
+
+            } else if (key == "place" && value == "0") {
+
+                sb.append("");
+
+            } else if (key == "place" && value != "0") {
+
+                sb.append(value + " bien placés ");
+
+            }
+
+        }
+
+        return sb.toString();
     }
 
 }

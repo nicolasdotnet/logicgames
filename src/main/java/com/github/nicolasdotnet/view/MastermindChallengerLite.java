@@ -112,25 +112,18 @@ public class MastermindChallengerLite extends JFrame {
 
                     result = (game.comparaisonChallenger(nbrCombinaison, humain, machine));
 
-                    Enumeration<String> toStringKey = Collections.enumeration(result.keySet());
-                    Enumeration<String> toStringValue = Collections.enumeration(result.values());
 
                     if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
 
                         textAreaOut.append("Félicitation ! mission accomplie en " + nbrTours + " tours :)\n");
-                        while (toStringKey.hasMoreElements() && toStringValue.hasMoreElements()) {
-
-                            textAreaOut.append("Résulat : " + toStringKey.nextElement() + " " + toStringValue.nextElement() + "\n");
-                        }
+                        textAreaOut.append(game.displayResult(result));
 
                     } else {
 
                         nbrTours++;
-                        while (toStringKey.hasMoreElements() && toStringValue.hasMoreElements()) {
-
-                            textAreaOut.append("Résulat : " + toStringKey.nextElement() + " " + toStringValue.nextElement() + "\n");
-                        }
                         
+                        textAreaOut.append(game.displayResult(result)+"\n");
+
                         String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
 
                         textAreaOut.append(message);
@@ -140,11 +133,10 @@ public class MastermindChallengerLite extends JFrame {
                 }
 
             }
-            
-        });
-                
-        return textArea ;
- }
 
+        });
+
+        return textArea;
+    }
 
 }
