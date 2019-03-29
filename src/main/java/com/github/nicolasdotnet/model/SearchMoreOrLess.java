@@ -124,7 +124,7 @@ public class SearchMoreOrLess {
 
             if (resultat[i] == "=") {
 
-                counter = +1;
+                counter ++;
             }
 
         }
