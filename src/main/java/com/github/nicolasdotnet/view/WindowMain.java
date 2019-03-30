@@ -185,7 +185,7 @@ public class WindowMain extends WindowSource {
 
                         } else {
                             
-                            MastermindChallengerLite run = new MastermindChallengerLite(nbrCombinaison);
+                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison());
 
                         }
 
