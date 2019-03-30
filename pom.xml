@@ -58,8 +58,6 @@
             <version>14.0</version>
             <type>jar</type>
         </dependency>
-    </dependencies>
-    
     <build>
         <plugins>
             <plugin>
