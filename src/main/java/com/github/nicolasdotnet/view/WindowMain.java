@@ -29,6 +29,15 @@ public class WindowMain extends WindowSource {
     private int searchMoreOrLess;
     private int mastermind;
     private String breadcrumb;
+    private int nbrCombinaison;
+
+    public int getNbrCombinaison() {
+        return nbrCombinaison;
+    }
+
+    public void setNbrCombinaison(int nbrcombinaison) {
+        this.nbrCombinaison = nbrcombinaison;
+    }
 
     public int getSearchMoreOrLess() {
         return searchMoreOrLess;
@@ -54,13 +63,13 @@ public class WindowMain extends WindowSource {
         this.breadcrumb = breadcrumb;
     }
 
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison) {
 
-    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb) {
-        
         this.searchMoreOrLess = searchMoreOrLess;
         this.mastermind = mastermind;
         this.breadcrumb = breadcrumb;
-        this.setTitle("Jeux de logique -> "+breadcrumb);
+        this.nbrCombinaison = nbrCombinaison;
+        this.setTitle("Jeux de logique -> " + breadcrumb);
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
@@ -131,16 +140,16 @@ public class WindowMain extends WindowSource {
      * @return panel.
      */
     private JPanel gamePanel() {
-        
+
         JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new GridLayout(2, 1, 5, 5));
-        
+
         JTextArea instructional = new JTextArea("Sélectionnez un mode de jeu parmis les 3 modes proposés ci-dessous : ");
         instructional.setEditable(false);
         gamePanel.add(instructional);
-        
+
         gamePanel.add(gamesOptions());
-        
+
         return gamePanel;
     }
 
@@ -173,6 +182,8 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
+
+                            System.out.println(getNbrCombinaison());
 
                         } else {
 
@@ -248,13 +259,12 @@ public class WindowMain extends WindowSource {
         return optionPanel;
 
     }
-    
+
     /**
      * Create games options description panel.
      *
      * @return panel with games options description.
      */
-
     private JPanel optionsDescription() {
 
         JPanel optionsDescription = new JPanel();
@@ -270,13 +280,12 @@ public class WindowMain extends WindowSource {
         return optionsDescription;
 
     }
-    
+
     /**
      * Create breadcrumb description panel.
      *
      * @return panel with return button to WhindowHome.
      */
-
     private JPanel breadcrumbPanel() {
 
         JPanel breadcrumbPanel = new JPanel();
