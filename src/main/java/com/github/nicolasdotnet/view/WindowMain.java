@@ -183,7 +183,7 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
-                            System.out.println(getNbrCombinaison());
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison());
 
                         } else {
 
