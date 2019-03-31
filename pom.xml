@@ -15,7 +15,6 @@
     <packaging>jar</packaging>
     
     <!--=== Informations Générales ===-->
-
     <name>LogicGames</name>
     <description>Mastermind and Search more or less</description>
     <url>https://github.com/nicolasdotnet/logicgames</url>
@@ -33,6 +32,8 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+  
+  <!--=== Dependencies ===-->
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -59,7 +60,8 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-    
+  
+    <!--=== Build ===-->
     <build>
         <plugins>
             <plugin>
@@ -78,6 +80,8 @@
             </plugin>
         </plugins>
     </build>
+  
+<!--=== Properties ===-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
