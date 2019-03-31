@@ -11,9 +11,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -25,6 +29,8 @@ import javax.swing.JPanel;
  */
 public class WindowHome extends WindowSource {
     
+    private int nbrCombinaison;
+    
     public WindowHome() {
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -33,7 +39,17 @@ public class WindowHome extends WindowSource {
         contentPanel.add(choiceGames(), BorderLayout.CENTER);
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
         this.setVisible(true);
+        
+        nbrCombinaison = 4;
 
+    }
+
+    public int getNbrCombinaison() {
+        return nbrCombinaison;
+    }
+
+    public void setNbrCombinaison(int nbrCombinaison) {
+        this.nbrCombinaison = nbrCombinaison;
     }
 
     /**
@@ -43,20 +59,48 @@ public class WindowHome extends WindowSource {
      */
     private JPanel choiceGames() {
 
+        JPanel panel = new JPanel();
+
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
+        
+       // Label instructions
+        JTextArea textAreaOut = new JTextArea("Tapez un N° entre 1 et 4 pour définir le N° de cases des combinaisons\nPuis sélectionnez le jeu");
+        textAreaOut.setEditable(false);
+        panel.add(textAreaOut);
+
+        // Field input value nbrCombinaison
+        JTextField textFieldIn = new JTextField();
+        panel.add(textFieldIn);
+
+        textFieldIn.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent event) {
+                
+                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                    setNbrCombinaison(Integer.valueOf(textFieldIn.getText())); 
+
+                }
+
+            }
+
+        });
+
+        // Choice games buttons
         JPanel choiceGames = new JPanel();
 
         choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
         JButton mastermind = new JButton("MasterMind");
-        
+
         mastermind.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain(0,1,"Mastermind");
-                WindowHome.super.dispose();
-                
-
+                    setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison);
+                    WindowHome.super.dispose();
             }
         });
         choiceGames.add(mastermind);
@@ -68,15 +112,19 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain(1,0,"Recherche +/-");
+                setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
+                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-",nbrCombinaison);
                 WindowHome.super.dispose();
 
             }
         });
+        
         choiceGames.add(searchMoreOrless);
-       
 
-        return choiceGames;
+        panel.add(choiceGames);
+        
+
+        return panel;
     }
 
     /**
