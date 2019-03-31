@@ -215,6 +215,8 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
+                            
+                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison());
 
                         } else {
 
