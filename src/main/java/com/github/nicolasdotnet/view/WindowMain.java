@@ -183,9 +183,9 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
-                            System.out.println(getNbrCombinaison());
-
                         } else {
+                            
+                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison());
 
                         }
 
@@ -200,6 +200,7 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
+
 
                         } else {
 
