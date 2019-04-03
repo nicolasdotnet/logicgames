@@ -155,7 +155,7 @@ public class SearchMoreOrLessDefenseur {
             nbr = 0;
 
             randomLimit[0][index] = attac.get(index);
-            randomLimit[1][index] = 9;
+//            randomLimit[1][index] = 9;
 
         } else if (attac.get(index) > def.get(index)) {
 
@@ -167,7 +167,7 @@ public class SearchMoreOrLessDefenseur {
 
             nbr = 0;
 
-            randomLimit[0][index] = 0;
+//            randomLimit[0][index] = 0;
             randomLimit[1][index] = attac.get(index);
 
         } else {
