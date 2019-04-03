@@ -183,6 +183,9 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
+
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison());
+
                         } else {
                             
                             MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison());
@@ -202,6 +205,9 @@ public class WindowMain extends WindowSource {
                         if (searchMoreOrLess == 1) {
 
 
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison());
+
+
                         } else {
 
                         }
@@ -216,6 +222,8 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
+                            
+                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison());
 
                         } else {
 
