@@ -33,6 +33,8 @@ public class MastermindChallengerLite extends JFrame {
 
     private int nbrTours;
 
+    private int nbrRange;
+
     private MastermindChallenger game;
 
     private ArrayList<Integer> machine;
@@ -42,7 +44,7 @@ public class MastermindChallengerLite extends JFrame {
     /**
      *
      */
-    public MastermindChallengerLite(int nbrCombinaison, int nbrTours) {
+    public MastermindChallengerLite(int nbrCombinaison, int nbrTours, int nbrRange) {
 
         this.setTitle("MastermindChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,6 +54,7 @@ public class MastermindChallengerLite extends JFrame {
 
         this.nbrCombinaison = nbrCombinaison;
         this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
         System.out.println("nbrtOurs Lite : " + nbrTours);
         game = new MastermindChallenger();
         random = new RandomList();
@@ -61,7 +64,7 @@ public class MastermindChallengerLite extends JFrame {
         // param to enable Window visibility 
         this.setVisible(true);
 
-        randomLimit = random.randomLimitIni(nbrCombinaison);
+        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
         machine = random.inputMachine(randomLimit, nbrCombinaison);
 
     }
@@ -107,7 +110,7 @@ public class MastermindChallengerLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                    humain = game.convertStringToArrayList(valueInput);
 
                     result = (game.comparaisonChallenger(nbrCombinaison, humain, machine));
 
@@ -132,7 +135,6 @@ public class MastermindChallengerLite extends JFrame {
                         textAreaOut.append(message);
 
                     }
-
                 }
 
             }

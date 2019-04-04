@@ -32,6 +32,8 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
     private int nbrTours;
 
+    private int nbrRange;
+
     private SearchMoreOrLessDefenseur game;
 
     private ArrayList<Integer> machine;
@@ -41,7 +43,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
     /**
      *
      */
-    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours) {
+    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours, int nbrRange) {
 
         this.setTitle("SearchMoreOrlessDefenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -51,6 +53,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
         this.nbrCombinaison = nbrCombinaison;
         this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
         game = new SearchMoreOrLessDefenseur();
         random = new RandomList();
         machine = new ArrayList<Integer>();
@@ -100,7 +103,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                     valueInput = textAreaIn.getText();
 
                     int[][] randomLimit;
-                    randomLimit = random.randomLimitIni(nbrCombinaison);
+                    randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
 
                     textAreaOut.insert(valueInput + " ", message.length());
 
@@ -141,11 +144,11 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                                 textAreaIn.setEditable(false);
 
                             } else if (nbrTours == 1) {
-                                
+
                                 String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
 
                                 textAreaOut.append(message);
-                                
+
                             } else {
 
                                 String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";

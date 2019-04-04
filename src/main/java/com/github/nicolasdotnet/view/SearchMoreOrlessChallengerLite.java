@@ -32,6 +32,8 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
     private int nbrTours;
 
+    private int nbrRange;
+
     private SearchMoreOrLessChallenger game;
 
     private ArrayList<Integer> machine;
@@ -41,7 +43,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
     /**
      *
      */
-    public SearchMoreOrlessChallengerLite(int nbrCombinaison, int nbrTours) {
+    public SearchMoreOrlessChallengerLite(int nbrCombinaison, int nbrTours, int nbrRange) {
 
         this.setTitle("SearchMoreOrlessChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -51,6 +53,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
         this.nbrCombinaison = nbrCombinaison;
         this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
         game = new SearchMoreOrLessChallenger();
         random = new RandomList();
         machine = new ArrayList<Integer>();
@@ -59,7 +62,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
         // param to enable Window visibility 
         this.setVisible(true);
 
-        randomLimit = random.randomLimitIni(nbrCombinaison);
+        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
         machine = random.inputMachine(randomLimit, nbrCombinaison);
 
     }

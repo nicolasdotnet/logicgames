@@ -31,6 +31,7 @@ public class WindowHome extends WindowSource {
 
     private int nbrCombinaison;
     private int nbrTours;
+    private int nbrRange;
 
     public WindowHome() {
 
@@ -41,6 +42,14 @@ public class WindowHome extends WindowSource {
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
         this.setVisible(true);
 
+    }
+
+    public int getNbrRange() {
+        return nbrRange;
+    }
+
+    public void setNbrRange(int nbrRange) {
+        this.nbrRange = nbrRange;
     }
 
     public int getNbrTours() {
@@ -70,7 +79,7 @@ public class WindowHome extends WindowSource {
         panel.setLayout(new GridLayout(2, 1, 10, 10));
 
         JPanel param = new JPanel();
-        param.setLayout(new GridLayout(2, 2, 0, 0));
+        param.setLayout(new GridLayout(3, 2, 0, 0));
 
         // nbrCombinaison Label instructions
         JTextArea textAreaOut = new JTextArea("1) Tapez un N° entre 1 et 4 pour définir le N°\nde cases des combinaisons");
@@ -97,7 +106,7 @@ public class WindowHome extends WindowSource {
         });
 
         // nbrTours Label instructions
-        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 4 pour définir le N°\nde tours. Puis sélectionnez le jeu");
+        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 4 pour définir le N°\nde tours.");
         textAreaOut2.setEditable(false);
         param.add(textAreaOut2);
 
@@ -121,6 +130,31 @@ public class WindowHome extends WindowSource {
 
         });
 
+        // nbrRange Label instructions
+        JTextArea textAreaOut3 = new JTextArea("3) Tapez un N° entre 1 et 4 pour définir \nl'amplitude maximal des nombres. Puis sélectionnez le jeu");
+        textAreaOut2.setEditable(false);
+        param.add(textAreaOut3);
+
+        // Field input value nbrRange
+        JTextField textFieldIn3 = new JTextField();
+        param.add(textFieldIn3);
+
+        textFieldIn3.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent event) {
+
+                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                    setNbrRange(Integer.valueOf(textFieldIn3.getText()));
+                    System.out.println("valeur nbrRange : " + textFieldIn3.getText());
+
+                }
+
+            }
+
+        });
+
         panel.add(param);
 
         // Choice games buttons
@@ -136,9 +170,11 @@ public class WindowHome extends WindowSource {
 
                 try {
 
+                    setNbrRange(Integer.valueOf(textFieldIn3.getText()));
+
                     setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours);
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange);
                     WindowHome.super.dispose();
                 } catch (NumberFormatException nfe) {
 
@@ -158,9 +194,11 @@ public class WindowHome extends WindowSource {
 
                 try {
 
+                    setNbrRange(Integer.valueOf(textFieldIn3.getText()));
+
                     setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours);
+                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange);
                     WindowHome.super.dispose();
                 } catch (NumberFormatException nfe) {
 

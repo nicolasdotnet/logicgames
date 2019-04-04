@@ -32,6 +32,8 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
     private int nbrTours;
 
+    private int nbrRange;
+
     private SearchMoreOrLessDuel game;
 
     private ArrayList<Integer> machine;
@@ -41,7 +43,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
     /**
      *
      */
-    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours) {
+    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours, int nbrRange) {
 
         this.setTitle("SearchMoreOrlessDuel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -51,6 +53,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
         this.nbrCombinaison = nbrCombinaison;
         this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
         game = new SearchMoreOrLessDuel();
         random = new RandomList();
         machine = new ArrayList<Integer>();
@@ -103,7 +106,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             int step = 0;
 
             String valueInput;
-            
+
             int[][] randomLimit;
 
             @Override
@@ -123,7 +126,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                         humainIni = game.convertStringToArrayList(game.inputUser(valueInput));
 
-                        randomLimit = random.randomLimitIni(nbrCombinaison);
+                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
                         machineIni = random.inputMachine(randomLimit, nbrCombinaison);
                         textAreaOut.append("La machine a choisit sa combinaison : " + machineIni.toString() + " \n");
 
