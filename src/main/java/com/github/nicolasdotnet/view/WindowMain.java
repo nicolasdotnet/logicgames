@@ -30,9 +30,18 @@ public class WindowMain extends WindowSource {
     private int mastermind;
     private String breadcrumb;
     private int nbrCombinaison;
+    private int NbrTours;
 
     public int getNbrCombinaison() {
         return nbrCombinaison;
+    }
+
+    public int getNbrTours() {
+        return NbrTours;
+    }
+
+    public void setNbrTours(int NbrTours) {
+        this.NbrTours = NbrTours;
     }
 
     public void setNbrCombinaison(int nbrcombinaison) {
@@ -63,12 +72,13 @@ public class WindowMain extends WindowSource {
         this.breadcrumb = breadcrumb;
     }
 
-    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison) {
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison, int nbrTours) {
 
         this.searchMoreOrLess = searchMoreOrLess;
         this.mastermind = mastermind;
         this.breadcrumb = breadcrumb;
         this.nbrCombinaison = nbrCombinaison;
+        this.NbrTours = nbrTours;
         this.setTitle("Jeux de logique -> " + breadcrumb);
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -183,12 +193,12 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
-
-                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison());
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison(), getNbrTours());
 
                         } else {
-                            
-                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison());
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison(), getNbrTours());
 
                         }
 
@@ -204,9 +214,8 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
 
-
-                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison());
-
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison(), getNbrTours());
 
                         } else {
 
@@ -222,8 +231,8 @@ public class WindowMain extends WindowSource {
                     public void actionPerformed(ActionEvent ae) {
 
                         if (searchMoreOrLess == 1) {
-                            
-                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison());
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison(), getNbrTours());
 
                         } else {
 

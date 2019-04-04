@@ -42,7 +42,7 @@ public class MastermindChallengerLite extends JFrame {
     /**
      *
      */
-    public MastermindChallengerLite(int nbrCombinaison) {
+    public MastermindChallengerLite(int nbrCombinaison, int nbrTours) {
 
         this.setTitle("MastermindChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -51,7 +51,8 @@ public class MastermindChallengerLite extends JFrame {
         add(JScrollTextArea(), BorderLayout.CENTER);
 
         this.nbrCombinaison = nbrCombinaison;
-        nbrTours = 1;
+        this.nbrTours = nbrTours;
+        System.out.println("nbrtOurs Lite : " + nbrTours);
         game = new MastermindChallenger();
         random = new RandomList();
         machine = new ArrayList<Integer>();
@@ -110,19 +111,23 @@ public class MastermindChallengerLite extends JFrame {
 
                     result = (game.comparaisonChallenger(nbrCombinaison, humain, machine));
 
-
                     if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
 
                         textAreaOut.append("Félicitation ! mission accomplie en " + nbrTours + " tours :)\n");
                         textAreaOut.append(game.displayResult(result));
 
+                    } else if (nbrTours == 1) {
+
+                        textAreaOut.append("GAME OVER !\n");
+                        textAreaOut.append("Solution : " + machine + "\n");
+
                     } else {
 
-                        nbrTours++;
-                        
-                        textAreaOut.append(game.displayResult(result)+"\n");
+                        nbrTours--;
 
-                        String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
+                        textAreaOut.append(game.displayResult(result) + "\n");
+
+                        String message = "Désolez ! il faut essayer une nouvelle combinaison (il reste " + nbrTours + " tours) !\n (" + machine + ")";
 
                         textAreaOut.append(message);
 

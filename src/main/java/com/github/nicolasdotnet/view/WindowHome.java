@@ -28,9 +28,10 @@ import javax.swing.JTextField;
  * @since 2019
  */
 public class WindowHome extends WindowSource {
-    
+
     private int nbrCombinaison;
-    
+    private int nbrTours;
+
     public WindowHome() {
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -39,9 +40,15 @@ public class WindowHome extends WindowSource {
         contentPanel.add(choiceGames(), BorderLayout.CENTER);
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
         this.setVisible(true);
-        
-        nbrCombinaison = 4;
 
+    }
+
+    public int getNbrTours() {
+        return nbrTours;
+    }
+
+    public void setNbrTours(int nbrTours) {
+        this.nbrTours = nbrTours;
     }
 
     public int getNbrCombinaison() {
@@ -60,32 +67,61 @@ public class WindowHome extends WindowSource {
     private JPanel choiceGames() {
 
         JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 1, 10, 10));
 
-        panel.setLayout(new GridLayout(3, 1, 10, 10));
-        
-       // Label instructions
-        JTextArea textAreaOut = new JTextArea("Tapez un N° entre 1 et 4 pour définir le N° de cases des combinaisons\nPuis sélectionnez le jeu");
+        JPanel param = new JPanel();
+        param.setLayout(new GridLayout(2, 2, 0, 0));
+
+        // nbrCombinaison Label instructions
+        JTextArea textAreaOut = new JTextArea("1) Tapez un N° entre 1 et 4 pour définir le N°\nde cases des combinaisons");
         textAreaOut.setEditable(false);
-        panel.add(textAreaOut);
+        param.add(textAreaOut);
 
         // Field input value nbrCombinaison
         JTextField textFieldIn = new JTextField();
-        panel.add(textFieldIn);
+        param.add(textFieldIn);
 
         textFieldIn.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyReleased(KeyEvent event) {
-                
+
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
-                    setNbrCombinaison(Integer.valueOf(textFieldIn.getText())); 
+                    setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
 
                 }
 
             }
 
         });
+
+        // nbrTours Label instructions
+        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 4 pour définir le N°\nde tours. Puis sélectionnez le jeu");
+        textAreaOut2.setEditable(false);
+        param.add(textAreaOut2);
+
+        // Field input value nbrTours
+        JTextField textFieldIn2 = new JTextField();
+        param.add(textFieldIn2);
+
+        textFieldIn2.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent event) {
+
+                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                    setNbrTours(Integer.valueOf(textFieldIn2.getText()));
+                    System.out.println("valeur nbrTours : " + textFieldIn2.getText());
+
+                }
+
+            }
+
+        });
+
+        panel.add(param);
 
         // Choice games buttons
         JPanel choiceGames = new JPanel();
@@ -98,9 +134,17 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
+                try {
+
+                    setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison);
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours);
                     WindowHome.super.dispose();
+                } catch (NumberFormatException nfe) {
+
+                    System.out.println("helloWorld");
+
+                }
             }
         });
         choiceGames.add(mastermind);
@@ -112,17 +156,24 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-",nbrCombinaison);
-                WindowHome.super.dispose();
+                try {
+
+                    setNbrTours(Integer.valueOf(textFieldIn2.getText()));
+                    setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
+                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours);
+                    WindowHome.super.dispose();
+                } catch (NumberFormatException nfe) {
+
+                    System.out.println("helloWorld");
+
+                }
 
             }
         });
-        
+
         choiceGames.add(searchMoreOrless);
 
         panel.add(choiceGames);
-        
 
         return panel;
     }
@@ -141,13 +192,12 @@ public class WindowHome extends WindowSource {
 
         return welcomeMessage;
     }
-    
+
     /**
      * Create options panel with Options Button to enable Developper Mode.
      *
      * @return panel with Options Button.
      */
-
     private JPanel optionsPanel() {
 
         JPanel optionPanel = new JPanel();
