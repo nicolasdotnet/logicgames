@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
+import com.github.nicolasdotnet.model.CheckUserInput;
 import com.github.nicolasdotnet.model.RandomList;
 import com.github.nicolasdotnet.model.SearchMoreOrLessChallenger;
 import java.awt.BorderLayout;
@@ -98,6 +99,9 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
             String valueInput;
             int nbrTests = 1;
 
+            CheckUserInput checkUserInput = new CheckUserInput();
+            Boolean inputUser;
+
             @Override
             public void keyReleased(KeyEvent event) {
 
@@ -111,47 +115,57 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                    inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
+                    System.out.println("inPut : " + inputUser);
 
-                    System.out.println("humain : " + humain);
-                    System.out.println("machine : " + machine);
-
-                    nbrTours--;
-                    nbrTests++;
-
-                    result.clear();
-                    result = (game.comparaisonChallenger(nbrCombinaison, humain, machine, result));
-                    counter = game.counter(result);
-
-                    String toString = game.convertArrayListToString(result);
-
-                    if (counter == nbrCombinaison) {
-
-                        textAreaOut.append("Félicitation ! mission accomplie en " + nbrTests + " tours :)\n");
-                        textAreaOut.append("Résulat : " + toString + "\n");
-                        textAreaIn.setEditable(false);
-
+                    if (inputUser) {
+                        nbrTours--;
+                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                        textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                     } else {
 
-                        textAreaOut.append("Résulat : " + toString + "\n");
+                        humain = game.convertStringToArrayList(valueInput);
 
-                        if (nbrTours == 0) {
+                        System.out.println("humain : " + humain);
+                        System.out.println("machine : " + machine);
 
-                            textAreaOut.append("GAME OVER !\n");
-                            textAreaOut.append("la solution était : " + machine + "\n");
+                        nbrTours--;
+                        nbrTests++;
+
+                        result.clear();
+                        result = (game.comparaisonChallenger(nbrCombinaison, humain, machine, result));
+                        counter = game.counter(result);
+
+                        String toString = game.convertArrayListToString(result);
+
+                        if (counter == nbrCombinaison) {
+
+                            textAreaOut.append("Félicitation ! mission accomplie en " + nbrTests + " tours :)\n");
+                            textAreaOut.append("Résulat : " + toString + "\n");
                             textAreaIn.setEditable(false);
-
-                        } else if (nbrTours == 1) {
-
-                            String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
-
-                            textAreaOut.append(message);
 
                         } else {
 
-                            String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
+                            textAreaOut.append("Résulat : " + toString + "\n");
 
-                            textAreaOut.append(message);
+                            if (nbrTours == 0) {
+
+                                textAreaOut.append("GAME OVER !\n");
+                                textAreaOut.append("la solution était : " + machine + "\n");
+                                textAreaIn.setEditable(false);
+
+                            } else if (nbrTours == 1) {
+
+                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
+
+                                textAreaOut.append(message);
+
+                            } else {
+
+                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
+
+                                textAreaOut.append(message);
+                            }
                         }
                     }
 

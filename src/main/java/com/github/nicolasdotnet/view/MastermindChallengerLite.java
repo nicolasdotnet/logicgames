@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
+import com.github.nicolasdotnet.model.CheckUserInput;
 import com.github.nicolasdotnet.model.MastermindChallenger;
 import com.github.nicolasdotnet.model.RandomList;
 import java.awt.BorderLayout;
@@ -93,6 +94,9 @@ public class MastermindChallengerLite extends JFrame {
 
         textAreaIn.addKeyListener(new KeyAdapter() {
 
+            CheckUserInput checkUserInput = new CheckUserInput();
+            Boolean inputUser;
+
             @Override
             public void keyReleased(KeyEvent event) {
 
@@ -110,30 +114,40 @@ public class MastermindChallengerLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    humain = game.convertStringToArrayList(valueInput);
+                    inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
+                    System.out.println("inPut : " + inputUser);
 
-                    result = (game.comparaisonChallenger(nbrCombinaison, humain, machine));
-
-                    if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
-
-                        textAreaOut.append("Félicitation ! mission accomplie en " + nbrTours + " tours :)\n");
-                        textAreaOut.append(game.displayResult(result));
-
-                    } else if (nbrTours == 1) {
-
-                        textAreaOut.append("GAME OVER !\n");
-                        textAreaOut.append("Solution : " + machine + "\n");
-
+                    if (inputUser) {
+                        nbrTours--;
+                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de "+nbrCombinaison+" chiffres\n");
+                        textAreaOut.append("Attention, il vous reste "+nbrTours+" tours\n");
                     } else {
 
-                        nbrTours--;
+                        humain = game.convertStringToArrayList(valueInput);
 
-                        textAreaOut.append(game.displayResult(result) + "\n");
+                        result = (game.comparaisonChallenger(nbrCombinaison, humain, machine));
 
-                        String message = "Désolez ! il faut essayer une nouvelle combinaison (il reste " + nbrTours + " tours) !\n (" + machine + ")";
+                        if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
 
-                        textAreaOut.append(message);
+                            textAreaOut.append("Félicitation ! mission accomplie en " + nbrTours + " tours :)\n");
+                            textAreaOut.append(game.displayResult(result));
 
+                        } else if (nbrTours == 1) {
+
+                            textAreaOut.append("GAME OVER !\n");
+                            textAreaOut.append("Solution : " + machine + "\n");
+
+                        } else {
+
+                            nbrTours--;
+
+                            textAreaOut.append(game.displayResult(result) + "\n");
+
+                            String message = "Désolez ! il faut essayer une nouvelle combinaison (il reste " + nbrTours + " tours) !\n (" + machine + ")";
+
+                            textAreaOut.append(message);
+
+                        }
                     }
                 }
 
