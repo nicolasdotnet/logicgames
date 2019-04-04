@@ -41,7 +41,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
     /**
      *
      */
-    public SearchMoreOrlessDefenseurLite(int nbrCombinaison) {
+    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours) {
 
         this.setTitle("SearchMoreOrlessDefenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +50,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         add(JScrollTextArea(), BorderLayout.CENTER);
 
         this.nbrCombinaison = nbrCombinaison;
-        nbrTours = 1;
+        this.nbrTours = nbrTours;
         game = new SearchMoreOrLessDefenseur();
         random = new RandomList();
         machine = new ArrayList<Integer>();
@@ -84,20 +84,23 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
         textAreaIn.addKeyListener(new KeyAdapter() {
 
+            // Déclarations :
+            int counter;
+            ArrayList<Integer> humain = new ArrayList<Integer>();
+            ArrayList<String> result = new ArrayList<String>();
+
+            String valueInput;
+            int nbrTests = 1;
+
             @Override
             public void keyReleased(KeyEvent event) {
 
-                // Déclarations :
-                int counter;
-                ArrayList<Integer> humain = new ArrayList<Integer>();
-                ArrayList<String> result = new ArrayList<String>();
-
-                int[][] randomLimit;
-                randomLimit = random.randomLimitIni(nbrCombinaison);
-
-                String valueInput = textAreaIn.getText();
-
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                    valueInput = textAreaIn.getText();
+
+                    int[][] randomLimit;
+                    randomLimit = random.randomLimitIni(nbrCombinaison);
 
                     textAreaOut.insert(valueInput + " ", message.length());
 
@@ -106,33 +109,52 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                     textAreaOut.append("\n");
 
                     humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                    textAreaIn.setEditable(false);
 
                     do {
 
+                        nbrTours--;
+                        nbrTests++;
+
                         counter = 0;
                         machine = random.inputMachine(randomLimit, nbrCombinaison);
-                        result.clear();
+                        textAreaOut.append("Valeur Attac Machine : " + machine.toString() + "\n");
 
+                        result.clear();
                         result = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, result));
                         counter = game.counter(result);
 
                         String toString = game.convertArrayListToString(result);
 
-                        if (counter != nbrCombinaison) {
+                        if (counter == nbrCombinaison) {
 
-                            nbrTours++;
+                            textAreaOut.append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
                             textAreaOut.append("Résulat : " + toString + "\n");
-                            String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
-
-                            textAreaOut.append(message);
 
                         } else {
 
-                            textAreaOut.append("Désolez ! mission accomplie en " + nbrTours + " tours ;)\n");
                             textAreaOut.append("Résulat : " + toString + "\n");
+
+                            if (nbrTours == 0) {
+
+                                textAreaOut.append("GAME OVER ! la machine est Out\n");
+                                textAreaIn.setEditable(false);
+
+                            } else if (nbrTours == 1) {
+                                
+                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
+
+                                textAreaOut.append(message);
+                                
+                            } else {
+
+                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
+
+                                textAreaOut.append(message);
+                            }
                         }
 
-                    } while (counter != nbrCombinaison);
+                    } while (counter != nbrCombinaison && nbrTours != 0);
 
                 }
 
