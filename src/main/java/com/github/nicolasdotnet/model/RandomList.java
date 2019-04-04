@@ -20,10 +20,9 @@ public class RandomList {
     /**
      *
      * @param nbrCombinaison number of digts of the combination
-     * @return max number limit and mini number limit for generate
-     * random number
+     * @return max number limit and mini number limit for generate random number
      */
-    public int[][] randomLimitIni(int nbrCombinaison) {
+    public int[][] randomLimitIni(int nbrCombinaison, int nbrRange) {
 
         int[][] randomLimit = new int[2][nbrCombinaison];
 
@@ -39,7 +38,7 @@ public class RandomList {
                 } else {
 
                     // Max value limit
-                    randomLimit[i][j] = 9;
+                    randomLimit[i][j] = nbrRange;
 
                 }
 
@@ -55,7 +54,7 @@ public class RandomList {
      *
      * @param randomLimit max number limit and mini number limit for generate
      * random number
-     * @param nbrCombinaison number of digts of the combination 
+     * @param nbrCombinaison number of digts of the combination
      * @return
      */
     public ArrayList<Integer> inputMachine(int[][] randomLimit, int nbrCombinaison) {
@@ -72,7 +71,5 @@ public class RandomList {
 
         return inputMachine;
     }
-
-
 
 }

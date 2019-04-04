@@ -30,18 +30,27 @@ public class WindowMain extends WindowSource {
     private int mastermind;
     private String breadcrumb;
     private int nbrCombinaison;
-    private int NbrTours;
+    private int nbrTours;
+    private int nbrRange;
+
+    public int getNbrRange() {
+        return nbrRange;
+    }
+
+    public void setNbrRange(int nbrRange) {
+        this.nbrRange = nbrRange;
+    }
 
     public int getNbrCombinaison() {
         return nbrCombinaison;
     }
 
     public int getNbrTours() {
-        return NbrTours;
+        return nbrTours;
     }
 
-    public void setNbrTours(int NbrTours) {
-        this.NbrTours = NbrTours;
+    public void setNbrTours(int nbrTours) {
+        this.nbrTours = nbrTours;
     }
 
     public void setNbrCombinaison(int nbrcombinaison) {
@@ -72,13 +81,14 @@ public class WindowMain extends WindowSource {
         this.breadcrumb = breadcrumb;
     }
 
-    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison, int nbrTours) {
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison, int nbrTours, int nbrRange) {
 
         this.searchMoreOrLess = searchMoreOrLess;
         this.mastermind = mastermind;
         this.breadcrumb = breadcrumb;
         this.nbrCombinaison = nbrCombinaison;
-        this.NbrTours = nbrTours;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
         this.setTitle("Jeux de logique -> " + breadcrumb);
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -194,11 +204,11 @@ public class WindowMain extends WindowSource {
                         if (searchMoreOrLess == 1) {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
-                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison(), getNbrTours());
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison(), getNbrTours(), getNbrRange());
 
                         } else {
                             System.out.println("nbrtour Main : " + getNbrTours());
-                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison(), getNbrTours());
+                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison(), getNbrTours(), getNbrRange());
 
                         }
 
@@ -215,7 +225,7 @@ public class WindowMain extends WindowSource {
                         if (searchMoreOrLess == 1) {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
-                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison(), getNbrTours());
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison(), getNbrTours(),getNbrRange());
 
                         } else {
 
@@ -232,7 +242,7 @@ public class WindowMain extends WindowSource {
 
                         if (searchMoreOrLess == 1) {
                             System.out.println("nbrtour Main : " + getNbrTours());
-                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison(), getNbrTours());
+                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison(), getNbrTours(),getNbrRange());
 
                         } else {
 
@@ -325,5 +335,4 @@ public class WindowMain extends WindowSource {
         return breadcrumbPanel;
 
     }
-
 }
