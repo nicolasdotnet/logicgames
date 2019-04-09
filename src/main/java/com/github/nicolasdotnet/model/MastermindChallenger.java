@@ -121,6 +121,60 @@ public class MastermindChallenger {
         return result;
     }
 
+    public HashMap<String, String> comparaisonChallengerS(String saisie, ArrayList<Integer> solution) {
+
+        String machine = convertArrayListIntegerToString(solution);
+        char def[] = machine.toCharArray();
+        char attac[] = saisie.toCharArray();
+
+        HashMap<String, String> result = new HashMap<String, String>();
+        result.put("place", "0");
+        result.put("present", "0");
+        int place = 0;
+        int present = 0;
+
+        // place
+        System.out.println("def[] : " + def.toString() + " taille : " + def.length);
+        System.out.println("attac[] : " + attac.toString() + " taille : " + attac.length);
+
+        for (int i = 0; i < def.length; i++) {
+
+            if (def[i] == attac[i]) {
+
+                place++;
+                System.out.println("place : " + place);
+                result.replace("place", Integer.toString(place));
+                def[i] = ' ';
+                attac[i] = ' ';
+
+            }
+
+        }
+
+        // present
+        for (int i = 0; i < attac.length; i++) {
+
+            for (int j = 0; j < def.length; j++) {
+
+                if (i != j && def[j] != ' ' && def[j] == attac[i]) {
+
+                    present++;
+                    System.out.println("present : " + present);
+                    result.replace("present", Integer.toString(present));
+                    System.out.println("valeur Attac : " + attac[i] + " ; index : " + i);
+                    System.out.println("valeur Def : " + def[j] + " ; index : " + j);
+
+                    def[j] = ' ';
+
+                    break;
+                }
+
+            }
+        }
+        return result;
+
+    }
+
     /**
      * count function the number of equals in the result table :
      *
@@ -198,6 +252,18 @@ public class MastermindChallenger {
         }
 
         return sb.toString();
+    }
+
+    public String convertArrayListIntegerToString(ArrayList<Integer> result) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < result.size(); i++) {
+            int num = result.get(i);
+            sb.append(num);
+        }
+
+        return sb.toString();
+
     }
 
 }
