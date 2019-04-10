@@ -5,11 +5,20 @@
  */
 package com.github.nicolasdotnet.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  *
- * @author pi
+ * CheckUserInput est la classe qui vérifie la saisie du joueur humain
+ *
+ * @author nicolasdotnet
+ * @version Alpha
+ * @since 2019
  */
 public class CheckUserInput {
+    
+    private static final Logger log = LogManager.getLogger(CheckUserInput.class);
 
     /**
      * Number value input by user : test the sizure of the user -> ToDo
@@ -26,6 +35,7 @@ public class CheckUserInput {
 
             nbrTrue++;
             System.out.print("Attention taille incorrecte !");
+            log.error("Attention taille incorrecte !");
 
         } else {
 
@@ -48,10 +58,13 @@ public class CheckUserInput {
         if (nbrTrue > 0) {
 
             inputUser = true;
+            log.info("Saisie invalide / FALSE !");
 
-        }
+        }else{
 
-        System.out.println("false : " + inputUser);
+        log.info("Saisie validée / TRUE !");}
+        
+                System.out.println("false : " + inputUser);
         System.out.println("nbrTrue++ : " + nbrTrue);
 
         return inputUser;
