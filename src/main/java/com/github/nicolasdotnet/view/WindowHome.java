@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.view;
 
 import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.Propertie;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -37,6 +38,13 @@ public class WindowHome extends WindowSource {
     Boolean inputUser;
 
     public WindowHome() {
+
+        Propertie para = new Propertie();
+        para.uploadProperties();
+
+        this.nbrCombinaison = para.getNbrCombinaison();
+        this.nbrRange = para.getNbrRange();
+        this.nbrTours = para.getNbrTours();
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
@@ -192,6 +200,9 @@ public class WindowHome extends WindowSource {
                     textFieldIn2.setText("");
                     textFieldIn3.setText("");
 
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange);
+                    WindowHome.super.dispose();
+
                 } else {
 
                     setNbrRange(Integer.valueOf(textFieldIn3.getText()));
@@ -221,6 +232,9 @@ public class WindowHome extends WindowSource {
                     textFieldIn.setText("");
                     textFieldIn2.setText("");
                     textFieldIn3.setText("");
+
+                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange);
+                    WindowHome.super.dispose();
 
                 } else {
 

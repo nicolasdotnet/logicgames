@@ -16,3 +16,26 @@ INFO  | 2019-04-10 07:27:58 | [AWT-EventQueue-0] model.CheckUserInput (CheckUser
 ERROR | 2019-04-10 07:44:46 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:38) - Attention taille incorrecte !
 INFO  | 2019-04-10 07:44:46 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - Saisie invalide / FALSE !
 INFO  | 2019-04-10 07:44:51 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+DEBUG | 2019-04-10 08:28:28 | [main] model.Propertie (Propertie.java:51) - Fichier parametres non trouvé
+java.io.FileNotFoundException: ./resources/config.properties (Aucun fichier ou dossier de ce type)
+	at java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.io.FileInputStream.open(FileInputStream.java:219) ~[?:?]
+	at java.io.FileInputStream.<init>(FileInputStream.java:157) ~[?:?]
+	at java.io.FileInputStream.<init>(FileInputStream.java:112) ~[?:?]
+	at com.github.nicolasdotnet.model.Propertie.uploadProperties(Propertie.java:40) [classes/:?]
+	at com.github.nicolasdotnet.view.WindowHome.<init>(WindowHome.java:43) [classes/:?]
+	at com.github.nicolasdotnet.logicgames.Run.main(Run.java:32) [classes/:?]
+DEBUG | 2019-04-10 08:39:15 | [main] model.Propertie (Propertie.java:51) - Fichier parametres non trouvé
+java.io.FileNotFoundException: ./resources/config.properties (Aucun fichier ou dossier de ce type)
+	at java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.io.FileInputStream.open(FileInputStream.java:219) ~[?:?]
+	at java.io.FileInputStream.<init>(FileInputStream.java:157) ~[?:?]
+	at java.io.FileInputStream.<init>(FileInputStream.java:112) ~[?:?]
+	at com.github.nicolasdotnet.model.Propertie.uploadProperties(Propertie.java:40) [classes/:?]
+	at com.github.nicolasdotnet.view.WindowHome.<init>(WindowHome.java:43) [classes/:?]
+	at com.github.nicolasdotnet.logicgames.Run.main(Run.java:32) [classes/:?]
+INFO  | 2019-04-10 08:41:56 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé
+INFO  | 2019-04-10 08:55:17 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé
+INFO  | 2019-04-10 08:56:45 | [AWT-EventQueue-0] model.Propertie (Propertie.java:62) - Fichier parametres importé
+INFO  | 2019-04-10 08:57:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 08:57:19 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
