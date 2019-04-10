@@ -1,0 +1,18 @@
+INFO  | 2019-04-04 17:38:50 | [main] model.AppMain (AppMain.java:21) - Info
+WARN  | 2019-04-04 17:38:50 | [main] model.AppMain (AppMain.java:22) - Warn
+ERROR | 2019-04-04 17:38:50 | [main] model.AppMain (AppMain.java:23) - Error
+FATAL | 2019-04-04 17:38:50 | [main] model.AppMain (AppMain.java:24) - Fatal
+INFO  | 2019-04-04 17:38:50 | [main] model.AppMain (AppMain.java:26) - Appending string: Bonjour !.
+ERROR | 2019-04-05 11:05:02 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:34) - 12345
+ERROR | 2019-04-10 07:16:34 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:34) - 00000000000
+INFO  | 2019-04-10 07:16:34 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:62) - 00000000000
+INFO  | 2019-04-10 07:16:43 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:62) - 0123
+ERROR | 2019-04-10 07:22:12 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:34) - 0000000000
+INFO  | 2019-04-10 07:22:12 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:57) - 0000000000
+INFO  | 2019-04-10 07:22:16 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - 1234
+ERROR | 2019-04-10 07:27:52 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:34) - 00000000Attention taille incorrecte !
+INFO  | 2019-04-10 07:27:52 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:57) - 00000000Saisie invalide / FALSE !
+INFO  | 2019-04-10 07:27:58 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - 0123Saisie validée / TRUE !
+ERROR | 2019-04-10 07:44:46 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:38) - Attention taille incorrecte !
+INFO  | 2019-04-10 07:44:46 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - Saisie invalide / FALSE !
+INFO  | 2019-04-10 07:44:51 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
