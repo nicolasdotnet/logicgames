@@ -14,6 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,21 +31,26 @@ import javax.swing.JTextField;
 public class SearchMoreOrlessDefenseurLite extends JFrame {
 
     private int nbrCombinaison;
-
     private int nbrTours;
-
     private int nbrRange;
-
+    private boolean modeDev;
     private SearchMoreOrLessDefenseur game;
-
     private ArrayList<Integer> machine;
-
     private RandomList random;
 
     /**
      *
      */
-    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours, int nbrRange) {
+    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+
+        this.nbrCombinaison = nbrCombinaison;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
+        this.modeDev = modeDev;
+
+        game = new SearchMoreOrLessDefenseur();
+        random = new RandomList();
+        machine = new ArrayList<Integer>();
 
         this.setTitle("SearchMoreOrlessDefenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,19 +58,20 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         this.setLocationRelativeTo(null);
         add(JScrollTextArea(), BorderLayout.CENTER);
 
-        this.nbrCombinaison = nbrCombinaison;
-        this.nbrTours = nbrTours;
-        this.nbrRange = nbrRange;
-        game = new SearchMoreOrLessDefenseur();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
-
         // param to enable Window visibility 
         this.setVisible(true);
 
     }
 
     private JPanel JScrollTextArea() {
+
+        JPanel modeDevPanel = new JPanel();
+        modeDevPanel.setLayout(new BorderLayout());
+
+        JLabel solution = new JLabel();
+        System.out.println("modeDev Lite : " + isModeDev());
+        solution.setVisible(isModeDev());
+        modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
 
@@ -95,6 +102,9 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
             String valueInput;
             int nbrTests = 1;
+            int step = 0;
+
+            int[][] randomLimit;
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -106,9 +116,6 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
                     valueInput = textAreaIn.getText();
 
-                    int[][] randomLimit;
-                    randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-
                     textAreaOut.insert(valueInput + " ", message.length());
 
                     textAreaIn.setText("");
@@ -119,68 +126,82 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                     System.out.println("inPut : " + inputUser);
 
                     if (inputUser) {
-                       
+
                         textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
-                    
+
                     } else {
 
+                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
                         humain = game.convertStringToArrayList(valueInput);
+                        solution.setText(valueInput);
                         textAreaIn.setEditable(false);
 
-                        do {
+                    }
 
-                            nbrTours--;
-                            nbrTests++;
+                    do {
 
-                            counter = 0;
-                            machine = random.inputMachine(randomLimit, nbrCombinaison);
-                            textAreaOut.append("Valeur Attac Machine : " + machine.toString() + "\n");
+                        nbrTours--;
+                        nbrTests++;
 
-                            result.clear();
-                            result = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, result));
-                            counter = game.counter(result);
+                        counter = 0;
+                        machine = random.inputMachine(randomLimit, nbrCombinaison);
+                        textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
-                            String toString = game.convertArrayListToString(result);
+                        result.clear();
+                        result = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, result));
+                        counter = game.counter(result);
 
-                            if (counter == nbrCombinaison) {
+                        String toString = game.convertArrayListToString(result);
 
-                                textAreaOut.append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
-                                textAreaOut.append("Résulat : " + toString + "\n");
+                        if (counter == nbrCombinaison) {
+
+                            textAreaOut.append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
+                            textAreaOut.append("Résulat : " + toString + "\n");
+                            textAreaOut.append("Rappel, votre combinaison était : " + humain + "\n");
+                            textAreaOut.append("Proposition de la machine : " + machine + "\n");
+                            textAreaIn.setEditable(false);
+
+                        } else {
+
+                            textAreaOut.append("Résulat : " + toString + "\n");
+
+                            if (nbrTours == 0) {
+
+                                textAreaOut.append("GAME OVER ! la machine est Out\n");
+                                textAreaOut.append("Rappel, votre combinaison était : " + humain + "\n");
+                                textAreaIn.setEditable(false);
+
+                            } else if (nbrTours == 1) {
+
+                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
+
+                                textAreaOut.append(message);
 
                             } else {
 
-                                textAreaOut.append("Résulat : " + toString + "\n");
+                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
 
-                                if (nbrTours == 0) {
-
-                                    textAreaOut.append("GAME OVER ! la machine est Out\n");
-                                    textAreaIn.setEditable(false);
-
-                                } else if (nbrTours == 1) {
-
-                                    String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
-
-                                    textAreaOut.append(message);
-
-                                } else {
-
-                                    String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
-
-                                    textAreaOut.append(message);
-                                }
+                                textAreaOut.append(message);
                             }
+                        }
 
-                        } while (counter != nbrCombinaison && nbrTours != 0);
-
-                    }
+                    } while (counter != nbrCombinaison && nbrTours != 0);
                 }
 
             }
 
         });
+        
+        modeDevPanel.add(textArea, BorderLayout.CENTER);
 
-        return textArea;
-
+        return modeDevPanel;
     }
 
+    public boolean isModeDev() {
+        return modeDev;
+    }
+
+    public void setModeDev(boolean modeDev) {
+        this.modeDev = modeDev;
+    }
 }

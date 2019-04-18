@@ -39,7 +39,7 @@ public class SearchMoreOrLessChallenger {
      * @param randomLimit max number limit and mini number limit for generate
      * random number
      * @param nbrCombinaison number of digts of the combination
-     * @return random number int 
+     * @return random number int
      */
     public ArrayList<Integer> inputMachine(int[][] randomLimit, int nbrCombinaison) {
 
@@ -64,8 +64,8 @@ public class SearchMoreOrLessChallenger {
     public ArrayList<Integer> convertStringToArrayList(String inputUser) {
 
         ArrayList<Integer> convert = new ArrayList<Integer>();
-        
-         int length = inputUser.length();
+
+        int length = inputUser.length();
 
         // Cast String to Int
         for (int i = 0; i <= length - 1; i++) {
@@ -92,10 +92,10 @@ public class SearchMoreOrLessChallenger {
     public ArrayList<String> comparaisonChallenger(int nbrCombinaison, ArrayList<Integer> attac, ArrayList<Integer> def, ArrayList<String> result) {
 
         int nbr;
-        
-        int index = nbrCombinaison -1;
-        
-        System.out.println("Index : "+index);
+
+        int index = nbrCombinaison - 1;
+
+        System.out.println("Index : " + index);
 
         System.out.println("\n nbrCombinaison : " + nbrCombinaison);
 
@@ -110,7 +110,7 @@ public class SearchMoreOrLessChallenger {
         if (attac.get(index) < def.get(index)) {
 
             result.add("+");
-            System.out.print("Résultat : " + result.get(result.size()-1) + " car ");
+            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
 
             System.out.print("attac : " + attac.get(index) + " ");
             System.out.println("def : " + def.get(index));
@@ -120,7 +120,7 @@ public class SearchMoreOrLessChallenger {
         } else if (attac.get(index) > def.get(index)) {
 
             result.add("-");
-            System.out.print("Résultat : " + result.get(result.size()-1) + " car ");
+            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
 
             System.out.print("attac : " + attac.get(index) + " ");
             System.out.println("def : " + def.get(index));
@@ -130,7 +130,7 @@ public class SearchMoreOrLessChallenger {
         } else {
 
             result.add("=");
-            System.out.print("Résultat : " + result.get(result.size()-1) + " car ");
+            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
 
             System.out.print("attac : " + attac.get(index) + " ");
             System.out.println("def : " + def.get(index));
@@ -175,10 +175,22 @@ public class SearchMoreOrLessChallenger {
      * @return result to String
      */
     public String convertArrayListToString(ArrayList<String> result) {
-        
-        String convert = String.join(" ",result);
+
+        String convert = String.join(" ", result);
 
         return convert;
+
+    }
+
+    public String convertArrayListIntegerToString(ArrayList<Integer> result) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < result.size(); i++) {
+            int num = result.get(i);
+            sb.append(num);
+        }
+
+        return sb.toString();
 
     }
 

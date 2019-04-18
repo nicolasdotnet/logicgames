@@ -39,3 +39,32 @@ INFO  | 2019-04-10 08:55:17 | [main] model.Propertie (Propertie.java:62) - Fichi
 INFO  | 2019-04-10 08:56:45 | [AWT-EventQueue-0] model.Propertie (Propertie.java:62) - Fichier parametres importé
 INFO  | 2019-04-10 08:57:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
 INFO  | 2019-04-10 08:57:19 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 10:34:14 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 10:40:23 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:08:14 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:24:35 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:26:08 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:26:49 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 11:36:43 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:36:53 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 11:40:10 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 11:42:31 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 12:12:25 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 12:18:36 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 12:20:35 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 12:27:31 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 12:27:47 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 12:49:18 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 12:50:14 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 13:11:11 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 13:11:28 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 13:30:01 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 13:30:18 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 13:33:50 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 13:39:49 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 13:39:59 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 13:48:47 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 14:00:55 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 14:01:08 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-10 14:12:36 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-10 14:12:52 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !

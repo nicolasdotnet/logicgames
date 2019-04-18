@@ -34,6 +34,7 @@ public class WindowHome extends WindowSource {
     private int nbrCombinaison;
     private int nbrTours;
     private int nbrRange;
+    private boolean modeDev;
     CheckUserInput checkUserInput = new CheckUserInput();
     Boolean inputUser;
 
@@ -45,6 +46,7 @@ public class WindowHome extends WindowSource {
         this.nbrCombinaison = para.getNbrCombinaison();
         this.nbrRange = para.getNbrRange();
         this.nbrTours = para.getNbrTours();
+        this.modeDev = para.isModeDev();
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
@@ -200,7 +202,7 @@ public class WindowHome extends WindowSource {
                     textFieldIn2.setText("");
                     textFieldIn3.setText("");
 
-                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange);
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange, modeDev);
                     WindowHome.super.dispose();
 
                 } else {
@@ -209,7 +211,7 @@ public class WindowHome extends WindowSource {
 
                     setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange);
+                    WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange, modeDev);
                     WindowHome.super.dispose();
                 }
 
@@ -233,7 +235,7 @@ public class WindowHome extends WindowSource {
                     textFieldIn2.setText("");
                     textFieldIn3.setText("");
 
-                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange);
+                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange, modeDev);
                     WindowHome.super.dispose();
 
                 } else {
@@ -242,7 +244,7 @@ public class WindowHome extends WindowSource {
 
                     setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
-                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange);
+                    WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange, modeDev);
                     WindowHome.super.dispose();
                 }
 
