@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -31,21 +32,30 @@ import javax.swing.JTextField;
 public class MastermindChallengerLite extends JFrame {
 
     private int nbrCombinaison;
-
     private int nbrTours;
-
     private int nbrRange;
-
+    private boolean modeDev;
     private MastermindChallenger game;
-
     private ArrayList<Integer> machine;
-
     private RandomList random;
 
     /**
      *
      */
-    public MastermindChallengerLite(int nbrCombinaison, int nbrTours, int nbrRange) {
+    public MastermindChallengerLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+
+        this.nbrCombinaison = nbrCombinaison;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
+        this.modeDev = modeDev;
+
+        game = new MastermindChallenger();
+        random = new RandomList();
+        machine = new ArrayList<Integer>();
+
+        int[][] randomLimit;
+        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
+        machine = random.inputMachine(randomLimit, nbrCombinaison);
 
         this.setTitle("MastermindChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -53,24 +63,24 @@ public class MastermindChallengerLite extends JFrame {
         this.setLocationRelativeTo(null);
         add(JScrollTextArea(), BorderLayout.CENTER);
 
-        this.nbrCombinaison = nbrCombinaison;
-        this.nbrTours = nbrTours;
-        this.nbrRange = nbrRange;
-        System.out.println("nbrtOurs Lite : " + nbrTours);
-        game = new MastermindChallenger();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
-        int[][] randomLimit;
-
         // param to enable Window visibility 
         this.setVisible(true);
 
-        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-        machine = random.inputMachine(randomLimit, nbrCombinaison);
+        System.out.println("this.modeDev Lite Ini : " + this.modeDev);
+        System.out.println("nbrtOurs Lite : " + nbrTours);
 
     }
 
     private JPanel JScrollTextArea() {
+
+        JPanel modeDevPanel = new JPanel();
+        modeDevPanel.setLayout(new BorderLayout());
+
+        JLabel solution = new JLabel();
+        solution.setText(game.convertArrayListIntegerToString(machine));
+        System.out.println("modeDev Lite : " + isModeDev());
+        solution.setVisible(isModeDev());
+        modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
 
@@ -96,7 +106,7 @@ public class MastermindChallengerLite extends JFrame {
 
             // Déclarations :
             HashMap<String, String> result = new HashMap<String, String>();
-            String valueInput ;
+            String valueInput;
 
             int nbrTests = 1;
             CheckUserInput checkUserInput = new CheckUserInput();
@@ -106,7 +116,7 @@ public class MastermindChallengerLite extends JFrame {
             public void keyReleased(KeyEvent event) {
 
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-                    
+
                     valueInput = textAreaIn.getText();
 
                     textAreaOut.insert(valueInput + " ", message.length());
@@ -154,7 +164,7 @@ public class MastermindChallengerLite extends JFrame {
 
                             } else {
 
-                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
+                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n";
 
                                 textAreaOut.append(message);
 
@@ -166,8 +176,16 @@ public class MastermindChallengerLite extends JFrame {
             }
 
         });
+        modeDevPanel.add(textArea, BorderLayout.CENTER);
 
-        return textArea;
+        return modeDevPanel;
     }
 
+    public boolean isModeDev() {
+        return modeDev;
+    }
+
+    public void setModeDev(boolean modeDev) {
+        this.modeDev = modeDev;
+    }
 }

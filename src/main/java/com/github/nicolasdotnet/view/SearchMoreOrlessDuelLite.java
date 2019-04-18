@@ -14,6 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,34 +31,35 @@ import javax.swing.JTextField;
 public class SearchMoreOrlessDuelLite extends JFrame {
 
     private int nbrCombinaison;
-
     private int nbrTours;
-
     private int nbrRange;
+        private boolean modeDev;
 
     private SearchMoreOrLessDuel game;
-
     private ArrayList<Integer> machine;
-
     private RandomList random;
 
     /**
      *
      */
-    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours, int nbrRange) {
+    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours, int nbrRange,boolean modeDev) {
 
+        
+                this.nbrCombinaison = nbrCombinaison;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
+                this.modeDev = modeDev;
+        game = new SearchMoreOrLessDuel();
+        random = new RandomList();
+        machine = new ArrayList<Integer>();
+        
+        
+        
         this.setTitle("SearchMoreOrlessDuel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
         this.setLocationRelativeTo(null);
         add(JScrollTextArea(), BorderLayout.CENTER);
-
-        this.nbrCombinaison = nbrCombinaison;
-        this.nbrTours = nbrTours;
-        this.nbrRange = nbrRange;
-        game = new SearchMoreOrLessDuel();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
 
         // param to enable Window visibility 
         this.setVisible(true);
@@ -65,6 +67,14 @@ public class SearchMoreOrlessDuelLite extends JFrame {
     }
 
     private JPanel JScrollTextArea() {
+        
+                JPanel modeDevPanel = new JPanel();
+        modeDevPanel.setLayout(new BorderLayout());
+
+        JLabel solution = new JLabel();
+        System.out.println("modeDev Lite : " + isModeDev());
+        solution.setVisible(isModeDev());
+        modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
 
@@ -141,6 +151,8 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
                             machineIni = random.inputMachine(randomLimit, nbrCombinaison);
                             textAreaOut.append("La machine a choisit sa combinaison : " + machineIni.toString() + " \n");
+                            
+                            solution.setText("votre combinaison : "+valueInput+" ; La combinaison de la machine : "+machineIni);
 
                             textAreaOut.append("Entrez une valeur Attac Humain : \n");
                         }
@@ -277,7 +289,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                 } else {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machineIni + ")";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n";
 
                                     textAreaOut.append(message);
                                 }
@@ -303,7 +315,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                 } else {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machineIni + ")";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n";
 
                                     textAreaOut.append(message);
                                 }
@@ -372,9 +384,16 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             }
 
         });
+        modeDevPanel.add(textArea, BorderLayout.CENTER);
 
-        return textArea;
-
+        return modeDevPanel;
     }
 
+    public boolean isModeDev() {
+        return modeDev;
+    }
+
+    public void setModeDev(boolean modeDev) {
+        this.modeDev = modeDev;
+    }
 }
