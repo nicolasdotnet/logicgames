@@ -155,20 +155,24 @@ public class SearchMoreOrLessDefenseur {
             nbr = 0;
 
             randomLimit[0][index] = attac.get(index);
+            System.out.println("min + : "+randomLimit[0][index]);
 //            randomLimit[1][index] = 9;
+            System.out.println("max + : "+randomLimit[1][index]);
 
         } else if (attac.get(index) > def.get(index)) {
 
             result.add("-");
             System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
 
-            System.out.print("attac : " + attac.get(index) + " ");
+            System.out.println("attac : " + attac.get(index) + " ");
             System.out.println("def : " + def.get(index));
 
             nbr = 0;
 
 //            randomLimit[0][index] = 0;
+            System.out.println("min - : "+randomLimit[0][index]);
             randomLimit[1][index] = attac.get(index);
+            System.out.println("max - : "+randomLimit[1][index]);
 
         } else {
 
@@ -181,7 +185,9 @@ public class SearchMoreOrLessDefenseur {
             nbr = 1;
 
             randomLimit[0][index] = attac.get(index);
+            System.out.println("min = : "+randomLimit[0][index]);
             randomLimit[1][index] = attac.get(index);
+            System.out.println("max = : "+randomLimit[1][index]);
 
         }
 
