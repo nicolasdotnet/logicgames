@@ -242,6 +242,10 @@ public class WindowMain extends WindowSource {
 
                         } else {
 
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            System.out.println("Modedev Main : " + isModeDev());
+                            MastermindDefenseurLite run = new MastermindDefenseurLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+
                         }
                     }
                 });
