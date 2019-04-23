@@ -6,13 +6,14 @@
 package com.github.nicolasdotnet.view;
 
 import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.MastermindDuel;
 import com.github.nicolasdotnet.model.RandomList;
-import com.github.nicolasdotnet.model.SearchMoreOrLessDuel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,38 +22,38 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * SearchMoreOrLessDuel est la classe qui représente la fenêtre de jeux
- * Recherche +/- en mode Duel.
+ * MastermindDuel est la classe qui représente la fenêtre de jeux mastermind en
+ * mode Duel.
  *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
  */
-public class SearchMoreOrlessDuelLite extends JFrame {
+public class MastermindDuelLite extends JFrame {
 
     private int nbrCombinaison;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
 
-    private SearchMoreOrLessDuel game;
+    private MastermindDuel game;
     private ArrayList<Integer> machine;
     private RandomList random;
 
     /**
      *
      */
-    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+    public MastermindDuelLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
 
         this.nbrCombinaison = nbrCombinaison;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
-        game = new SearchMoreOrLessDuel();
+        game = new MastermindDuel();
         random = new RandomList();
         machine = new ArrayList<Integer>();
 
-        this.setTitle("SearchMoreOrlessDuel");
+        this.setTitle("MastermindDuel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
         this.setLocationRelativeTo(null);
@@ -78,7 +79,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
 
         // Display first message : 
-        String message = "Entrer une combinaison secrète que doit trouver la machine : ";
+        String message = "Entrer une combinaison -> ";
 
         JTextArea textAreaOut = new JTextArea(message);
         textAreaOut.setEditable(false);
@@ -98,17 +99,18 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             // Déclarations :
             int counterH = 0;
             int counterM = 0;
-            ArrayList<Integer> humain = new ArrayList<Integer>();
-            ArrayList<String> resultM = new ArrayList<String>();
-            ArrayList<String> resultH = new ArrayList<String>();
+            String humain;
+            HashMap<String, String> resultM = new HashMap<String, String>();
 
-            ArrayList<Integer> humainIni = new ArrayList<Integer>();
+            HashMap<String, String> resultH = new HashMap<String, String>();
+
+            String humainIni;
             ArrayList<Integer> machineIni = new ArrayList<Integer>();
 
             String toStringM = "null";
             String toStringH = "null";
 
-            int nbrTestsM = 1;
+            int nbrTestsM = 0;
             int nbrTestsH = 1;
 
             int step = 0;
@@ -116,6 +118,10 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             String valueInput;
 
             int[][] randomLimit;
+
+            ArrayList<String> possible;
+            ArrayList<String> bestPossible;
+            String machine2;
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -143,36 +149,80 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
                         } else {
 
-                            humainIni = game.convertStringToArrayList(valueInput);
+                            resultM.put("place", "0");
+                            resultM.put("present", "0");
+
+                            humainIni = valueInput;
 
                             randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
                             machineIni = random.inputMachine(randomLimit, nbrCombinaison);
                             textAreaOut.append("La machine a choisit sa combinaison : " + machineIni.toString() + " \n");
 
-                            solution.setText("votre combinaison : " + valueInput + " ; La combinaison de la machine : " + machineIni);
+                            solution.setText("votre combinaison : " + humainIni + " ; La combinaison de la machine : " + machineIni);
 
                             textAreaOut.append("Entrez une valeur Attac Humain : \n");
                         }
 
                     }
 
-                    if (step > 0 && counterM != nbrCombinaison) {
+                    if (step > 0 && Integer.parseInt(resultM.get("place")) != nbrCombinaison) {
 
                         nbrTestsM++;
                         nbrTestsH++;
                         nbrTours--;
 
                         if (inputUser) {
+
                             textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
                             nbrTours++;
 
                         } else {
 
-                            humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                            humain = valueInput;
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
-                            machine = random.inputMachine(randomLimit, nbrCombinaison);
-                            textAreaOut.append("Valeur Attac Machine : " + machine.toString() + "\n");
+                            if (nbrTestsM == 1) {
+
+                                possible = game.generatAllPossible(nbrCombinaison, nbrRange);
+                                machine2 = game.getCombinaison(nbrTestsM, possible, nbrRange);
+
+                                System.out.println("Attac machine : " + machine2);
+
+                                machine = game.convertStringToArrayList(machine2);
+
+                                textAreaOut.append("Valeur Attac Machine : " + machine.toString() + "\n");
+
+                            } else if (nbrTestsM == 2) {
+
+                                nbrTours--;
+                                nbrTestsM++;
+
+                                bestPossible = game.generatBestPossible(possible, resultM, machine);
+                                machine2 = game.getCombinaison(nbrTestsM, bestPossible, nbrRange);
+
+                                System.out.println("Attac machine : " + machine2);
+
+                                machine = game.convertStringToArrayList(machine2);
+
+                                textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+
+                            } else {
+
+                                nbrTours--;
+                                nbrTestsM++;
+
+                                textAreaOut.append("CAS X \n");
+                                bestPossible = game.generatBestPossible(bestPossible, resultM, machine);
+
+                                machine2 = game.getCombinaison(nbrTestsM, bestPossible, nbrRange);
+
+                                System.out.println("Attac machine : " + machine2);
+
+                                machine = game.convertStringToArrayList(machine2);
+
+                                textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+
+                            }
 
                             // Humain play
                             resultH.clear();
@@ -181,22 +231,21 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             System.out.println("machineIni " + machineIni.toString());
                             System.out.println("humain " + humain.toString());
 
-                            resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.counter(resultH);
+                            resultH = (game.comparaisonChallengerS(humain, machineIni));
 
-                            toStringH = game.convertArrayListToString(resultH);
+                            toStringH = game.displayResult(resultH);
 
                             // Machine play
                             resultM.clear();
                             System.out.println("Machine play");
                             textAreaOut.append("La machine joue ! \n");
+                            textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
-                            resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humainIni, randomLimit, resultM));
-                            counterM = game.counter(resultM);
+                            resultM = (game.comparaisonChallengerS(humainIni, machine));
 
-                            toStringM = game.convertArrayListToString(resultM);
+                            toStringM = game.displayResult(resultM);
 
-                            if (counterM == nbrCombinaison && counterH == nbrCombinaison) {
+                            if (Integer.parseInt(resultM.get("place")) == nbrCombinaison && Integer.parseInt(resultH.get("place")) == nbrCombinaison) {
 
                                 // Humain
                                 textAreaOut.append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
@@ -208,7 +257,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                 textAreaIn.setEditable(false);
 
-                            } else if (counterH == nbrCombinaison) {
+                            } else if (Integer.parseInt(resultH.get("place")) == nbrCombinaison) {
 
                                 System.out.println("counterH == nbrCombinaison");
 
@@ -227,16 +276,39 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                     nbrTours--;
                                     nbrTestsM++;
+                                    System.out.println("nbrTestsM : " + nbrTestsM);
 
-                                    machine = random.inputMachine(randomLimit, nbrCombinaison);
+                                    if (nbrTestsM == 2) {
 
-                                    resultM.clear();
-                                    resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, resultM));
-                                    counterM = game.counter(resultM);
+                                        bestPossible = game.generatBestPossible(possible, resultM, machine);
+                                        machine2 = game.getCombinaison(nbrTestsM, bestPossible, nbrRange);
 
-                                    toStringM = game.convertArrayListToString(resultM);
+                                        System.out.println("Attac machine : " + machine2);
 
-                                    if (counterM == nbrCombinaison) {
+                                        machine = game.convertStringToArrayList(machine2);
+
+                                        textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+
+                                        resultM.clear();
+                                        resultM = (game.comparaisonChallengerS(humainIni, machine));
+
+                                    } else {
+
+                                        bestPossible = game.generatBestPossible(bestPossible, resultM, machine);
+
+                                        machine2 = game.getCombinaison(nbrTestsM, bestPossible, nbrRange);
+
+                                        System.out.println("Attac machine : " + machine2);
+
+                                        machine = game.convertStringToArrayList(machine2);
+
+                                        resultM.clear();
+                                        resultM = (game.comparaisonChallengerS(humainIni, machine));
+
+                                        toStringM = game.displayResult(resultM);
+                                    }
+
+                                    if (Integer.parseInt(resultM.get("place")) == nbrCombinaison) {
 
                                         textAreaOut.append("Désolez ! mission accomplie en " + nbrTestsM + " tours ;)\n");
                                         textAreaOut.append("Résulat : " + toStringM + "\n");
@@ -264,9 +336,9 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                         }
                                     }
 
-                                } while (counterM != nbrCombinaison && nbrTours != 0);
+                                } while (Integer.parseInt(resultM.get("place")) != nbrCombinaison && nbrTours != 0);
 
-                            } else if (counterM == nbrCombinaison) {
+                            } else if (Integer.parseInt(resultM.get("place")) == nbrCombinaison) {
 
                                 //Machine 
                                 textAreaOut.append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
@@ -294,7 +366,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                     textAreaOut.append(message);
                                 }
 
-                            } else if (counterM != nbrCombinaison && counterH != nbrCombinaison) {
+                            } else if (Integer.parseInt(resultM.get("place")) != nbrCombinaison && Integer.parseInt(resultH.get("place")) != nbrCombinaison) {
 
                                 textAreaOut.append("Personne n'a gagné !\n");
                                 textAreaOut.append("Son Résulat : " + toStringM + "\n");
@@ -323,7 +395,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             }
                         }
 
-                    } else if (step > 0 && counterM == nbrCombinaison) {
+                    } else if (step > 0 && Integer.parseInt(resultM.get("place")) == nbrCombinaison) {
 
                         System.out.println("Step = " + step);
 
@@ -336,16 +408,15 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                         } else {
 
-                            humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                            humain = valueInput;
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             resultH.clear();
-                            resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.counter(resultH);
+                            resultH = (game.comparaisonChallengerS(humain, machineIni));
 
-                            String toString = game.convertArrayListToString(resultH);
+                            String toString = game.displayResult(resultH);
 
-                            if (counterH == nbrCombinaison) {
+                            if (Integer.parseInt(resultM.get("place")) == nbrCombinaison) {
 
                                 textAreaOut.append("Félicitation ! mission accomplie en " + nbrTestsH + " tours :)\n");
                                 textAreaOut.append("Résulat : " + toString + "\n");
