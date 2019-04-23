@@ -21,8 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * SearchMoreOrLessChallengerLite est la classe qui représente la fenêtre de
- * jeux Recherche +/- en mode Challenger.
+ * MastermindDefenseurLite est la classe qui représente la fenêtre de
+ * jeux mastermind en mode Défenseur.
  *
  * @author nicolasdotnet
  * @version Alpha

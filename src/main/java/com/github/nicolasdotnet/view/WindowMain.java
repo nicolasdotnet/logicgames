@@ -263,6 +263,9 @@ public class WindowMain extends WindowSource {
                             SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
+                            System.out.println("nbrtour Main : " + getNbrTours());
+                            System.out.println("Modedev Main : " + isModeDev());
+                            MastermindDuelLite run = new MastermindDuelLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
                     }
