@@ -34,10 +34,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-
     private SearchMoreOrLessDuel game;
-    private ArrayList<Integer> machine;
-    private RandomList random;
 
     /**
      *
@@ -49,8 +46,6 @@ public class SearchMoreOrlessDuelLite extends JFrame {
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
         game = new SearchMoreOrLessDuel();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
 
         this.setTitle("SearchMoreOrlessDuel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +69,6 @@ public class SearchMoreOrlessDuelLite extends JFrame {
         modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
-
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
 
         // Display first message : 
@@ -98,24 +92,25 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             // Déclarations :
             int counterH = 0;
             int counterM = 0;
-            ArrayList<Integer> humain = new ArrayList<Integer>();
-            ArrayList<String> resultM = new ArrayList<String>();
-            ArrayList<String> resultH = new ArrayList<String>();
-
             ArrayList<Integer> humainIni = new ArrayList<Integer>();
             ArrayList<Integer> machineIni = new ArrayList<Integer>();
+            ArrayList<Integer> humain = new ArrayList<Integer>();
+            ArrayList<Integer> machine = new ArrayList<Integer>();
+            ArrayList<String> resultM = new ArrayList<String>();
+            ArrayList<String> resultH = new ArrayList<String>();
 
             String toStringM = "null";
             String toStringH = "null";
 
-            int nbrTestsM = 1;
-            int nbrTestsH = 1;
+            int nbrTestsM = 0;
+            int nbrTestsH = 0;
 
             int step = 0;
 
             String valueInput;
 
             int[][] randomLimit;
+            RandomList random = new RandomList();
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -143,13 +138,13 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
                         } else {
 
-                            humainIni = game.convertStringToArrayList(valueInput);
+                            humainIni = game.convertStringToArrayListInteger(valueInput);
 
                             randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
                             machineIni = random.inputMachine(randomLimit, nbrCombinaison);
-                            textAreaOut.append("La machine a choisit sa combinaison : " + machineIni.toString() + " \n");
+                            textAreaOut.append("La machine a choisit sa combinaison secréte \n");
 
-                            solution.setText("votre combinaison : " + valueInput + " ; La combinaison de la machine : " + machineIni);
+                            solution.setText("votre combinaison : " + valueInput + " ; La combinaison de la machine : " + game.convertArrayListIntegerToString(machineIni));
 
                             textAreaOut.append("Entrez une valeur Attac Humain : \n");
                         }
@@ -168,7 +163,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                         } else {
 
-                            humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                            humain = game.convertStringToArrayListInteger(valueInput);
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             machine = random.inputMachine(randomLimit, nbrCombinaison);
@@ -182,7 +177,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             System.out.println("humain " + humain.toString());
 
                             resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.counter(resultH);
+                            counterH = game.equalCounter(resultH);
 
                             toStringH = game.convertArrayListToString(resultH);
 
@@ -192,7 +187,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("La machine joue ! \n");
 
                             resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humainIni, randomLimit, resultM));
-                            counterM = game.counter(resultM);
+                            counterM = game.equalCounter(resultM);
 
                             toStringM = game.convertArrayListToString(resultM);
 
@@ -232,7 +227,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                     resultM.clear();
                                     resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, resultM));
-                                    counterM = game.counter(resultM);
+                                    counterM = game.equalCounter(resultM);
 
                                     toStringM = game.convertArrayListToString(resultM);
 
@@ -336,12 +331,12 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                         } else {
 
-                            humain = game.convertStringToArrayList(game.inputUser(valueInput));
+                            humain = game.convertStringToArrayListInteger(valueInput);
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             resultH.clear();
                             resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.counter(resultH);
+                            counterH = game.equalCounter(resultH);
 
                             String toString = game.convertArrayListToString(resultH);
 

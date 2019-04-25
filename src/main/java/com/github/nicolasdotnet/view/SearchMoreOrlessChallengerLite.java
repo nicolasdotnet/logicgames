@@ -35,8 +35,6 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
     private int nbrRange;
     private boolean modeDev;
     private SearchMoreOrLessChallenger game;
-    private ArrayList<Integer> machine;
-    private RandomList random;
 
     /**
      *
@@ -47,14 +45,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
-
         game = new SearchMoreOrLessChallenger();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
-
-        int[][] randomLimit;
-        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-        machine = random.inputMachine(randomLimit, nbrCombinaison);
 
         this.setTitle("SearchMoreOrlessChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,13 +67,11 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
         modeDevPanel.setLayout(new BorderLayout());
 
         JLabel solution = new JLabel();
-        solution.setText(game.convertArrayListIntegerToString(machine));
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
-
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
 
         // Display first message : 
@@ -107,8 +96,12 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
             int counter = 0;
             ArrayList<Integer> humain = new ArrayList<Integer>();
             ArrayList<String> result = new ArrayList<String>();
+            ArrayList<Integer> machine = new ArrayList<Integer>();
             String valueInput;
-            int nbrTests = 1;
+            int nbrTests = 0;
+            int[][] randomLimit;
+            RandomList random = new RandomList();
+            int step = 0;
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -129,13 +122,21 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
                     inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
                     System.out.println("inPut : " + inputUser);
 
+                    if (step == 0) {
+
+                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
+                        machine = random.inputMachine(randomLimit, nbrCombinaison);
+                        solution.setText(game.convertArrayListIntegerToString(machine));
+
+                    }
+
                     if (inputUser) {
                         nbrTours--;
                         textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
                         textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                     } else {
 
-                        humain = game.convertStringToArrayList(valueInput);
+                        humain = game.convertStringToArrayListInteger(valueInput);
 
                         System.out.println("humain : " + humain);
                         System.out.println("machine : " + machine);
@@ -144,8 +145,8 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
                         nbrTests++;
 
                         result.clear();
-                        result = (game.comparaisonChallenger(nbrCombinaison, humain, machine, result));
-                        counter = game.counter(result);
+                        result = (game.comparaison(nbrCombinaison, humain, machine, result));
+                        counter = game.equalCounter(result);
 
                         String toString = game.convertArrayListToString(result);
 
@@ -173,12 +174,13 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
                             } else {
 
-                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machine + ")";
+                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n";
 
                                 textAreaOut.append(message);
                             }
                         }
                     }
+                    step++;
 
                 }
 

@@ -7,6 +7,7 @@ package com.github.nicolasdotnet.view;
 
 import com.github.nicolasdotnet.model.CheckUserInput;
 import com.github.nicolasdotnet.model.MastermindDefenseur;
+import com.github.nicolasdotnet.model.RandomList;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -21,8 +22,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * MastermindDefenseurLite est la classe qui représente la fenêtre de
- * jeux mastermind en mode Défenseur.
+ * MastermindDefenseurLite est la classe qui représente la fenêtre de jeux
+ * mastermind en mode Défenseur.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -35,7 +36,6 @@ public class MastermindDefenseurLite extends JFrame {
     private int nbrRange;
     private boolean modeDev;
     private MastermindDefenseur game;
-    private ArrayList<Integer> machine;
 
     /**
      *
@@ -48,7 +48,6 @@ public class MastermindDefenseurLite extends JFrame {
         this.modeDev = modeDev;
 
         game = new MastermindDefenseur();
-        machine = new ArrayList<Integer>();
 
         this.setTitle("MastermindDefenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,7 +69,6 @@ public class MastermindDefenseurLite extends JFrame {
         modeDevPanel.setLayout(new BorderLayout());
 
         JLabel solution = new JLabel();
-        solution.setText(game.convertArrayListIntegerToString(machine));
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
@@ -99,11 +97,16 @@ public class MastermindDefenseurLite extends JFrame {
 
             // Déclarations :
             HashMap<String, String> result = new HashMap<String, String>();
+            ArrayList<Integer> machine = new ArrayList<Integer>();
             String valueInput;
             ArrayList<String> possible;
             ArrayList<String> bestPossible;
 
+            int[][] randomLimit;
+            RandomList random = new RandomList();
+
             int nbrTests = 1;
+            
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
 
@@ -128,6 +131,9 @@ public class MastermindDefenseurLite extends JFrame {
                         textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
 
                     } else {
+
+                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
+
                         solution.setText(valueInput);
                         textAreaIn.setEditable(false);
 
@@ -147,9 +153,6 @@ public class MastermindDefenseurLite extends JFrame {
 
                                 textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
-                                result.clear();
-                                result = (game.comparaisonChallengerS(valueInput, machine));
-
                             } else if (nbrTests == 2) {
 
                                 nbrTours--;
@@ -163,9 +166,6 @@ public class MastermindDefenseurLite extends JFrame {
                                 machine = game.convertStringToArrayList(machine2);
 
                                 textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
-
-                                result.clear();
-                                result = (game.comparaisonChallengerS(valueInput, machine));
 
                             } else {
 
@@ -181,11 +181,15 @@ public class MastermindDefenseurLite extends JFrame {
 
                                 textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
-                                result.clear();
-                                result = (game.comparaisonChallengerS(valueInput, machine));
-                                System.out.println("result ok ");
-
                             }
+
+                            // Machine play
+                            result.clear();
+                            System.out.println("Machine play");
+                            textAreaOut.append("La machine joue ! \n");
+                            textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+
+                            result = (game.comparaison(valueInput, machine));
 
                             if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
 
