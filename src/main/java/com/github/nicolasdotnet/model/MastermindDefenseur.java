@@ -85,11 +85,11 @@ public class MastermindDefenseur extends Mastermind {
     }
 
     /**
-     * Complete list of combinaison possible generator function : 
-     * 
+     * Complete list of combinaison possible generator function :
+     *
      * @param nbrCombinaison number of digts of the combination
      * @param nbrRange range of number for the combinaison
-     * @return complete list of combinaison possible 
+     * @return complete list of combinaison possible
      */
     public ArrayList<String> generatAllPossible(int nbrCombinaison, int nbrRange) {
 
@@ -124,48 +124,101 @@ public class MastermindDefenseur extends Mastermind {
                 } else {
                     for (int k = 0; k <= nbrRange; k++) {
 
-                        for (int l = 0; l <= nbrRange; l++) {
+                        if (nbrCombinaison == 3) {
+                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k));
+                            possible.add(str);
 
-                            if (nbrCombinaison == 4) {
+                        } else {
 
-                                String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
-                                possible.add(str);
+                            for (int l = 0; l <= nbrRange; l++) {
 
-                            } else {
+                                if (nbrCombinaison == 4) {
 
-                                for (int m = 0; m <= nbrRange; m++) {
+                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
+                                    possible.add(str);
 
-                                    if (nbrCombinaison == 5) {
+                                } else {
 
-                                        String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
-                                        possible.add(str);
+                                    for (int m = 0; m <= nbrRange; m++) {
 
-                                    } else {
+                                        if (nbrCombinaison == 5) {
 
-                                        for (int n = 0; n <= nbrRange; n++) {
+                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
+                                            possible.add(str);
 
-                                            if (nbrCombinaison == 6) {
+                                        } else {
 
-                                                String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
-                                                possible.add(str);
+                                            for (int n = 0; n <= nbrRange; n++) {
+
+                                                if (nbrCombinaison == 6) {
+
+                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
+                                                    possible.add(str);
+                                                } else {
+
+                                                    for (int o = 0; o <= nbrRange; o++) {
+
+                                                        if (nbrCombinaison == 7) {
+
+                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o));
+                                                            possible.add(str);
+                                                        } else {
+
+                                                            for (int p = 0; p <= nbrRange; p++) {
+
+                                                                if (nbrCombinaison == 8) {
+
+                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p));
+                                                                    possible.add(str);
+                                                                } else {
+
+                                                                    for (int q = 0; q <= nbrRange; q++) {
+
+                                                                        if (nbrCombinaison == 9) {
+
+                                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q));
+                                                                            possible.add(str);
+                                                                        } else {
+                                                                            for (int r = 0; r <= nbrRange; r++) {
+
+                                                                                if (nbrCombinaison == 10) {
+
+                                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q) + String.valueOf(r));
+                                                                                    possible.add(str);
+                                                                                }
+                                                                            }
+
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+
                                             }
-
                                         }
-                                    }
 
+                                    }
                                 }
+
                             }
 
                         }
-
                     }
                 }
 
             }
         }
 
+        int x = 0;
+
         for (String combinaison : possible) {
             System.out.println("combinaison : " + combinaison);
+            System.out.println("nbrPossible : " + x++);
+
         }
 
         return possible;
@@ -173,9 +226,9 @@ public class MastermindDefenseur extends Mastermind {
     }
 
     /**
-     * Random selection of machine combinaison :  
-     * 
-     * @param nbrTests number of test of comparison 
+     * Random selection of machine combinaison :
+     *
+     * @param nbrTests number of test of comparison
      * @param possible list of combinaison possible (complete or best)
      * @param nbrRange range of number for the combinaison
      * @return machine value
@@ -200,12 +253,12 @@ public class MastermindDefenseur extends Mastermind {
     }
 
     /**
-     * List of best combinaison possible generator function : 
-     * 
+     * List of best combinaison possible generator function :
+     *
      * @param possible complete list of combinaison possible
      * @param result result hashmap of the comparison() function
      * @param machine machine value
-     * @return list of best combinaison possible 
+     * @return list of best combinaison possible
      */
     public ArrayList<String> generatBestPossible(ArrayList<String> possible, HashMap<String, String> result, ArrayList<Integer> machine) {
 
@@ -230,4 +283,5 @@ public class MastermindDefenseur extends Mastermind {
         System.out.println("retour bestpossible");
         return bestPossible;
 
-    }}
+    }
+}
