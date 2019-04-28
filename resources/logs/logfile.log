@@ -341,3 +341,6 @@ INFO  | 2019-04-26 12:59:39 | [main] model.Propertie (Propertie.java:63) - Fichi
 ERROR | 2019-04-26 13:01:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:38) - Attention taille incorrecte !
 INFO  | 2019-04-26 13:01:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - Saisie invalide / FALSE !
 INFO  | 2019-04-26 13:01:20 | [AWT-EventQueue-0] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-28 11:25:23 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-28 17:05:24 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-28 17:12:11 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
