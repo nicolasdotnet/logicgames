@@ -330,3 +330,14 @@ INFO  | 2019-04-25 14:25:41 | [AWT-EventQueue-0] model.CheckUserInput (CheckUser
 INFO  | 2019-04-25 14:25:51 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
 INFO  | 2019-04-25 14:26:26 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
 INFO  | 2019-04-25 14:26:30 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:65) - Saisie validée / TRUE !
+INFO  | 2019-04-26 12:19:25 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:20:56 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:25:10 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:39:01 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:50:21 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:50:50 | [AWT-EventQueue-0] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:50:54 | [AWT-EventQueue-0] model.Propertie (Propertie.java:63) - Fichier parametres importé
+INFO  | 2019-04-26 12:59:39 | [main] model.Propertie (Propertie.java:63) - Fichier parametres importé
+ERROR | 2019-04-26 13:01:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:38) - Attention taille incorrecte !
+INFO  | 2019-04-26 13:01:03 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:61) - Saisie invalide / FALSE !
+INFO  | 2019-04-26 13:01:20 | [AWT-EventQueue-0] model.Propertie (Propertie.java:63) - Fichier parametres importé
