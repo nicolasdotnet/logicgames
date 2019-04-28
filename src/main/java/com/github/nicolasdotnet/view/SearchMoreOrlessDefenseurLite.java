@@ -35,8 +35,6 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
     private int nbrRange;
     private boolean modeDev;
     private SearchMoreOrLessDefenseur game;
-    private ArrayList<Integer> machine;
-    private RandomList random;
 
     /**
      *
@@ -49,8 +47,6 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         this.modeDev = modeDev;
 
         game = new SearchMoreOrLessDefenseur();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
 
         this.setTitle("SearchMoreOrlessDefenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +70,6 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         modeDevPanel.add(solution, BorderLayout.NORTH);
 
         JPanel textArea = new JPanel();
-
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
 
         // Display first message : 
@@ -96,15 +91,17 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         textAreaIn.addKeyListener(new KeyAdapter() {
 
             // Déclarations :
-            int counter;
+            int counter = 0;
             ArrayList<Integer> humain = new ArrayList<Integer>();
             ArrayList<String> result = new ArrayList<String>();
+            ArrayList<Integer> machine = new ArrayList<Integer>();
 
             String valueInput;
-            int nbrTests = 1;
+            int nbrTests = 0;
             int step = 0;
 
             int[][] randomLimit;
+            RandomList random = new RandomList();
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -132,7 +129,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                     } else {
 
                         randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-                        humain = game.convertStringToArrayList(valueInput);
+                        humain = game.convertStringToArrayListInteger(valueInput);
                         solution.setText(valueInput);
                         textAreaIn.setEditable(false);
 
@@ -148,8 +145,8 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                         textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
                         result.clear();
-                        result = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, result));
-                        counter = game.counter(result);
+                        result = (game.comparaison(nbrCombinaison, machine, humain, randomLimit, result));
+                        counter = game.equalCounter(result);
 
                         String toString = game.convertArrayListToString(result);
 
@@ -191,7 +188,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
             }
 
         });
-        
+
         modeDevPanel.add(textArea, BorderLayout.CENTER);
 
         return modeDevPanel;

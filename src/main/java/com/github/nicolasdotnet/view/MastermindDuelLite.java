@@ -35,10 +35,7 @@ public class MastermindDuelLite extends JFrame {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-
     private MastermindDuel game;
-    private ArrayList<Integer> machine;
-    private RandomList random;
 
     /**
      *
@@ -50,8 +47,6 @@ public class MastermindDuelLite extends JFrame {
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
         game = new MastermindDuel();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
 
         this.setTitle("MastermindDuel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -97,31 +92,28 @@ public class MastermindDuelLite extends JFrame {
         textAreaIn.addKeyListener(new KeyAdapter() {
 
             // Déclarations :
-            int counterH = 0;
-            int counterM = 0;
+            String valueInput;
             String humain;
-            HashMap<String, String> resultM = new HashMap<String, String>();
-
-            HashMap<String, String> resultH = new HashMap<String, String>();
-
             String humainIni;
-            ArrayList<Integer> machineIni = new ArrayList<Integer>();
-
-            String toStringM = "null";
+            HashMap<String, String> resultH = new HashMap<String, String>();
             String toStringH = "null";
+
+            ArrayList<Integer> machine = new ArrayList<Integer>();
+            ArrayList<Integer> machineIni = new ArrayList<Integer>();
+            HashMap<String, String> resultM = new HashMap<String, String>();
+            String machine2;
+            String toStringM = "null";
 
             int nbrTestsM = 0;
             int nbrTestsH = 1;
 
             int step = 0;
 
-            String valueInput;
-
             int[][] randomLimit;
+            RandomList random = new RandomList();
 
             ArrayList<String> possible;
             ArrayList<String> bestPossible;
-            String machine2;
 
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
@@ -231,7 +223,7 @@ public class MastermindDuelLite extends JFrame {
                             System.out.println("machineIni " + machineIni.toString());
                             System.out.println("humain " + humain.toString());
 
-                            resultH = (game.comparaisonChallengerS(humain, machineIni));
+                            resultH = (game.comparaison(humain, machineIni));
 
                             toStringH = game.displayResult(resultH);
 
@@ -241,7 +233,7 @@ public class MastermindDuelLite extends JFrame {
                             textAreaOut.append("La machine joue ! \n");
                             textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
-                            resultM = (game.comparaisonChallengerS(humainIni, machine));
+                            resultM = (game.comparaison(humainIni, machine));
 
                             toStringM = game.displayResult(resultM);
 
@@ -287,10 +279,6 @@ public class MastermindDuelLite extends JFrame {
 
                                         machine = game.convertStringToArrayList(machine2);
 
-                                        textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
-
-                                        resultM.clear();
-                                        resultM = (game.comparaisonChallengerS(humainIni, machine));
 
                                     } else {
 
@@ -301,12 +289,17 @@ public class MastermindDuelLite extends JFrame {
                                         System.out.println("Attac machine : " + machine2);
 
                                         machine = game.convertStringToArrayList(machine2);
-
-                                        resultM.clear();
-                                        resultM = (game.comparaisonChallengerS(humainIni, machine));
-
-                                        toStringM = game.displayResult(resultM);
                                     }
+
+                                    // Machine play
+                                    resultM.clear();
+                                    System.out.println("Machine play");
+                                    textAreaOut.append("La machine joue ! \n");
+                                    textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+
+                                    resultM = (game.comparaison(humainIni, machine));
+
+                                    toStringM = game.displayResult(resultM);
 
                                     if (Integer.parseInt(resultM.get("place")) == nbrCombinaison) {
 
@@ -412,7 +405,7 @@ public class MastermindDuelLite extends JFrame {
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             resultH.clear();
-                            resultH = (game.comparaisonChallengerS(humain, machineIni));
+                            resultH = (game.comparaison(humain, machineIni));
 
                             String toString = game.displayResult(resultH);
 

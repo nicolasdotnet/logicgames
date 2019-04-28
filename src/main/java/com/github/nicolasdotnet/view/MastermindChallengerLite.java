@@ -22,8 +22,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * SearchMoreOrLessChallengerLite est la classe qui représente la fenêtre de
- * jeux Recherche +/- en mode Challenger.
+ * MasterminChallengerLite est la classe qui représente la fenêtre de jeux
+ * Mastermind en mode Challenger.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -36,8 +36,6 @@ public class MastermindChallengerLite extends JFrame {
     private int nbrRange;
     private boolean modeDev;
     private MastermindChallenger game;
-    private ArrayList<Integer> machine;
-    private RandomList random;
 
     /**
      *
@@ -50,12 +48,6 @@ public class MastermindChallengerLite extends JFrame {
         this.modeDev = modeDev;
 
         game = new MastermindChallenger();
-        random = new RandomList();
-        machine = new ArrayList<Integer>();
-
-        int[][] randomLimit;
-        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-        machine = random.inputMachine(randomLimit, nbrCombinaison);
 
         this.setTitle("MastermindChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -77,7 +69,6 @@ public class MastermindChallengerLite extends JFrame {
         modeDevPanel.setLayout(new BorderLayout());
 
         JLabel solution = new JLabel();
-        solution.setText(game.convertArrayListIntegerToString(machine));
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
@@ -106,9 +97,12 @@ public class MastermindChallengerLite extends JFrame {
 
             // Déclarations :
             HashMap<String, String> result = new HashMap<String, String>();
+            ArrayList<Integer> machine = new ArrayList<Integer>();
             String valueInput;
-
-            int nbrTests = 1;
+            int[][] randomLimit;
+            RandomList random = new RandomList();
+            int step = 0;
+            int nbrTests = 0;
             CheckUserInput checkUserInput = new CheckUserInput();
             Boolean inputUser;
 
@@ -128,6 +122,14 @@ public class MastermindChallengerLite extends JFrame {
                     inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
                     System.out.println("inPut : " + inputUser);
 
+                    if (step == 0) {
+
+                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
+                        machine = random.inputMachine(randomLimit, nbrCombinaison);
+                        solution.setText(game.convertArrayListIntegerToString(machine));
+
+                    }
+
                     if (inputUser) {
                         nbrTours--;
                         textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
@@ -138,7 +140,7 @@ public class MastermindChallengerLite extends JFrame {
                         nbrTests++;
 
                         result.clear();
-                        result = (game.comparaisonChallengerS(valueInput, machine));
+                        result = (game.comparaison(valueInput, machine));
 
                         if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
 
@@ -171,6 +173,7 @@ public class MastermindChallengerLite extends JFrame {
                             }
                         }
                     }
+                    step++;
                 }
 
             }

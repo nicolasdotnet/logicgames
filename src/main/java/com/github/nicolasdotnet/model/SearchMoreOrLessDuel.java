@@ -17,104 +17,7 @@ import java.util.Collections;
  * @version Alpha
  * @since 2019
  */
-public class SearchMoreOrLessDuel {
-
-    /**
-     * Number value input by user : test the sizure of the user -> ToDo
-     *
-     * @param saisie input clavier user
-     * @return number user to String
-     */
-    public String inputUser(String saisie) {
-
-        String inputUser = saisie;
-
-        return inputUser;
-
-    }
-
-    /**
-     * function random for generate number for user Machine :
-     *
-     * @param randomLimit max number limit and mini number limit for generate
-     * random number
-     * @param nbrCombinaison number of digts of the combination
-     * @return random number int 
-     */
-    public ArrayList<Integer> inputMachine(int[][] randomLimit, int nbrCombinaison) {
-
-        ArrayList<Integer> inputMachine = new ArrayList<Integer>();
-
-        for (int i = 0; i < nbrCombinaison; i++) {
-            inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
-
-            System.out.println("test A  : " + inputMachine.get(i) + " ");
-
-        };
-
-        return inputMachine;
-    }
-
-    /**
-     * convert function input user to Integer ArrayList :
-     *
-     * @param inputUser Number value input by user
-     * @return Number value to Integer ArrayList
-     */
-    public ArrayList<Integer> convertStringToArrayList(String inputUser) {
-
-        ArrayList<Integer> convert = new ArrayList<Integer>();
-        
-         int length = inputUser.length();
-
-        // Cast String to Int
-        for (int i = 0; i <= length - 1; i++) {
-
-            char car = inputUser.charAt(i);
-
-            convert.add(Character.getNumericValue(inputUser.charAt(i)));
-        }
-
-        return convert;
-
-    }
-
-    /**
-     * count function the number of equals in the result table :
-     *
-     * @param result Result arrayList of the comparison() function
-     * @return number of equals to int
-     */
-    public int counter(ArrayList<String> result) {
-
-        int counter = 0;
-
-        for (int i = 0; i < result.size(); i++) {
-
-            if (result.get(i) == "=") {
-
-                counter++;
-            }
-
-        }
-
-        return counter;
-
-    }
-
-    /**
-     * convert function result table of the comparison to String :
-     *
-     * @param result Result arrayList of the comparison() function
-     * @return result to String
-     */
-    public String convertArrayListToString(ArrayList<String> result) {
-        
-        String convert = String.join(" ",result);
-
-        return convert;
-
-    }
+public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
     /**
      * comparison function of attac value and defenseur value :
@@ -122,6 +25,7 @@ public class SearchMoreOrLessDuel {
      * @param nbrCombinaison number of digts of the combination
      * @param attac Value table of the Attaquant
      * @param def Value table of the Defenseur
+     * @param randomLimit Value limit for number random generator (machine value) 
      * @param result Result arrayList of the comparison() function for recursive
      * method
      * @return result of the comparaison.

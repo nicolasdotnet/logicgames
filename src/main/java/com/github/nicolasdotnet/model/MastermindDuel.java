@@ -6,8 +6,6 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 /**
@@ -18,7 +16,7 @@ import java.util.HashMap;
  * @version Alpha
  * @since 2019
  */
-public class MastermindDuel {
+public class MastermindDuel extends Mastermind {
 
     public static void main(String[] args) {
 
@@ -38,7 +36,7 @@ public class MastermindDuel {
         System.out.println("machine2 : " + machine2);
         ArrayList<Integer> machine = run.convertStringToArrayList(machine2);
 
-        HashMap<String, String> result = run.comparaisonChallengerS(def, machine);
+        HashMap<String, String> result = run.comparaison(def, machine);
         System.out.println("result: " + run.displayResult(result) + "\n");
 
         // tour 2 : 
@@ -51,7 +49,7 @@ public class MastermindDuel {
         System.out.println("machine2 : " + machine2);
         machine = run.convertStringToArrayList(machine2);
 
-        result = run.comparaisonChallengerS(def, machine);
+        result = run.comparaison(def, machine);
         System.out.println("result 2 : " + run.displayResult(result) + "\n");
 
         // tour 3 : 
@@ -64,7 +62,7 @@ public class MastermindDuel {
         System.out.println("machine2 : " + machine2);
         machine = run.convertStringToArrayList(machine2);
 
-        result = run.comparaisonChallengerS(def, machine);
+        result = run.comparaison(def, machine);
         System.out.println("result 3 : " + run.displayResult(result) + "\n");
 
         // tour 4 :
@@ -79,7 +77,7 @@ public class MastermindDuel {
             System.out.println("machine2 : " + machine2);
             machine = run.convertStringToArrayList(machine2);
 
-            result = run.comparaisonChallengerS(def, machine);
+            result = run.comparaison(def, machine);
             System.out.println("result 4 : " + run.displayResult(result) + "\n");
 
         }
@@ -87,265 +85,12 @@ public class MastermindDuel {
     }
 
     /**
-     * Number value input by user : test the sizure of the user -> ToDo
-     *
-     * @param saisie input clavier user
-     * @return number user to String
-     */
-    public String inputUser(String saisie) {
-
-        String inputUser = saisie;
-
-        return inputUser;
-
-    }
-
-    /**
-     * function random for generate number for user Machine :
-     *
-     * @param randomLimit max number limit and mini number limit for generate
-     * random number
-     * @param nbrCombinaison number of digts of the combination
-     * @return random number int
-     */
-    public ArrayList<Integer> inputMachine(int[][] randomLimit, int nbrCombinaison) {
-
-        ArrayList<Integer> inputMachine = new ArrayList<Integer>();
-
-        for (int i = 0; i < nbrCombinaison; i++) {
-            inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
-
-            System.out.println("test A  : " + inputMachine.get(i) + " ");
-
-        };
-
-        return inputMachine;
-    }
-
-    /**
-     * convert function input user to Integer ArrayList :
-     *
-     * @param inputUser Number value input by user
-     * @return Number value to Integer ArrayList
-     */
-    public ArrayList<Integer> convertStringToArrayList(String inputUser) {
-
-        ArrayList<Integer> convert = new ArrayList<Integer>();
-
-        int length = inputUser.length();
-
-        // Cast String to Int
-        for (int i = 0; i <= length - 1; i++) {
-
-            char car = inputUser.charAt(i);
-
-            convert.add(Character.getNumericValue(inputUser.charAt(i)));
-        }
-
-        return convert;
-
-    }
-
-    /**
+     * Complete list of combinaison possible generator function :
      *
      * @param nbrCombinaison number of digts of the combination
-     * @param attac Value table of the Attaquant
-     * @param def Value table of the Defenseur
-     * @return Result hasmap with number place and number present
+     * @param nbrRange range of number for the combinaison
+     * @return complete list of combinaison possible
      */
-    public HashMap<String, String> comparaisonChallenger(int nbrCombinaison, ArrayList<Integer> attac, ArrayList<Integer> def) {
-
-        HashMap<String, String> result = new HashMap<String, String>();
-        result.put("place", "0");
-        result.put("present", "0");
-
-        int place = 0;
-
-        for (int i = 0; i < nbrCombinaison; i++) {
-
-            System.out.println("TOUR ATTAC: " + i);
-
-            for (int j = 0; j < nbrCombinaison; j++) {
-
-                System.out.println("TOUR DEF: " + j);
-
-                if (attac.get(i) == def.get(j)) {
-
-                    if (i == j) {
-
-                        place++;
-
-                        result.replace("place", Integer.toString(place));
-
-                    }
-
-                }
-            }
-
-        }
-
-        return result;
-    }
-
-    public HashMap<String, String> comparaisonChallengerS(String saisie, ArrayList<Integer> solution) {
-
-        String machine = convertArrayListIntegerToString(solution);
-        char def[] = machine.toCharArray();
-        char attac[] = saisie.toCharArray();
-
-        HashMap<String, String> result = new HashMap<String, String>();
-        result.put("place", "0");
-        result.put("present", "0");
-        int place = 0;
-        int present = 0;
-
-        // place
-        System.out.println("def[] : " + def.toString() + " taille : " + def.length);
-        System.out.println("attac[] : " + attac.toString() + " taille : " + attac.length);
-
-        for (int i = 0; i < def.length; i++) {
-
-            if (def[i] == attac[i]) {
-
-                place++;
-                System.out.println("place : " + place);
-                result.replace("place", Integer.toString(place));
-                def[i] = ' ';
-                attac[i] = ' ';
-
-            }
-
-        }
-
-        // present
-        for (int i = 0; i < attac.length; i++) {
-
-            for (int j = 0; j < def.length; j++) {
-
-                if (i != j && def[j] != ' ' && def[j] == attac[i]) {
-
-                    present++;
-                    System.out.println("present : " + present);
-                    result.replace("present", Integer.toString(present));
-                    System.out.println("valeur Attac : " + attac[i] + " ; index : " + i);
-                    System.out.println("valeur Def : " + def[j] + " ; index : " + j);
-
-                    def[j] = ' ';
-
-                    break;
-                }
-
-            }
-        }
-
-        System.out.println("retour compraison");
-        return result;
-
-    }
-
-    /**
-     * count function the number of equals in the result table :
-     *
-     * @param result Result arrayList of the comparison() function
-     * @return number of equals to int
-     */
-    public int counter(ArrayList<String> result) {
-
-        int counter = 0;
-
-        for (int i = 0; i < result.size(); i++) {
-
-            if (result.get(i) == "=") {
-
-                counter++;
-            }
-
-        }
-
-        return counter;
-
-    }
-
-    /**
-     * convert function result table of the comparison to String :
-     *
-     * @param result Result arrayList of the comparison() function
-     * @return result to String
-     */
-    public String convertArrayListToString(ArrayList<String> result) {
-
-        String convert = String.join(" ", result);
-
-        return convert;
-
-    }
-
-    /**
-     * display result according to place value and present value
-     *
-     * @param result Result hasmap of the comparison() function
-     * @return a string for display
-     */
-    public String displayResult(HashMap<String, String> result) {
-
-        StringBuilder sb = new StringBuilder();
-
-        Enumeration<String> toStringKey = Collections.enumeration(result.keySet());
-        Enumeration<String> toStringValue = Collections.enumeration(result.values());
-
-        while (toStringKey.hasMoreElements() && toStringValue.hasMoreElements()) {
-
-            String key = toStringKey.nextElement();
-
-            String value = toStringValue.nextElement();
-
-            if (key == "present" && value == "0") {
-
-                sb.append("");
-
-            } else if (key == "present" && value != "0") {
-
-                sb.append(value + " présent ");
-
-            } else if (key == "place" && value == "0") {
-
-                sb.append("");
-
-            } else if (key == "place" && value != "0") {
-
-                sb.append(value + " bien placés ");
-
-            }
-
-        }
-
-        return sb.toString();
-    }
-
-    public String convertArrayListIntegerToString(ArrayList<Integer> result) {
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < result.size(); i++) {
-            int num = result.get(i);
-            sb.append(num);
-        }
-
-        return sb.toString();
-
-    }
-
-    public int convertArrayListIntegerToInt(ArrayList<Integer> result) {
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < result.size(); i++) {
-            int num = result.get(i);
-            sb.append(num);
-        }
-
-        return Integer.valueOf(sb.toString());
-
-    }
-
     public ArrayList<String> generatAllPossible(int nbrCombinaison, int nbrRange) {
 
         ArrayList<String> possible = new ArrayList<String>();
@@ -379,54 +124,115 @@ public class MastermindDuel {
                 } else {
                     for (int k = 0; k <= nbrRange; k++) {
 
-                        for (int l = 0; l <= nbrRange; l++) {
+                        if (nbrCombinaison == 3) {
+                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k));
+                            possible.add(str);
 
-                            if (nbrCombinaison == 4) {
+                        } else {
 
-                                String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
-                                possible.add(str);
+                            for (int l = 0; l <= nbrRange; l++) {
 
-                            } else {
+                                if (nbrCombinaison == 4) {
 
-                                for (int m = 0; m <= nbrRange; m++) {
+                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
+                                    possible.add(str);
 
-                                    if (nbrCombinaison == 5) {
+                                } else {
 
-                                        String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
-                                        possible.add(str);
+                                    for (int m = 0; m <= nbrRange; m++) {
 
-                                    } else {
+                                        if (nbrCombinaison == 5) {
 
-                                        for (int n = 0; n <= nbrRange; n++) {
+                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
+                                            possible.add(str);
 
-                                            if (nbrCombinaison == 6) {
+                                        } else {
 
-                                                String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
-                                                possible.add(str);
+                                            for (int n = 0; n <= nbrRange; n++) {
+
+                                                if (nbrCombinaison == 6) {
+
+                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
+                                                    possible.add(str);
+                                                } else {
+
+                                                    for (int o = 0; o <= nbrRange; o++) {
+
+                                                        if (nbrCombinaison == 7) {
+
+                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o));
+                                                            possible.add(str);
+                                                        } else {
+
+                                                            for (int p = 0; p <= nbrRange; p++) {
+
+                                                                if (nbrCombinaison == 8) {
+
+                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p));
+                                                                    possible.add(str);
+                                                                } else {
+
+                                                                    for (int q = 0; q <= nbrRange; q++) {
+
+                                                                        if (nbrCombinaison == 9) {
+
+                                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q));
+                                                                            possible.add(str);
+                                                                        } else {
+                                                                            for (int r = 0; r <= nbrRange; r++) {
+
+                                                                                if (nbrCombinaison == 10) {
+
+                                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q) + String.valueOf(r));
+                                                                                    possible.add(str);
+                                                                                }
+                                                                            }
+
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+
                                             }
-
                                         }
-                                    }
 
+                                    }
                                 }
+
                             }
 
                         }
-
                     }
                 }
 
             }
         }
 
+        int x = 0;
+
         for (String combinaison : possible) {
             System.out.println("combinaison : " + combinaison);
+            System.out.println("nbrPossible : " + x++);
+
         }
 
         return possible;
 
     }
 
+    /**
+     * Random selection of machine combinaison :
+     *
+     * @param nbrTests number of test of comparison
+     * @param possible list of combinaison possible (complete or best)
+     * @param nbrRange range of number for the combinaison
+     * @return machine value
+     */
     public String getCombinaison(int nbrTests, ArrayList<String> possible, int nbrRange) {
 
         String combinaison;
@@ -446,6 +252,14 @@ public class MastermindDuel {
 
     }
 
+    /**
+     * List of best combinaison possible generator function :
+     *
+     * @param possible complete list of combinaison possible
+     * @param result result hashmap of the comparison() function
+     * @param machine machine value
+     * @return list of best combinaison possible
+     */
     public ArrayList<String> generatBestPossible(ArrayList<String> possible, HashMap<String, String> result, ArrayList<Integer> machine) {
 
         HashMap<String, String> ri = new HashMap<String, String>();
@@ -453,7 +267,7 @@ public class MastermindDuel {
 
         for (int i = 0; i < possible.size(); i++) {
 
-            ri = comparaisonChallengerS(possible.get(i), machine);
+            ri = comparaison(possible.get(i), machine);
 
             System.out.println("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
             System.out.println("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
