@@ -8,6 +8,8 @@ package com.github.nicolasdotnet.model;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 
@@ -27,15 +29,14 @@ public class Propertie {
     int nbrTours;
     int nbrCombinaison;
     int nbrRange;
-    String path = "./src/main/resources/config.properties";
 
     public void uploadProperties() {
 
-        FileInputStream upload = null;
+        InputStream upload = null;
         Properties prop = null;
         try {
             prop = new Properties();
-            upload = new FileInputStream(path);
+            upload = Propertie.class.getResourceAsStream("/config.properties");
             prop.load(upload);
             upload.close();
 
