@@ -6,7 +6,6 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  *
@@ -17,87 +16,56 @@ import java.util.Collections;
  * @version Alpha
  * @since 2019
  */
-public class SearchMoreOrLessDefenseur extends SearchMoreOrLess{
-
-    /**
-     * comparison function of attac value and defenseur value :
-     *
-     * @param nbrCombinaison number of digts of the combination
-     * @param attac Value table of the Attaquant
-     * @param def Value table of the Defenseur
-     * @param randomLimit Value limit for number random generator (machine value) 
-     * @param result Result arrayList of the comparison() function for recursive
-     * method
-     * @return result of the comparaison.
-     */
-    public ArrayList<String> comparaison(int nbrCombinaison, ArrayList<Integer> attac, ArrayList<Integer> def, int[][] randomLimit, ArrayList<String> result) {
-
-        int nbr;
-
-        int index = nbrCombinaison - 1;
-
-        System.out.println("Index : " + index);
-
-        System.out.println("\n nbrCombinaison : " + nbrCombinaison);
-
-        if (index < 0) {
-
-            Collections.reverse(result);
-
-            return result;
-
-        }
-
-        if (attac.get(index) < def.get(index)) {
-
-            result.add("+");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
-
-            System.out.print("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
-
-            nbr = 0;
-
-            randomLimit[0][index] = attac.get(index);
-            System.out.println("min + : "+randomLimit[0][index]);
-//            randomLimit[1][index] = 9;
-            System.out.println("max + : "+randomLimit[1][index]);
-
-        } else if (attac.get(index) > def.get(index)) {
-
-            result.add("-");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
-
-            System.out.println("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
-
-            nbr = 0;
-
-//            randomLimit[0][index] = 0;
-            System.out.println("min - : "+randomLimit[0][index]);
-            randomLimit[1][index] = attac.get(index);
-            System.out.println("max - : "+randomLimit[1][index]);
-
-        } else {
-
-            result.add("=");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
-
-            System.out.print("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
-
-            nbr = 1;
-
-            randomLimit[0][index] = attac.get(index);
-            System.out.println("min = : "+randomLimit[0][index]);
-            randomLimit[1][index] = attac.get(index);
-            System.out.println("max = : "+randomLimit[1][index]);
-
-        }
-
-        comparaison(index, attac, def,randomLimit,result);
-
-        return result;
+public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
+    
+    public static void main(String[] args) {
+        
+        String  result = "===";
+        System.out.println(result.indexOf("="));
+        SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur();
+        int counter =run.equalCounter(result);
+        System.out.println("counter = "+counter);
     }
 
+    /**
+     * new random limit generator function.
+     * 
+     * @param result Result of the comparaison function
+     * @param attac Value table of the Attaquant
+     * @param randomLimit Random limit initial
+     * @return new random limit
+     */
+    public int[][] generatNewRandomLimit(ArrayList<String> result, ArrayList<Integer> attac, int[][] randomLimit) {
+
+        for (int i = 0; i < result.size(); i++) {
+            String icon = result.get(i);
+
+            switch (icon) {
+
+                case "+":
+                    randomLimit[0][i] = attac.get(i);
+                    System.out.println("min + : " + randomLimit[0][i]);
+//            randomLimit[1][i] = 9;
+                    System.out.println("max + : " + randomLimit[1][i]);
+                    break;
+                case "-":
+                    System.out.println("min - : " + randomLimit[0][i]);
+                    randomLimit[1][i] = attac.get(i);
+                    System.out.println("max - : " + randomLimit[1][i]);
+                    break;
+                case "=":
+                    randomLimit[0][i] = attac.get(i);
+                    System.out.println("min = : " + randomLimit[0][i]);
+                    randomLimit[1][i] = attac.get(i);
+                    System.out.println("max = : " + randomLimit[1][i]);
+
+                    break;
+
+            }
+
+        }
+
+        return randomLimit;
+
+    }
 }

@@ -176,8 +176,8 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             System.out.println("machineIni " + machineIni.toString());
                             System.out.println("humain " + humain.toString());
 
-                            resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.equalCounter(resultH);
+                            resultH = (game.comparaison(nbrCombinaison, humain, machineIni, resultH));
+                            counterH = game.equalCounter(game.convertArrayListToString(resultH));
 
                             toStringH = game.convertArrayListToString(resultH);
 
@@ -186,8 +186,10 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             System.out.println("Machine play");
                             textAreaOut.append("La machine joue ! \n");
 
-                            resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humainIni, randomLimit, resultM));
-                            counterM = game.equalCounter(resultM);
+                            resultM = (game.comparaison(nbrCombinaison, machine, humainIni, resultM));
+                            counterM = game.equalCounter(game.convertArrayListToString(resultM));
+                            
+                            randomLimit = game.generatNewRandomLimit(resultM, machine, randomLimit);
 
                             toStringM = game.convertArrayListToString(resultM);
 
@@ -226,8 +228,10 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                     machine = random.inputMachine(randomLimit, nbrCombinaison);
 
                                     resultM.clear();
-                                    resultM = (game.comparaisonDefenseur(nbrCombinaison, machine, humain, randomLimit, resultM));
-                                    counterM = game.equalCounter(resultM);
+                                    resultM = (game.comparaison(nbrCombinaison, machine, humain, resultM));
+                                    counterM = game.equalCounter(game.convertArrayListToString(resultM));
+                                    
+                                    randomLimit = game.generatNewRandomLimit(resultM, machine, randomLimit);
 
                                     toStringM = game.convertArrayListToString(resultM);
 
@@ -335,8 +339,8 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             resultH.clear();
-                            resultH = (game.comparaisonChallenger(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = game.equalCounter(resultH);
+                            resultH = (game.comparaison(nbrCombinaison, humain, machineIni, resultH));
+                            counterH = game.equalCounter(game.convertArrayListToString(resultH));
 
                             String toString = game.convertArrayListToString(resultH);
 

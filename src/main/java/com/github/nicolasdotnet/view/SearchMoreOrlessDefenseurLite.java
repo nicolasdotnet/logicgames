@@ -145,8 +145,10 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                         textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
 
                         result.clear();
-                        result = (game.comparaison(nbrCombinaison, machine, humain, randomLimit, result));
-                        counter = game.equalCounter(result);
+                        result = (game.comparaison(nbrCombinaison, machine, humain, result));
+                        counter = game.equalCounter(game.convertArrayListToString(result));
+                        
+                        randomLimit = game.generatNewRandomLimit(result, machine, randomLimit);
 
                         String toString = game.convertArrayListToString(result);
 

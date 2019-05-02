@@ -146,9 +146,11 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
                         result.clear();
                         result = (game.comparaison(nbrCombinaison, humain, machine, result));
-                        counter = game.equalCounter(result);
+                        counter = game.equalCounter(game.convertArrayListToString(result));
+                        
 
                         String toString = game.convertArrayListToString(result);
+                        textAreaOut.append("counter : " + counter + " \n");
 
                         if (counter == nbrCombinaison) {
 

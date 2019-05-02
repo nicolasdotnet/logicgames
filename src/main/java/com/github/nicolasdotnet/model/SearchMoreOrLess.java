@@ -16,7 +16,7 @@ import java.util.Collections;
  * @since 2019
  */
 public abstract class SearchMoreOrLess {
-
+    
     /**
      * convert function input user to Integer ArrayList :
      *
@@ -42,21 +42,22 @@ public abstract class SearchMoreOrLess {
     }
 
     /**
-     * count function the number of equals in the result table :
+     * count function the number of equals in the result string :
      *
-     * @param result Result arrayList of the comparison() function
+     * @param result Result string of the comparison() function
      * @return number of equals to int
      */
-    public int equalCounter(ArrayList<String> result) {
+    public int equalCounter(String result) {
 
         int counter = 0;
 
-        for (int i = 0; i < result.size(); i++) {
+        int index = result.indexOf("=");
 
-            if (result.get(i) == "=") {
-
-                counter++;
-            }
+        while (index >= 0) {
+            
+            counter++;
+            System.out.println("counter while : "+counter);
+            index = result.indexOf("=", index + 1);
 
         }
 
@@ -79,8 +80,8 @@ public abstract class SearchMoreOrLess {
     }
 
     /**
-     * convert function machine value (Integer ArrayList) to String type : 
-     * 
+     * convert function machine value (Integer ArrayList) to String type :
+     *
      * @param machine Integer ArrayList
      * @return machine value to String
      */

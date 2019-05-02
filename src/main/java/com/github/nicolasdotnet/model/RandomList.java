@@ -20,6 +20,7 @@ public class RandomList {
     /**
      *
      * @param nbrCombinaison number of digts of the combination
+     * @param nbrRange range of number for the combinaison
      * @return max number limit and mini number limit for generate random number
      */
     public int[][] randomLimitIni(int nbrCombinaison, int nbrRange) {
