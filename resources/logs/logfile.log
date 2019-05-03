@@ -368,3 +368,4 @@ INFO  | 2019-05-02 11:08:53 | [main] model.Propertie (Propertie.java:62) - Fichi
 INFO  | 2019-05-02 11:09:05 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:66) - Saisie validée / TRUE !
 INFO  | 2019-05-02 11:09:18 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:66) - Saisie validée / TRUE !
 INFO  | 2019-05-02 11:16:05 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:66) - Saisie validée / TRUE !
+INFO  | 2019-05-02 11:37:32 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé

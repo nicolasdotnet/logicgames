@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,137 +93,33 @@ public class MastermindDefenseur extends Mastermind {
      * @return complete list of combinaison possible
      */
     public ArrayList<String> generatAllPossible(int nbrCombinaison, int nbrRange) {
-
         ArrayList<String> possible = new ArrayList<String>();
 
-//        String combinaisonFormat = "";
-//
-//        for (int i = 0; i < nbrCombinaison; i++) {
-//
-//            combinaisonFormat += 0;
-//            System.out.println("combinaisonFormat : " + combinaisonFormat);
-//        }
-//
-//        DecimalFormat format = new DecimalFormat(combinaisonFormat);
-//
-//        for (int i = 0; i <= Math.pow(nbrRange, nbrCombinaison); i++) {
-//
-//            String combinaison = format.format(i);
-//
-//            possible.add(combinaison);
-//
-//        }
-        for (int i = 0; i <= nbrRange; i++) {
+        String combinaisonFormat = "";
 
-            for (int j = 0; j <= nbrRange; j++) {
+        for (int i = 0; i < nbrCombinaison; i++) {
 
-                if (nbrCombinaison == 2) {
-
-                    String str = (String.valueOf(i) + String.valueOf(j));
-                    possible.add(str);
-
-                } else {
-                    for (int k = 0; k <= nbrRange; k++) {
-
-                        if (nbrCombinaison == 3) {
-                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k));
-                            possible.add(str);
-
-                        } else {
-
-                            for (int l = 0; l <= nbrRange; l++) {
-
-                                if (nbrCombinaison == 4) {
-
-                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
-                                    possible.add(str);
-
-                                } else {
-
-                                    for (int m = 0; m <= nbrRange; m++) {
-
-                                        if (nbrCombinaison == 5) {
-
-                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
-                                            possible.add(str);
-
-                                        } else {
-
-                                            for (int n = 0; n <= nbrRange; n++) {
-
-                                                if (nbrCombinaison == 6) {
-
-                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
-                                                    possible.add(str);
-                                                } else {
-
-                                                    for (int o = 0; o <= nbrRange; o++) {
-
-                                                        if (nbrCombinaison == 7) {
-
-                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o));
-                                                            possible.add(str);
-                                                        } else {
-
-                                                            for (int p = 0; p <= nbrRange; p++) {
-
-                                                                if (nbrCombinaison == 8) {
-
-                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p));
-                                                                    possible.add(str);
-                                                                } else {
-
-                                                                    for (int q = 0; q <= nbrRange; q++) {
-
-                                                                        if (nbrCombinaison == 9) {
-
-                                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q));
-                                                                            possible.add(str);
-                                                                        } else {
-                                                                            for (int r = 0; r <= nbrRange; r++) {
-
-                                                                                if (nbrCombinaison == 10) {
-
-                                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q) + String.valueOf(r));
-                                                                                    possible.add(str);
-                                                                                }
-                                                                            }
-
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                            }
-
-                        }
-                    }
-                }
-
-            }
+            combinaisonFormat += 0;
+            System.out.println("combinaisonFormat : " + combinaisonFormat);
         }
 
-        int x = 0;
+        DecimalFormat format = new DecimalFormat(combinaisonFormat);
 
-        for (String combinaison : possible) {
-            System.out.println("combinaison : " + combinaison);
-            System.out.println("nbrPossible : " + x++);
+        for (int i = 0; i <= (Math.pow(nbrRange, nbrCombinaison) - 1); i++) {
+
+            System.out.println("combinaison base 10 : " + i);
+
+            int item = Integer.parseInt(Integer.toString(i, nbrRange));
+
+            String combinaison = format.format(item);
+
+            System.out.println("combinaison base " + nbrRange + " : " + combinaison);
+
+            possible.add(combinaison);
 
         }
 
         return possible;
-
     }
 
     /**
