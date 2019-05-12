@@ -175,3 +175,4 @@ nbdist/
 
 # End of https://www.gitignore.io/api/netbeans,eclipse,intellij,maven
 /nbproject/
+/resources/logs/
