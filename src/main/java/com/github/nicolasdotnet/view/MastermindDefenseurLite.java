@@ -5,9 +5,9 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.Controller;
 import com.github.nicolasdotnet.model.MastermindDefenseur;
-import com.github.nicolasdotnet.model.RandomList;
+import com.github.nicolasdotnet.model.RandomList_;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -103,11 +103,11 @@ public class MastermindDefenseurLite extends JFrame {
             ArrayList<String> bestPossible;
 
             int[][] randomLimit;
-            RandomList random = new RandomList();
+            RandomList_ random = new RandomList_();
 
             int nbrTests = 1;
             
-            CheckUserInput checkUserInput = new CheckUserInput();
+            Controller checkUserInput = new Controller();
             Boolean inputUser;
 
             @Override

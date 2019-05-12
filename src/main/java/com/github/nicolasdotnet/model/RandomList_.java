@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 /**
  *
- * RandomList est la classe qui génére une liste de nombres aléatoire.
+ * RandomList_ est la classe qui génére une liste de nombres aléatoire.
  *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
  */
-public class RandomList {
+public class RandomList_ {
 
     /**
      *

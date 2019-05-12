@@ -17,19 +17,20 @@ import java.util.ArrayList;
  * @since 2019
  */
 public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
-    
+
     public static void main(String[] args) {
-        
-        String  result = "===";
+
+        String result = "===";
         System.out.println(result.indexOf("="));
         SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur();
-        int counter =run.equalCounter(result);
-        System.out.println("counter = "+counter);
+        int counter = run.equalCounter(result);
+        System.out.println("counter = " + counter);
     }
 
+    // methodes Ai
     /**
      * new random limit generator function.
-     * 
+     *
      * @param result Result of the comparaison function
      * @param attac Value table of the Attaquant
      * @param randomLimit Random limit initial
@@ -66,6 +67,13 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
         }
 
         return randomLimit;
+
+    }
+
+    @Override
+    public String generatSolution(int nbrCombinaison, int nbrRange, String sizure) {
+
+        return sizure;
 
     }
 }

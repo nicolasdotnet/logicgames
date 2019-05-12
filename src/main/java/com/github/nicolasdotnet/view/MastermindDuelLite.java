@@ -5,9 +5,9 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.Controller;
 import com.github.nicolasdotnet.model.MastermindDuel;
-import com.github.nicolasdotnet.model.RandomList;
+import com.github.nicolasdotnet.model.RandomList_;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -110,12 +110,12 @@ public class MastermindDuelLite extends JFrame {
             int step = 0;
 
             int[][] randomLimit;
-            RandomList random = new RandomList();
+            RandomList_ random = new RandomList_();
 
             ArrayList<String> possible;
             ArrayList<String> bestPossible;
 
-            CheckUserInput checkUserInput = new CheckUserInput();
+            Controller checkUserInput = new Controller();
             Boolean inputUser;
 
             @Override

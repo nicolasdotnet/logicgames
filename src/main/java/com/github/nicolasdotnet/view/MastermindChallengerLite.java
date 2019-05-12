@@ -5,9 +5,9 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.Controller;
 import com.github.nicolasdotnet.model.MastermindChallenger;
-import com.github.nicolasdotnet.model.RandomList;
+import com.github.nicolasdotnet.model.RandomList_;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -100,10 +100,10 @@ public class MastermindChallengerLite extends JFrame {
             ArrayList<Integer> machine = new ArrayList<Integer>();
             String valueInput;
             int[][] randomLimit;
-            RandomList random = new RandomList();
+            RandomList_ random = new RandomList_();
             int step = 0;
             int nbrTests = 0;
-            CheckUserInput checkUserInput = new CheckUserInput();
+            Controller checkUserInput = new Controller();
             Boolean inputUser;
 
             @Override

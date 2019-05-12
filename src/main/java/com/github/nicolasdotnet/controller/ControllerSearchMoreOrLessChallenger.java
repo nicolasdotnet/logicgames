@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.nicolasdotnet.model;
+package com.github.nicolasdotnet.controller;
 
+import com.github.nicolasdotnet.model.*;
+import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * CheckUserInput est la classe qui vérifie la sizure du joueur humain
+ * Controller est la classe qui vérifie la sizure du joueur humain
  *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
  */
-public class CheckUserInput {
+public class ControllerSearchMoreOrLessChallenger {
     
-    private static final Logger log = LogManager.getLogger(CheckUserInput.class);
+    private static final Logger log = LogManager.getLogger(ControllerSearchMoreOrLessChallenger.class);
+    private SearchMoreOrLessChallenger game = new SearchMoreOrLessChallenger();
 
     /**
      * Number value input by user : test the sizure of the user for nbrCombinaison-> ToDo
@@ -119,4 +122,24 @@ public class CheckUserInput {
         return inputUser;
 
     }
+
+    public ArrayList<Integer> getGeneratSolution(int nbrCombinaison, int nbrRange, String valueInput) {
+        ArrayList<Integer> machine = new ArrayList<Integer>();
+        Tools tools = new Tools();
+        String temp;
+        temp = game.generatSolution(nbrCombinaison, nbrRange, valueInput);
+        machine = tools.convertStringToArrayListInteger(temp);
+        
+        return machine;
+    }
+
+    public ArrayList<String> getComparaison(int nbrCombinaison, ArrayList<Integer> humain, ArrayList<Integer> machine, ArrayList<String> result) {
+        return (game.comparaison(nbrCombinaison, humain, machine, result));}
+
+    public int getEqualCounter(String convertArrayListToString) {
+        return game.equalCounter(convertArrayListToString);
+    }
+    
+    
+    
 }

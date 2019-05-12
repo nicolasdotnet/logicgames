@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.nicolasdotnet.model;
+package com.github.nicolasdotnet.controller;
 
+import com.github.nicolasdotnet.model.*;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +18,10 @@ import org.apache.logging.log4j.Logger;
  * @version Alpha
  * @since 2019
  */
-public class Controller {
+public class ControllerSearchMoreOrLessDuel {
     
-    private static final Logger log = LogManager.getLogger(Controller.class);
-    private SearchMoreOrLessChallenger game = new SearchMoreOrLessChallenger();
+    private static final Logger log = LogManager.getLogger(ControllerSearchMoreOrLessDuel.class);
+    private SearchMoreOrLessDuel game = new SearchMoreOrLessDuel();
 
     /**
      * Number value input by user : test the sizure of the user for nbrCombinaison-> ToDo
@@ -137,6 +138,10 @@ public class Controller {
 
     public int getEqualCounter(String convertArrayListToString) {
         return game.equalCounter(convertArrayListToString);
+    }
+
+    public int[][] getGeneratNewRandomLimit(ArrayList<String> resultM, ArrayList<Integer> machine, int[][] randomLimit) {
+        return game.generatNewRandomLimit(resultM, machine, randomLimit) ;
     }
     
     

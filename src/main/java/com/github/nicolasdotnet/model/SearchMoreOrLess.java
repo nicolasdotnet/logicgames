@@ -162,5 +162,7 @@ public abstract class SearchMoreOrLess {
         return result;
 
     }
+    
+    public abstract String generatSolution (int nbrCombinaison, int nbrRange, String saissie);
 
 }

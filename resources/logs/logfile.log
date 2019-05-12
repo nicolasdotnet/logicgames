@@ -369,3 +369,9 @@ INFO  | 2019-05-02 11:09:05 | [AWT-EventQueue-0] model.CheckUserInput (CheckUser
 INFO  | 2019-05-02 11:09:18 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:66) - Saisie validée / TRUE !
 INFO  | 2019-05-02 11:16:05 | [AWT-EventQueue-0] model.CheckUserInput (CheckUserInput.java:66) - Saisie validée / TRUE !
 INFO  | 2019-05-02 11:37:32 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé
+INFO  | 2019-05-11 11:34:37 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé
+ERROR | 2019-05-11 11:34:56 | [AWT-EventQueue-0] Controller.ControllerSearchMoreOrLessChallenger (ControllerSearchMoreOrLessChallenger.java:42) - Attention taille incorrecte !
+INFO  | 2019-05-11 11:34:56 | [AWT-EventQueue-0] Controller.ControllerSearchMoreOrLessChallenger (ControllerSearchMoreOrLessChallenger.java:65) - Saisie invalide / FALSE !
+INFO  | 2019-05-11 11:35:11 | [AWT-EventQueue-0] Controller.ControllerSearchMoreOrLessChallenger (ControllerSearchMoreOrLessChallenger.java:69) - Saisie validée / TRUE !
+INFO  | 2019-05-11 11:35:16 | [AWT-EventQueue-0] Controller.ControllerSearchMoreOrLessChallenger (ControllerSearchMoreOrLessChallenger.java:69) - Saisie validée / TRUE !
+INFO  | 2019-05-12 09:05:02 | [main] model.Propertie (Propertie.java:62) - Fichier parametres importé

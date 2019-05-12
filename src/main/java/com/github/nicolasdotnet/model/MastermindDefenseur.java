@@ -84,6 +84,8 @@ public class MastermindDefenseur extends Mastermind {
         }
 
     }
+    
+    // methodes AI
 
     /**
      * Complete list of combinaison possible generator function :

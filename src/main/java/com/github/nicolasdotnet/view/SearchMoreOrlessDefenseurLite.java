@@ -5,8 +5,8 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
-import com.github.nicolasdotnet.model.RandomList;
+import com.github.nicolasdotnet.model.Controller;
+import com.github.nicolasdotnet.model.RandomList_;
 import com.github.nicolasdotnet.model.SearchMoreOrLessDefenseur;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -101,9 +101,9 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
             int step = 0;
 
             int[][] randomLimit;
-            RandomList random = new RandomList();
+            RandomList_ random = new RandomList_();
 
-            CheckUserInput checkUserInput = new CheckUserInput();
+            Controller checkUserInput = new Controller();
             Boolean inputUser;
 
             @Override

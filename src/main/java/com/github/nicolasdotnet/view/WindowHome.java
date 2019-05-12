@@ -5,7 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
+import com.github.nicolasdotnet.model.Controller;
 import com.github.nicolasdotnet.model.Propertie;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -31,7 +31,7 @@ public class WindowHome extends WindowSource {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-    CheckUserInput checkUserInput = new CheckUserInput();
+    Controller checkUserInput = new Controller();
     Boolean inputUser;
 
     public WindowHome() {

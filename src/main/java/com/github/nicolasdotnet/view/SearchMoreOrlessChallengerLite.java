@@ -5,9 +5,8 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.CheckUserInput;
-import com.github.nicolasdotnet.model.RandomList;
-import com.github.nicolasdotnet.model.SearchMoreOrLessChallenger;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessChallenger;
+import com.github.nicolasdotnet.model.Tools;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -34,7 +33,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-    private SearchMoreOrLessChallenger game;
+    private Tools tools;
 
     /**
      *
@@ -45,7 +44,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
-        game = new SearchMoreOrLessChallenger();
+        tools = new Tools();
 
         this.setTitle("SearchMoreOrlessChallenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -99,11 +98,10 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
             ArrayList<Integer> machine = new ArrayList<Integer>();
             String valueInput;
             int nbrTests = 0;
-            int[][] randomLimit;
-            RandomList random = new RandomList();
+            
             int step = 0;
 
-            CheckUserInput checkUserInput = new CheckUserInput();
+            ControllerSearchMoreOrLessChallenger checkUserInput = new ControllerSearchMoreOrLessChallenger();
             Boolean inputUser;
 
             @Override
@@ -124,9 +122,11 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
 
                     if (step == 0) {
 
-                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-                        machine = random.inputMachine(randomLimit, nbrCombinaison);
-                        solution.setText(game.convertArrayListIntegerToString(machine));
+                        //randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
+                        //machine = random.inputMachine(randomLimit, nbrCombinaison);
+                        
+                        machine = checkUserInput.getGeneratSolution(nbrCombinaison,nbrRange,valueInput);
+                        solution.setText(tools.convertArrayListIntegerToString(machine));
 
                     }
 
@@ -136,7 +136,7 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
                         textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                     } else {
 
-                        humain = game.convertStringToArrayListInteger(valueInput);
+                        humain = tools.convertStringToArrayListInteger(valueInput);
 
                         System.out.println("humain : " + humain);
                         System.out.println("machine : " + machine);
@@ -145,11 +145,11 @@ public class SearchMoreOrlessChallengerLite extends JFrame {
                         nbrTests++;
 
                         result.clear();
-                        result = (game.comparaison(nbrCombinaison, humain, machine, result));
-                        counter = game.equalCounter(game.convertArrayListToString(result));
+                        result = (checkUserInput.getComparaison(nbrCombinaison, humain, machine, result));
+                        counter = checkUserInput.getEqualCounter(tools.convertArrayListToString(result));
                         
 
-                        String toString = game.convertArrayListToString(result);
+                        String toString = tools.convertArrayListToString(result);
                         textAreaOut.append("counter : " + counter + " \n");
 
                         if (counter == nbrCombinaison) {
