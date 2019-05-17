@@ -12,17 +12,17 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * ControllerSearchMoreOrLessDuel est la classe controller entre la vue et le
- * métier du jeu SearchMoreOrLess en mode Duel
+ * ControllerSearchMoreOrLessDefenseur est la classe controller entre la vue et
+ * le métier du jeu SearchMoreOrLess en mode Défenseur
  *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
  */
-public class ControllerSearchMoreOrLessDuel extends Controller {
+public class ControllerSearchMoreOrLessDefenseur extends Controller {
 
-    private static final Logger log = LogManager.getLogger(ControllerSearchMoreOrLessDuel.class);
-    private SearchMoreOrLessDuel game = new SearchMoreOrLessDuel();
+    private static final Logger log = LogManager.getLogger(ControllerSearchMoreOrLessDefenseur.class);
+    private SearchMoreOrLessDefenseur game = new SearchMoreOrLessDefenseur();
 
     /**
      * Controller method that calls the model get solution combination method
@@ -71,7 +71,6 @@ public class ControllerSearchMoreOrLessDuel extends Controller {
      */
     public List<Integer> getGeneratePossible(int[][] randomRange, int nbrDigits) {
         return game.generatePossible(randomRange, nbrDigits);
-
     }
 
 }

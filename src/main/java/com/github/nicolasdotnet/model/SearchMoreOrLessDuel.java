@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,68 +18,38 @@ import java.util.ArrayList;
  */
 public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
+    private SearchMoreOrlLessAi inter = new SearchMoreOrLessDefenseur();
+
     /**
-     * new random limit generator function.
+     * Generator function of solution combination
      *
-     * @param result Result of the comparaison function
-     * @param attac Value table of the Attaquant
-     * @param randomLimit Random limit initial
-     * @return new random limit
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
      */
-    public int[][] generatNewRandomLimit(ArrayList<String> result, ArrayList<Integer> attac, int[][] randomLimit) {
-
-        for (int i = 0; i < result.size(); i++) {
-            String icon = result.get(i);
-
-            switch (icon) {
-
-                case "+":
-                    randomLimit[0][i] = attac.get(i);
-                    System.out.println("min + : " + randomLimit[0][i]);
-//            randomLimit[1][i] = 9;
-                    System.out.println("max + : " + randomLimit[1][i]);
-                    break;
-                case "-":
-                    System.out.println("min - : " + randomLimit[0][i]);
-                    randomLimit[1][i] = attac.get(i);
-                    System.out.println("max - : " + randomLimit[1][i]);
-                    break;
-                case "=":
-                    randomLimit[0][i] = attac.get(i);
-                    System.out.println("min = : " + randomLimit[0][i]);
-                    randomLimit[1][i] = attac.get(i);
-                    System.out.println("max = : " + randomLimit[1][i]);
-
-                    break;
-
-            }
-
-        }
-
-        return randomLimit;
-
-    }
-
     @Override
-    public String generatSolution(int nbrCombinaison, int nbrRange, String sizure) {
-        if (sizure == null) {
+    public String getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
 
-            // randomLimit
-            int[][] randomLimit = new int[2][nbrCombinaison];
+        // "null"
+        if (sizure == "null") {
+
+            // randomRange
+            int[][] randomRange = new int[2][nbrDigits];
 
             for (int i = 0; i < 2; i++) {
 
-                for (int j = 0; j < nbrCombinaison; j++) {
+                for (int j = 0; j < nbrDigits; j++) {
 
                     if (i == 0) {
 
                         // Min value limit
-                        randomLimit[i][j] = 0;
+                        randomRange[i][j] = 0;
 
                     } else {
 
                         // Max value limit
-                        randomLimit[i][j] = nbrRange;
+                        randomRange[i][j] = nbrRange;
 
                     }
 
@@ -87,17 +58,17 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
             }
 
             // inputmachine
-            ArrayList<Integer> inputMachine = new ArrayList<Integer>();
+            List<Integer> inputMachine = new ArrayList<Integer>();
 
-            for (int i = 0; i < nbrCombinaison; i++) {
+            for (int i = 0; i < nbrDigits; i++) {
 
-                inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
+                inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
                 System.out.println("test A  : " + inputMachine.get(i) + " ");
 
             }
 
-            // convertArrayListIntegerToString
+            // convertListIntegerToString
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < inputMachine.size(); i++) {
                 int num = inputMachine.get(i);
@@ -105,9 +76,23 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
             }
 
             sizure = sb.toString();
-
+            System.out.println("sizure : " + sizure);
         }
         return sizure;
+    }
+
+    /**
+     * Generator function of possible combination for the machine
+     *
+     * @param randomRange max number limit and mini number limit for generate
+     * random number
+     * @param nbrDigits number of digts of the combination
+     * @return possible combination in List integer
+     */
+    public List<Integer> generatePossible(int[][] randomRange, int nbrDigits) {
+
+        return inter.generatePossible(randomRange, nbrDigits);
+
     }
 
 }

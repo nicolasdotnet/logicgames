@@ -29,7 +29,7 @@ public class WindowMain extends WindowSource {
     private int searchMoreOrLess;
     private int mastermind;
     private String breadcrumb;
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
@@ -42,8 +42,8 @@ public class WindowMain extends WindowSource {
         this.nbrRange = nbrRange;
     }
 
-    public int getNbrCombinaison() {
-        return nbrCombinaison;
+    public int getNbrDigits() {
+        return nbrDigits;
     }
 
     public int getNbrTours() {
@@ -54,8 +54,8 @@ public class WindowMain extends WindowSource {
         this.nbrTours = nbrTours;
     }
 
-    public void setNbrCombinaison(int nbrcombinaison) {
-        this.nbrCombinaison = nbrcombinaison;
+    public void setNbrDigits(int nbrcombinaison) {
+        this.nbrDigits = nbrcombinaison;
     }
 
     public int getSearchMoreOrLess() {
@@ -90,12 +90,12 @@ public class WindowMain extends WindowSource {
         this.modeDev = modeDev;
     }
 
-    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
         this.searchMoreOrLess = searchMoreOrLess;
         this.mastermind = mastermind;
         this.breadcrumb = breadcrumb;
-        this.nbrCombinaison = nbrCombinaison;
+        this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
@@ -107,7 +107,7 @@ public class WindowMain extends WindowSource {
 //        contentPanel.add(gamesMenu(), BorderLayout.WEST);
         contentPanel.add(breadcrumbPanel(), BorderLayout.NORTH);
         contentPanel.add(gamePanel(), BorderLayout.CENTER);
-        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
+//        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
 
         this.setVisible(true);
     }
@@ -215,12 +215,12 @@ public class WindowMain extends WindowSource {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
 
@@ -238,13 +238,13 @@ public class WindowMain extends WindowSource {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindDefenseurLite run = new MastermindDefenseurLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindDefenseurLite run = new MastermindDefenseurLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
                     }
@@ -260,12 +260,12 @@ public class WindowMain extends WindowSource {
                         if (searchMoreOrLess == 1) {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindDuelLite run = new MastermindDuelLite(getNbrCombinaison(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindDuelLite run = new MastermindDuelLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
                     }
@@ -299,15 +299,15 @@ public class WindowMain extends WindowSource {
      *
      * @return panel with Options Button.
      */
-    private JPanel optionsPanel() {
-
-        JPanel optionPanel = new JPanel();
-        optionPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        optionPanel.add(new JButton("Options"));
-
-        return optionPanel;
-
-    }
+//    private JPanel optionsPanel() {
+//
+//        JPanel optionPanel = new JPanel();
+//        optionPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+//        optionPanel.add(new JButton("Options"));
+//
+//        return optionPanel;
+//
+//    }
 
     /**
      * Create games options description panel.

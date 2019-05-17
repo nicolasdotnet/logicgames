@@ -5,12 +5,11 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.Controller;
+import com.github.nicolasdotnet.controller.Controller;
 import com.github.nicolasdotnet.model.Propertie;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -27,7 +26,7 @@ import javax.swing.JPanel;
  */
 public class WindowHome extends WindowSource {
 
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
@@ -36,10 +35,11 @@ public class WindowHome extends WindowSource {
 
     public WindowHome() {
 
-        Propertie para = new Propertie();
+//        Propertie para = new Propertie();
 //        para.uploadProperties();
+        Propertie para = checkUserInput.getInstancePropertie();
 
-        this.nbrCombinaison = para.getNbrCombinaison();
+        this.nbrDigits = para.getNbrDigits();
         this.nbrRange = para.getNbrRange();
         this.nbrTours = para.getNbrTours();
         this.modeDev = para.isModeDev();
@@ -75,12 +75,12 @@ public class WindowHome extends WindowSource {
         this.nbrTours = nbrTours;
     }
 
-    public int getNbrCombinaison() {
-        return nbrCombinaison;
+    public int getNbrDigits() {
+        return nbrDigits;
     }
 
-    public void setNbrCombinaison(int nbrCombinaison) {
-        this.nbrCombinaison = nbrCombinaison;
+    public void setNbrDigits(int nbrDigits) {
+        this.nbrDigits = nbrDigits;
     }
 
     /**
@@ -92,20 +92,21 @@ public class WindowHome extends WindowSource {
 
         // Choice games buttons
         JPanel choiceGames = new JPanel();
-        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
-        
+//        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
+        choiceGames.setLayout(new FlowLayout());
+
         JButton mastermind = new JButton("MasterMind");
         mastermind.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrCombinaison, nbrTours, nbrRange, modeDev);
+                WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrDigits, nbrTours, nbrRange, modeDev);
                 WindowHome.super.dispose();
 
             }
         });
-        
+
         choiceGames.add(mastermind);
 
         JButton searchMoreOrless = new JButton("Recherche +/-");
@@ -114,7 +115,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrCombinaison, nbrTours, nbrRange, modeDev);
+                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, nbrRange, modeDev);
                 WindowHome.super.dispose();
             }
         });

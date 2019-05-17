@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,25 +19,33 @@ import java.util.ArrayList;
  */
 public class SearchMoreOrLessChallenger extends SearchMoreOrLess {
 
+    /**
+     * Generator function of solution combination
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
     @Override
-    public String generatSolution(int nbrCombinaison, int nbrRange, String saissie) {
+    public String getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
 
-        // randomLimit
-        int[][] randomLimit = new int[2][nbrCombinaison];
+        // randomRange
+        int[][] randomRange = new int[2][nbrDigits];
 
         for (int i = 0; i < 2; i++) {
 
-            for (int j = 0; j < nbrCombinaison; j++) {
+            for (int j = 0; j < nbrDigits; j++) {
 
                 if (i == 0) {
 
                     // Min value limit
-                    randomLimit[i][j] = 0;
+                    randomRange[i][j] = 0;
 
                 } else {
 
                     // Max value limit
-                    randomLimit[i][j] = nbrRange;
+                    randomRange[i][j] = nbrRange;
 
                 }
 
@@ -45,17 +54,17 @@ public class SearchMoreOrLessChallenger extends SearchMoreOrLess {
         }
 
         // inputmachine
-        ArrayList<Integer> inputMachine = new ArrayList<Integer>();
+        List<Integer> inputMachine = new ArrayList<Integer>();
 
-        for (int i = 0; i < nbrCombinaison; i++) {
+        for (int i = 0; i < nbrDigits; i++) {
 
-            inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
+            inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
             System.out.println("test A  : " + inputMachine.get(i) + " ");
 
         }
 
-        // convertArrayListIntegerToString
+        // convertListIntegerToString
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < inputMachine.size(); i++) {
             int num = inputMachine.get(i);

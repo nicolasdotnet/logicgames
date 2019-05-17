@@ -25,7 +25,7 @@ public class Propertie {
 
     private boolean modeDev;
     private int nbrTours;
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrRange;
 
     public Propertie() {
@@ -39,7 +39,7 @@ public class Propertie {
             upload.close();
 
             this.modeDev = Boolean.parseBoolean(prop.getProperty("modeDev"));
-            this.nbrCombinaison = Integer.parseInt(prop.getProperty("nbrCombinaison"));
+            this.nbrDigits = Integer.parseInt(prop.getProperty("nbrDigits"));
             this.nbrTours = Integer.parseInt(prop.getProperty("nbrTours"));
             this.nbrRange = Integer.parseInt(prop.getProperty("nbrRange"));
 
@@ -74,7 +74,7 @@ public class Propertie {
 //            upload.close();
 //
 //            this.modeDev = Boolean.parseBoolean(prop.getProperty("modeDev"));
-//            this.nbrCombinaison = Integer.parseInt(prop.getProperty("nbrCombinaison"));
+//            this.nbrDigits = Integer.parseInt(prop.getProperty("nbrDigits"));
 //            this.nbrTours = Integer.parseInt(prop.getProperty("nbrTours"));
 //            this.nbrRange = Integer.parseInt(prop.getProperty("nbrRange"));
 //
@@ -106,8 +106,8 @@ public class Propertie {
         return nbrTours;
     }
 
-    public int getNbrCombinaison() {
-        return nbrCombinaison;
+    public int getNbrDigits() {
+        return nbrDigits;
     }
 
     public int getNbrRange() {

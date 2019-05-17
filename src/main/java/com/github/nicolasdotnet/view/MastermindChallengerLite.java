@@ -5,15 +5,18 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.Controller;
-import com.github.nicolasdotnet.model.MastermindChallenger;
-import com.github.nicolasdotnet.model.RandomList_;
+import com.github.nicolasdotnet.controller.ControllerMastermindChallenger;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,25 +34,25 @@ import javax.swing.JTextField;
  */
 public class MastermindChallengerLite extends JFrame {
 
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-    private MastermindChallenger game;
+    private ControllerMastermindChallenger checkUserInput;
 
     /**
      *
      */
-    public MastermindChallengerLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+    public MastermindChallengerLite(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
-        this.nbrCombinaison = nbrCombinaison;
+        this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
 
-        game = new MastermindChallenger();
+        checkUserInput = new ControllerMastermindChallenger();
 
-        this.setTitle("MastermindChallenger");
+        this.setTitle("Mastermind Challenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
         this.setLocationRelativeTo(null);
@@ -72,6 +75,10 @@ public class MastermindChallengerLite extends JFrame {
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
+
+        JPanel reloadButton = reloadGame();
+        modeDevPanel.add(reloadButton, BorderLayout.SOUTH);
+        reloadButton.setVisible(false);
 
         JPanel textArea = new JPanel();
 
@@ -97,13 +104,12 @@ public class MastermindChallengerLite extends JFrame {
 
             // Déclarations :
             HashMap<String, String> result = new HashMap<String, String>();
-            ArrayList<Integer> machine = new ArrayList<Integer>();
+            List<Integer> machine = new ArrayList<Integer>();
             String valueInput;
-            int[][] randomLimit;
-            RandomList_ random = new RandomList_();
+
             int step = 0;
             int nbrTests = 0;
-            Controller checkUserInput = new Controller();
+
             Boolean inputUser;
 
             @Override
@@ -119,20 +125,20 @@ public class MastermindChallengerLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
+                    inputUser = checkUserInput.inputError(valueInput, nbrDigits);
                     System.out.println("inPut : " + inputUser);
 
                     if (step == 0) {
 
-                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-                        machine = random.inputMachine(randomLimit, nbrCombinaison);
-                        solution.setText(game.convertArrayListIntegerToString(machine));
+//                        randomLimit = checkUserInput.getRandomLimitIni(nbrDigits, nbrRange);
+                        machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+                        solution.setText(checkUserInput.getConvertListIntegerToString(machine));
 
                     }
 
                     if (inputUser) {
                         nbrTours--;
-                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
                         textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                     } else {
 
@@ -140,27 +146,31 @@ public class MastermindChallengerLite extends JFrame {
                         nbrTests++;
 
                         result.clear();
-                        result = (game.comparaison(valueInput, machine));
+                        result = (checkUserInput.getComparison(valueInput, machine));
 
-                        if (Integer.parseInt(result.get("place")) == nbrCombinaison) {
+                        if (Integer.parseInt(result.get("place")) == nbrDigits) {
 
-                            textAreaOut.append("Félicitation ! mission accomplie en " + nbrTests + " tours :)\n");
-                            textAreaOut.append(game.displayResult(result));
+                            textAreaOut.append("Félicitation ! mission accomplie en " + nbrTests + " tours.\n");
+                            textAreaOut.append("Le résulat est : " + checkUserInput.getDisplayResult(result) + "\n\n");
+                            textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                             textAreaIn.setEditable(false);
+                            reloadButton.setVisible(true);
 
                         } else {
 
-                            textAreaOut.append(game.displayResult(result) + "\n");
+                            textAreaOut.append(checkUserInput.getDisplayResult(result) + "\n");
 
                             if (nbrTours == 0) {
 
                                 textAreaOut.append("GAME OVER !\n");
-                                textAreaOut.append("Solution : " + machine + "\n");
+                                textAreaOut.append("La solution est : " + machine + "\n\n");
+                                textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                 textAreaIn.setEditable(false);
+                                reloadButton.setVisible(true);
 
                             } else if (nbrTours == 1) {
 
-                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
+                                String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n";
 
                                 textAreaOut.append(message);
 
@@ -190,5 +200,39 @@ public class MastermindChallengerLite extends JFrame {
 
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
+    }
+
+    public JPanel reloadGame() {
+
+        JPanel choiceButtons = new JPanel();
+        choiceButtons.setLayout(new FlowLayout());
+
+        JButton yes = new JButton("Oui");
+        yes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                MastermindChallengerLite reload = new MastermindChallengerLite(nbrDigits, nbrTours, nbrRange, modeDev);
+                MastermindChallengerLite.super.dispose();
+
+            }
+        });
+
+        choiceButtons.add(yes);
+
+        JButton no = new JButton("Non");
+        no.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                MastermindChallengerLite.super.dispose();
+            }
+        });
+
+        choiceButtons.add(no);
+
+        return choiceButtons;
+
     }
 }

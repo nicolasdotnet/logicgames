@@ -5,14 +5,17 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.Controller;
-import com.github.nicolasdotnet.model.RandomList_;
-import com.github.nicolasdotnet.model.SearchMoreOrLessDefenseur;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessDefenseur;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,25 +33,25 @@ import javax.swing.JTextField;
  */
 public class SearchMoreOrlessDefenseurLite extends JFrame {
 
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-    private SearchMoreOrLessDefenseur game;
+    private ControllerSearchMoreOrLessDefenseur checkUserInput;
 
     /**
      *
      */
-    public SearchMoreOrlessDefenseurLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+    public SearchMoreOrlessDefenseurLite(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
-        this.nbrCombinaison = nbrCombinaison;
+        this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
 
-        game = new SearchMoreOrLessDefenseur();
+        checkUserInput = new ControllerSearchMoreOrLessDefenseur();
 
-        this.setTitle("SearchMoreOrlessDefenseur");
+        this.setTitle("Recherche +/- Défenseur");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
         this.setLocationRelativeTo(null);
@@ -68,6 +71,10 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
+
+        JPanel reloadButton = reloadGame();
+        modeDevPanel.add(reloadButton, BorderLayout.SOUTH);
+        reloadButton.setVisible(false);
 
         JPanel textArea = new JPanel();
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
@@ -92,18 +99,16 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
             // Déclarations :
             int counter = 0;
-            ArrayList<Integer> humain = new ArrayList<Integer>();
-            ArrayList<String> result = new ArrayList<String>();
-            ArrayList<Integer> machine = new ArrayList<Integer>();
+            List<Integer> humain = new ArrayList<Integer>();
+            List<String> result = new ArrayList<String>();
+            List<Integer> machine = new ArrayList<Integer>();
 
             String valueInput;
             int nbrTests = 0;
             int step = 0;
 
-            int[][] randomLimit;
-            RandomList_ random = new RandomList_();
+            int[][] randomRange;
 
-            Controller checkUserInput = new Controller();
             Boolean inputUser;
 
             @Override
@@ -119,46 +124,49 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
+                    inputUser = checkUserInput.inputError(valueInput, nbrDigits);
                     System.out.println("inPut : " + inputUser);
 
+                    // Initial phase
                     if (inputUser) {
 
-                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                        textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
 
                     } else {
 
-                        randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-                        humain = game.convertStringToArrayListInteger(valueInput);
+                        randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
+                        humain = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
                         solution.setText(valueInput);
                         textAreaIn.setEditable(false);
 
                     }
 
+                    // Gaming machine
                     do {
 
                         nbrTours--;
                         nbrTests++;
 
                         counter = 0;
-                        machine = random.inputMachine(randomLimit, nbrCombinaison);
-                        textAreaOut.append("Proposition de la machine : " + machine.toString() + "\n\n");
+                        machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                        textAreaOut.append("La proposition de la machine est : " + machine.toString() + "\n\n");
 
                         result.clear();
-                        result = (game.comparaison(nbrCombinaison, machine, humain, result));
-                        counter = game.equalCounter(game.convertArrayListToString(result));
-                        
-                        randomLimit = game.generatNewRandomLimit(result, machine, randomLimit);
+                        result = (checkUserInput.getComparison(nbrDigits, machine, humain, result));
+                        counter = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(result));
 
-                        String toString = game.convertArrayListToString(result);
+                        randomRange = checkUserInput.getGenerateRandomRangeNew(result, machine, randomRange);
 
-                        if (counter == nbrCombinaison) {
+                        String toString = checkUserInput.getConvertListToString(result);
+
+                        if (counter == nbrDigits) {
 
                             textAreaOut.append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
-                            textAreaOut.append("Résulat : " + toString + "\n");
+                            textAreaOut.append("Son résulat est : " + toString + "\n");
                             textAreaOut.append("Rappel, votre combinaison était : " + humain + "\n");
-                            textAreaOut.append("Proposition de la machine : " + machine + "\n");
+                            textAreaOut.append("La dernière proposition de la machine est : " + machine + "\n\n");
                             textAreaIn.setEditable(false);
+                            reloadButton.setVisible(true);
 
                         } else {
 
@@ -168,11 +176,14 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
                                 textAreaOut.append("GAME OVER ! la machine est Out\n");
                                 textAreaOut.append("Rappel, votre combinaison était : " + humain + "\n");
+                                textAreaOut.append("La dernière proposition de la machine est : " + machine + "\n\n");
+                                textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                 textAreaIn.setEditable(false);
+                                reloadButton.setVisible(true);
 
                             } else if (nbrTours == 1) {
 
-                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
+                                String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n";
 
                                 textAreaOut.append(message);
 
@@ -184,7 +195,7 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
                             }
                         }
 
-                    } while (counter != nbrCombinaison && nbrTours != 0);
+                    } while (counter != nbrDigits && nbrTours != 0);
                 }
 
             }
@@ -202,5 +213,39 @@ public class SearchMoreOrlessDefenseurLite extends JFrame {
 
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
+    }
+
+    public JPanel reloadGame() {
+
+        JPanel choiceButtons = new JPanel();
+        choiceButtons.setLayout(new FlowLayout());
+
+        JButton yes = new JButton("Oui");
+        yes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                SearchMoreOrlessDefenseurLite reload = new SearchMoreOrlessDefenseurLite(nbrDigits, nbrTours, nbrRange, modeDev);
+                SearchMoreOrlessDefenseurLite.super.dispose();
+
+            }
+        });
+
+        choiceButtons.add(yes);
+
+        JButton no = new JButton("Non");
+        no.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                SearchMoreOrlessDefenseurLite.super.dispose();
+            }
+        });
+
+        choiceButtons.add(no);
+
+        return choiceButtons;
+
     }
 }

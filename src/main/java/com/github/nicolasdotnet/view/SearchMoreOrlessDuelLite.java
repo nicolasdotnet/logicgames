@@ -6,13 +6,16 @@
 package com.github.nicolasdotnet.view;
 
 import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessDuel;
-import com.github.nicolasdotnet.model.RandomList_;
-import com.github.nicolasdotnet.model.Tools;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,24 +33,25 @@ import javax.swing.JTextField;
  */
 public class SearchMoreOrlessDuelLite extends JFrame {
 
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
-    private Tools tools;
+    private ControllerSearchMoreOrLessDuel checkUserInput;
 
     /**
      *
      */
-    public SearchMoreOrlessDuelLite(int nbrCombinaison, int nbrTours, int nbrRange, boolean modeDev) {
+    public SearchMoreOrlessDuelLite(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
-        this.nbrCombinaison = nbrCombinaison;
+        this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
         this.modeDev = modeDev;
-        tools = new Tools();
 
-        this.setTitle("SearchMoreOrlessDuel");
+        checkUserInput = new ControllerSearchMoreOrLessDuel();
+
+        this.setTitle("Recherche +/- Duel");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
         this.setLocationRelativeTo(null);
@@ -67,6 +71,10 @@ public class SearchMoreOrlessDuelLite extends JFrame {
         System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
+
+        JPanel reloadButton = reloadGame();
+        modeDevPanel.add(reloadButton, BorderLayout.SOUTH);
+        reloadButton.setVisible(false);
 
         JPanel textArea = new JPanel();
         textArea.setLayout(new GridLayout(2, 1, 0, 0));
@@ -92,12 +100,12 @@ public class SearchMoreOrlessDuelLite extends JFrame {
             // Déclarations :
             int counterH = 0;
             int counterM = 0;
-            ArrayList<Integer> humainIni = new ArrayList<Integer>();
-            ArrayList<Integer> machineIni = new ArrayList<Integer>();
-            ArrayList<Integer> humain = new ArrayList<Integer>();
-            ArrayList<Integer> machine = new ArrayList<Integer>();
-            ArrayList<String> resultM = new ArrayList<String>();
-            ArrayList<String> resultH = new ArrayList<String>();
+            List<Integer> humainIni = new ArrayList<Integer>();
+            List<Integer> machineIni = new ArrayList<Integer>();
+            List<Integer> humain = new ArrayList<Integer>();
+            List<Integer> machine = new ArrayList<Integer>();
+            List<String> resultM = new ArrayList<String>();
+            List<String> resultH = new ArrayList<String>();
 
             String toStringM = "null";
             String toStringH = "null";
@@ -109,10 +117,8 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
             String valueInput;
 
-            int[][] randomLimit;
-            RandomList_ random = new RandomList_();
+            int[][] randomRange;
 
-            ControllerSearchMoreOrLessDuel checkUserInput = new ControllerSearchMoreOrLessDuel();
             Boolean inputUser;
 
             @Override
@@ -128,49 +134,52 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                     textAreaOut.append("\n");
 
-                    inputUser = checkUserInput.inputError(valueInput, nbrCombinaison);
+                    inputUser = checkUserInput.inputError(valueInput, nbrDigits);
                     System.out.println("inPut : " + inputUser);
 
                     if (step == 0) {
 
                         if (inputUser) {
                             step--;
-                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
                         } else {
 
-                            humainIni = tools.convertStringToArrayListInteger(valueInput);
+                            humainIni = checkUserInput.getConvertStringToListInteger(valueInput);
+                            humainIni = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
 
-                            randomLimit = random.randomLimitIni(nbrCombinaison, nbrRange);
-                            machineIni = random.inputMachine(randomLimit, nbrCombinaison);
-//                            valueInput = "null";
-//                            machineIni = checkUserInput.getGeneratSolution(nbrCombinaison, nbrRange, valueInput);
+                            randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
+//                            machineIni = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                            valueInput = "null";
+                            System.out.println("machineIni : " + machineIni.toString());
+                            System.out.println("item : " + checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
+                            machineIni = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
 
                             textAreaOut.append("La machine a choisit sa combinaison secréte \n");
 
-                            solution.setText("votre combinaison : " + valueInput + " ; La combinaison de la machine : " + tools.convertArrayListIntegerToString(machineIni));
+                            solution.setText("votre combinaison : " + checkUserInput.getConvertListIntegerToString(humainIni) + " ; La combinaison de la machine : " + checkUserInput.getConvertListIntegerToString(machineIni));
 
-                            textAreaOut.append("Entrez une valeur Attac Humain : \n");
+                            textAreaOut.append("Entrez une proposition : \n");
                         }
 
                     }
 
-                    if (step > 0 && counterM != nbrCombinaison) {
+                    if (step > 0 && counterM != nbrDigits) {
 
                         nbrTestsM++;
                         nbrTestsH++;
                         nbrTours--;
 
                         if (inputUser) {
-                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
                             nbrTours++;
 
                         } else {
 
-                            humain = tools.convertStringToArrayListInteger(valueInput);
-                            textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
+                            humain = checkUserInput.getConvertStringToListInteger(valueInput);
+                            textAreaOut.append("Votre proposition : " + humain.toString() + "\n");
 
-                            machine = random.inputMachine(randomLimit, nbrCombinaison);
-                            textAreaOut.append("Valeur Attac Machine : " + machine.toString() + "\n");
+                            machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                            textAreaOut.append("La proposition de la machine : " + machine.toString() + "\n");
 
                             // Humain play
                             resultH.clear();
@@ -179,24 +188,24 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             System.out.println("machineIni " + machineIni.toString());
                             System.out.println("humain " + humain.toString());
 
-                            resultH = (checkUserInput.getComparaison(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = checkUserInput.getEqualCounter(tools.convertArrayListToString(resultH));
+                            resultH = (checkUserInput.getComparison(nbrDigits, humain, machineIni, resultH));
+                            counterH = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultH));
 
-                            toStringH = tools.convertArrayListToString(resultH);
+                            toStringH = checkUserInput.getConvertListToString(resultH);
 
                             // Machine play
                             resultM.clear();
                             System.out.println("Machine play");
                             textAreaOut.append("La machine joue ! \n");
 
-                            resultM = (checkUserInput.getComparaison(nbrCombinaison, machine, humainIni, resultM));
-                            counterM = checkUserInput.getEqualCounter(tools.convertArrayListToString(resultM));
+                            resultM = (checkUserInput.getComparison(nbrDigits, machine, humainIni, resultM));
+                            counterM = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultM));
 
-                            randomLimit = checkUserInput.getGeneratNewRandomLimit(resultM, machine, randomLimit);
+                            randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                            toStringM = tools.convertArrayListToString(resultM);
+                            toStringM = checkUserInput.getConvertListToString(resultM);
 
-                            if (counterM == nbrCombinaison && counterH == nbrCombinaison) {
+                            if (counterM == nbrDigits && counterH == nbrDigits) {
 
                                 // Humain
                                 textAreaOut.append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
@@ -204,13 +213,15 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                 // Machine
                                 textAreaOut.append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                                textAreaOut.append("Son Résulat : " + toStringM + "\n");
+                                textAreaOut.append("Son Résulat : " + toStringM + "\n\n");
+                                textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
 
                                 textAreaIn.setEditable(false);
+                                reloadButton.setVisible(true);
 
-                            } else if (counterH == nbrCombinaison) {
+                            } else if (counterH == nbrDigits) {
 
-                                System.out.println("counterH == nbrCombinaison");
+                                System.out.println("counterH == nbrDigits");
 
                                 // Humain
                                 textAreaOut.append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
@@ -228,20 +239,23 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                     nbrTours--;
                                     nbrTestsM++;
 
-                                    machine = random.inputMachine(randomLimit, nbrCombinaison);
+                                    machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
 
                                     resultM.clear();
-                                    resultM = (checkUserInput.getComparaison(nbrCombinaison, machine, humain, resultM));
-                                    counterM = checkUserInput.getEqualCounter(tools.convertArrayListToString(resultM));
+                                    resultM = (checkUserInput.getComparison(nbrDigits, machine, humain, resultM));
+                                    counterM = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultM));
 
-                                    randomLimit = checkUserInput.getGeneratNewRandomLimit(resultM, machine, randomLimit);
+                                    randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                                    toStringM = tools.convertArrayListToString(resultM);
+                                    toStringM = checkUserInput.getConvertListToString(resultM);
 
-                                    if (counterM == nbrCombinaison) {
+                                    if (counterM == nbrDigits) {
 
                                         textAreaOut.append("Désolez ! mission accomplie en " + nbrTestsM + " tours ;)\n");
-                                        textAreaOut.append("Résulat : " + toStringM + "\n");
+                                        textAreaOut.append("Résulat : " + toStringM + "\n\n");
+                                        textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
+                                        textAreaIn.setEditable(false);
+                                        reloadButton.setVisible(true);
 
                                     } else {
 
@@ -249,26 +263,28 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                         if (nbrTours == 0) {
 
-                                            textAreaOut.append("GAME OVER ! la machine est Out\n");
+                                            textAreaOut.append("GAME OVER ! la machine est Out\n\n");
+                                            textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                             textAreaIn.setEditable(false);
+                                            reloadButton.setVisible(true);
 
                                         } else if (nbrTours == 1) {
 
-                                            message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n\n";
+                                            message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n";
 
                                             textAreaOut.append(message);
 
                                         } else {
 
-                                            message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
+                                            message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n";
 
                                             textAreaOut.append(message);
                                         }
                                     }
 
-                                } while (counterM != nbrCombinaison && nbrTours != 0);
+                                } while (counterM != nbrDigits && nbrTours != 0);
 
-                            } else if (counterM == nbrCombinaison) {
+                            } else if (counterM == nbrDigits) {
 
                                 //Machine 
                                 textAreaOut.append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
@@ -280,12 +296,14 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                 if (nbrTours == 0) {
 
                                     textAreaOut.append("GAME OVER !\n");
-                                    textAreaOut.append("La solution était : " + machineIni + "\n");
+                                    textAreaOut.append("La solution était : " + machineIni + "\n\n");
+                                    textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                     textAreaIn.setEditable(false);
+                                    reloadButton.setVisible(true);
 
                                 } else if (nbrTours == 1) {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n";
 
                                     textAreaOut.append(message);
 
@@ -296,7 +314,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                     textAreaOut.append(message);
                                 }
 
-                            } else if (counterM != nbrCombinaison && counterH != nbrCombinaison) {
+                            } else if (counterM != nbrDigits && counterH != nbrDigits) {
 
                                 textAreaOut.append("Personne n'a gagné !\n");
                                 textAreaOut.append("Son Résulat : " + toStringM + "\n");
@@ -306,12 +324,14 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
                                     textAreaOut.append("GAME OVER for all !\n");
                                     textAreaOut.append("La combinaison de la machine : " + machineIni + "\n");
-                                    textAreaOut.append("Machine est Out également\n");
+                                    textAreaOut.append("Machine est Out également\n\n");
+                                    textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                     textAreaIn.setEditable(false);
+                                    reloadButton.setVisible(true);
 
                                 } else if (nbrTours == 1) {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n";
 
                                     textAreaOut.append(message);
 
@@ -325,7 +345,7 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                             }
                         }
 
-                    } else if (step > 0 && counterM == nbrCombinaison) {
+                    } else if (step > 0 && counterM == nbrDigits) {
 
                         System.out.println("Step = " + step);
 
@@ -334,24 +354,26 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                         nbrTours--;
 
                         if (inputUser) {
-                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrCombinaison + " chiffres\n");
+                            textAreaOut.append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
                             textAreaOut.append("Attention, il vous reste " + nbrTours + " tours\n");
                         } else {
 
-                            humain = tools.convertStringToArrayListInteger(valueInput);
+                            humain = checkUserInput.getConvertStringToListInteger(valueInput);
                             textAreaOut.append("Valeur Attac Humain : " + humain.toString() + "\n");
 
                             resultH.clear();
-                            resultH = (checkUserInput.getComparaison(nbrCombinaison, humain, machineIni, resultH));
-                            counterH = checkUserInput.getEqualCounter(tools.convertArrayListToString(resultH));
+                            resultH = (checkUserInput.getComparison(nbrDigits, humain, machineIni, resultH));
+                            counterH = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultH));
 
-                            String toString = tools.convertArrayListToString(resultH);
+                            String toString = checkUserInput.getConvertListToString(resultH);
 
-                            if (counterH == nbrCombinaison) {
+                            if (counterH == nbrDigits) {
 
                                 textAreaOut.append("Félicitation ! mission accomplie en " + nbrTestsH + " tours :)\n");
-                                textAreaOut.append("Résulat : " + toString + "\n");
+                                textAreaOut.append("Résulat : " + toString + "\n\n");
+                                textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                 textAreaIn.setEditable(false);
+                                reloadButton.setVisible(true);
 
                             } else {
 
@@ -360,18 +382,20 @@ public class SearchMoreOrlessDuelLite extends JFrame {
                                 if (nbrTours == 0) {
 
                                     textAreaOut.append("GAME OVER !\n");
-                                    textAreaOut.append("la solution était : " + machineIni + "\n");
+                                    textAreaOut.append("la solution était : " + machineIni + "\n\n");
+                                    textAreaOut.append("Voulez-vous rejouer une nouvelle partie ?\n");
                                     textAreaIn.setEditable(false);
+                                    reloadButton.setVisible(true);
 
                                 } else if (nbrTours == 1) {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n\n";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n";
 
                                     textAreaOut.append(message);
 
                                 } else {
 
-                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n (" + machineIni + ")";
+                                    String message = "Désolez ! il faut essayer une nouvelle combinaison (Tour N°" + nbrTours + ") !\n";
 
                                     textAreaOut.append(message);
                                 }
@@ -397,5 +421,39 @@ public class SearchMoreOrlessDuelLite extends JFrame {
 
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
+    }
+
+    public JPanel reloadGame() {
+
+        JPanel choiceButtons = new JPanel();
+        choiceButtons.setLayout(new FlowLayout());
+
+        JButton yes = new JButton("Oui");
+        yes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                SearchMoreOrlessDuelLite reload = new SearchMoreOrlessDuelLite(nbrDigits, nbrTours, nbrRange, modeDev);
+                SearchMoreOrlessDuelLite.super.dispose();
+
+            }
+        });
+
+        choiceButtons.add(yes);
+
+        JButton no = new JButton("Non");
+        no.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                SearchMoreOrlessDuelLite.super.dispose();
+            }
+        });
+
+        choiceButtons.add(no);
+
+        return choiceButtons;
+
     }
 }

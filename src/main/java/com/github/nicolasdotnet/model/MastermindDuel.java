@@ -7,6 +7,7 @@ package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -18,66 +19,69 @@ import java.util.HashMap;
  */
 public class MastermindDuel extends Mastermind {
 
+    private MastermindAi inter = new MastermindDefenseur();
+
     public static void main(String[] args) {
 
         MastermindDuel run = new MastermindDuel();
+        Tools tools = Tools.getInstance();
 
         String def = "22";
-        int nbrCombinaison = 2;
+        int nbrDigits = 2;
         int nbrRange = 3;
         int nbrTests = 1;
         String machine2;
 
         // tour 1 : 
-        ArrayList<String> possible = run.generatAllPossible(nbrCombinaison, nbrRange);
+        List<String> possible = run.generateAllPossible(nbrDigits, nbrRange);
         System.out.println("taille possible : " + possible.size());
 
-        machine2 = run.getCombinaison(nbrTests, possible, nbrRange);
+        machine2 = run.getPossible(nbrTests, possible, nbrRange);
         System.out.println("machine2 : " + machine2);
-        ArrayList<Integer> machine = run.convertStringToArrayList(machine2);
+        List<Integer> machine = tools.convertStringToList(machine2);
 
-        HashMap<String, String> result = run.comparaison(def, machine);
+        HashMap<String, String> result = run.comparison(def, machine);
         System.out.println("result: " + run.displayResult(result) + "\n");
 
         // tour 2 : 
-        ArrayList<String> bestPossible = run.generatBestPossible(possible, result, machine);
+        List<String> bestPossible = run.generateBestPossible(possible, result, machine);
         System.out.println("\n taille bestPossible 1 : " + bestPossible.size());
 
         System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible : " + bestPossible.size());
 
-        machine2 = run.getCombinaison(nbrTests, bestPossible, nbrRange);
+        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
         System.out.println("machine2 : " + machine2);
-        machine = run.convertStringToArrayList(machine2);
+        machine = tools.convertStringToList(machine2);
 
-        result = run.comparaison(def, machine);
+        result = run.comparison(def, machine);
         System.out.println("result 2 : " + run.displayResult(result) + "\n");
 
         // tour 3 : 
-        bestPossible = run.generatBestPossible(bestPossible, result, machine);
+        bestPossible = run.generateBestPossible(bestPossible, result, machine);
         System.out.println("\n taille bestPossible 2 : " + bestPossible.size());
 
         System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 2 : " + bestPossible.size());
 
-        machine2 = run.getCombinaison(nbrTests, bestPossible, nbrRange);
+        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
         System.out.println("machine2 : " + machine2);
-        machine = run.convertStringToArrayList(machine2);
+        machine = tools.convertStringToList(machine2);
 
-        result = run.comparaison(def, machine);
+        result = run.comparison(def, machine);
         System.out.println("result 3 : " + run.displayResult(result) + "\n");
 
         // tour 4 :
-        if (Integer.parseInt(result.get("place")) != nbrCombinaison) {
+        if (Integer.parseInt(result.get("place")) != nbrDigits) {
 
-            bestPossible = run.generatBestPossible(bestPossible, result, machine);
+            bestPossible = run.generateBestPossible(bestPossible, result, machine);
             System.out.println("\n taille bestPossible 3 : " + bestPossible.size());
 
             System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 3 : " + bestPossible.size());
 
-            machine2 = run.getCombinaison(nbrTests, bestPossible, nbrRange);
+            machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
             System.out.println("machine2 : " + machine2);
-            machine = run.convertStringToArrayList(machine2);
+            machine = tools.convertStringToList(machine2);
 
-            result = run.comparaison(def, machine);
+            result = run.comparison(def, machine);
             System.out.println("result 4 : " + run.displayResult(result) + "\n");
 
         }
@@ -85,203 +89,102 @@ public class MastermindDuel extends Mastermind {
     }
 
     /**
-     * Complete list of combinaison possible generator function :
+     * Generator function of complete list of combination possible
      *
-     * @param nbrCombinaison number of digts of the combination
-     * @param nbrRange range of number for the combinaison
-     * @return complete list of combinaison possible
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combination
+     * @return complete list of combination possible
      */
-    public ArrayList<String> generatAllPossible(int nbrCombinaison, int nbrRange) {
+    public List<String> generateAllPossible(int nbrDigits, int nbrRange) {
 
-        ArrayList<String> possible = new ArrayList<String>();
+        return inter.generateAllPossible(nbrDigits, nbrRange);
+    }
 
-//        String combinaisonFormat = "";
-//
-//        for (int i = 0; i < nbrCombinaison; i++) {
-//
-//            combinaisonFormat += 0;
-//            System.out.println("combinaisonFormat : " + combinaisonFormat);
-//        }
-//
-//        DecimalFormat format = new DecimalFormat(combinaisonFormat);
-//
-//        for (int i = 0; i <= Math.pow(nbrRange, nbrCombinaison); i++) {
-//
-//            String combinaison = format.format(i);
-//
-//            possible.add(combinaison);
-//
-//        }
-        for (int i = 0; i <= nbrRange; i++) {
+    /**
+     * Random selection of machine combination :
+     *
+     * @param nbrTests number of test of comparison
+     * @param possible list of combination possible (complete or best)
+     * @param nbrRange range of number for the combination
+     * @return machine value
+     */
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange) {
 
-            for (int j = 0; j <= nbrRange; j++) {
+        return inter.getPossible(nbrTests, possible, nbrRange);
 
-                if (nbrCombinaison == 2) {
+    }
 
-                    String str = (String.valueOf(i) + String.valueOf(j));
-                    possible.add(str);
+    /**
+     * Generator function of list of best combination possible
+     *
+     * @param possible complete list of combination possible
+     * @param result result hashmap of the comparison() function
+     * @param machine machine value
+     * @return list of best combination possible
+     */
+    public List<String> generateBestPossible(List<String> possible, HashMap<String, String> result, List<Integer> machine) {
 
-                } else {
-                    for (int k = 0; k <= nbrRange; k++) {
+        return inter.generateBestPossible(possible, result, machine);
+    }
 
-                        if (nbrCombinaison == 3) {
-                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k));
-                            possible.add(str);
+    /**
+     * Generator function of solution combination
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
+    @Override
+    public String getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
 
-                        } else {
+        // "null"
+        if (sizure == "null") {
 
-                            for (int l = 0; l <= nbrRange; l++) {
+            // randomLimit
+            int[][] randomLimit = new int[2][nbrDigits];
 
-                                if (nbrCombinaison == 4) {
+            for (int i = 0; i < 2; i++) {
 
-                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l));
-                                    possible.add(str);
+                for (int j = 0; j < nbrDigits; j++) {
 
-                                } else {
+                    if (i == 0) {
 
-                                    for (int m = 0; m <= nbrRange; m++) {
+                        // Min value limit
+                        randomLimit[i][j] = 0;
 
-                                        if (nbrCombinaison == 5) {
+                    } else {
 
-                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m));
-                                            possible.add(str);
+                        // Max value limit
+                        randomLimit[i][j] = nbrRange;
 
-                                        } else {
-
-                                            for (int n = 0; n <= nbrRange; n++) {
-
-                                                if (nbrCombinaison == 6) {
-
-                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n));
-                                                    possible.add(str);
-                                                } else {
-
-                                                    for (int o = 0; o <= nbrRange; o++) {
-
-                                                        if (nbrCombinaison == 7) {
-
-                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o));
-                                                            possible.add(str);
-                                                        } else {
-
-                                                            for (int p = 0; p <= nbrRange; p++) {
-
-                                                                if (nbrCombinaison == 8) {
-
-                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p));
-                                                                    possible.add(str);
-                                                                } else {
-
-                                                                    for (int q = 0; q <= nbrRange; q++) {
-
-                                                                        if (nbrCombinaison == 9) {
-
-                                                                            String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q));
-                                                                            possible.add(str);
-                                                                        } else {
-                                                                            for (int r = 0; r <= nbrRange; r++) {
-
-                                                                                if (nbrCombinaison == 10) {
-
-                                                                                    String str = (String.valueOf(i) + String.valueOf(j) + String.valueOf(k) + String.valueOf(l) + String.valueOf(m) + String.valueOf(n) + String.valueOf(o) + String.valueOf(p) + String.valueOf(q) + String.valueOf(r));
-                                                                                    possible.add(str);
-                                                                                }
-                                                                            }
-
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                            }
-
-                        }
                     }
+
                 }
 
             }
-        }
 
-        int x = 0;
+            // inputmachine
+            List<Integer> inputMachine = new ArrayList<Integer>();
 
-        for (String combinaison : possible) {
-            System.out.println("combinaison : " + combinaison);
-            System.out.println("nbrPossible : " + x++);
+            for (int i = 0; i < nbrDigits; i++) {
 
-        }
+                inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
 
-        return possible;
-
-    }
-
-    /**
-     * Random selection of machine combinaison :
-     *
-     * @param nbrTests number of test of comparison
-     * @param possible list of combinaison possible (complete or best)
-     * @param nbrRange range of number for the combinaison
-     * @return machine value
-     */
-    public String getCombinaison(int nbrTests, ArrayList<String> possible, int nbrRange) {
-
-        String combinaison;
-
-        if (nbrTests == 1 && nbrRange == 6) {
-
-            combinaison = possible.get(1122);
-
-        } else {
-
-            int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
-            System.out.println("id : " + id);
-            combinaison = possible.get(id);
-        }
-        System.out.println("retour get combinaison");
-        return combinaison;
-
-    }
-
-    /**
-     * List of best combinaison possible generator function :
-     *
-     * @param possible complete list of combinaison possible
-     * @param result result hashmap of the comparison() function
-     * @param machine machine value
-     * @return list of best combinaison possible
-     */
-    public ArrayList<String> generatBestPossible(ArrayList<String> possible, HashMap<String, String> result, ArrayList<Integer> machine) {
-
-        HashMap<String, String> ri = new HashMap<String, String>();
-        ArrayList<String> bestPossible = new ArrayList<String>();
-
-        for (int i = 0; i < possible.size(); i++) {
-
-            ri = comparaison(possible.get(i), machine);
-
-            System.out.println("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
-            System.out.println("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
-
-            if (result.get("place").equals(ri.get("place")) && result.get("present").equals(ri.get("present"))) {
-
-                System.out.println("possible.get(i) : " + possible.get(i));
-                bestPossible.add(possible.get(i));
+                System.out.println("test A  : " + inputMachine.get(i) + " ");
 
             }
 
-        }
-        System.out.println("retour bestpossible");
-        return bestPossible;
+            // convertListIntegerToString
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < inputMachine.size(); i++) {
+                int num = inputMachine.get(i);
+                sb.append(num);
+            }
 
+            sizure = sb.toString();
+            System.out.println("sizure : " + sizure);
+        }
+        return sizure;
     }
 }

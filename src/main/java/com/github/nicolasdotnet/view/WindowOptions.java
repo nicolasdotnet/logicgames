@@ -5,7 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.model.Controller;
+import com.github.nicolasdotnet.controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  */
 public class WindowOptions extends WindowSource {
 
-    private int nbrCombinaison;
+    private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
@@ -49,12 +49,12 @@ public class WindowOptions extends WindowSource {
         this.setVisible(true);
     }
 
-    public int getNbrCombinaison() {
-        return nbrCombinaison;
+    public int getNbrDigits() {
+        return nbrDigits;
     }
 
-    public void setNbrCombinaison(int nbrCombinaison) {
-        this.nbrCombinaison = nbrCombinaison;
+    public void setNbrDigits(int nbrDigits) {
+        this.nbrDigits = nbrDigits;
     }
 
     public int getNbrTours() {
@@ -94,12 +94,12 @@ public class WindowOptions extends WindowSource {
         JPanel param = new JPanel();
         param.setLayout(new GridLayout(4, 2, 0, 0));
 
-        // nbrCombinaison Label instructions
+        // nbrDigits Label instructions
         JTextArea textAreaOut = new JTextArea("1) Tapez un N° entre 1 et 4 pour définir le N°\nde cases des combinaisons");
         textAreaOut.setEditable(false);
         param.add(textAreaOut);
 
-        // Field input value nbrCombinaison
+        // Field input value nbrDigits
         JTextField textFieldIn = new JTextField();
         param.add(textFieldIn);
 
@@ -111,9 +111,9 @@ public class WindowOptions extends WindowSource {
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
                     try {
-                        setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
+                        setNbrDigits(Integer.valueOf(textFieldIn.getText()));
                     } catch (NumberFormatException nfe) {
-                        System.out.println("valeur nbrCombinaison : " + textFieldIn.getText());
+                        System.out.println("valeur nbrDigits : " + textFieldIn.getText());
                     }
 
                 }
@@ -234,11 +234,11 @@ public class WindowOptions extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                boolean inputCombinaison = checkUserInput.inputErrorHome(textFieldIn.getText(), 4);
+                boolean inputDigits = checkUserInput.inputErrorHome(textFieldIn.getText(), 4);
                 boolean inputTours = checkUserInput.inputErrorHome(textFieldIn2.getText(), 9);
                 boolean inputRange = checkUserInput.inputErrorHome(textFieldIn3.getText(), 9);
 
-                if (inputCombinaison || inputTours || inputRange) {
+                if (inputDigits || inputTours || inputRange) {
                     textFieldIn.setText("");
                     textFieldIn2.setText("");
                     textFieldIn3.setText("");
@@ -247,7 +247,7 @@ public class WindowOptions extends WindowSource {
 
                     windowHome.setNbrRange(Integer.valueOf(textFieldIn3.getText()));
                     windowHome.setNbrTours(Integer.valueOf(textFieldIn2.getText()));
-                    windowHome.setNbrCombinaison(Integer.valueOf(textFieldIn.getText()));
+                    windowHome.setNbrDigits(Integer.valueOf(textFieldIn.getText()));
                     WindowOptions.this.dispose();
 
                 }

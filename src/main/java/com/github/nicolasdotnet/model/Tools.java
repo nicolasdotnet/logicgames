@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tools est la classe utilitaire des jeux SearchMoreOrless et Mastermind.
@@ -17,28 +18,41 @@ import java.util.ArrayList;
 public class Tools {
 
     /**
-     *
-     * @param nbrCombinaison number of digts of the combination
-     * @param nbrRange range of number for the combinaison
-     * @return max number limit and mini number limit for generate random number
+     * Instance unique pré-initialisée
      */
-    public int[][] randomLimitIni(int nbrCombinaison, int nbrRange) {
+    private static Tools INSTANCE = new Tools();
 
-        int[][] randomLimit = new int[2][nbrCombinaison];
+    /**
+     * Point d'accès pour l'instance unique du singleton
+     */
+    public static Tools getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * Random range generator function initial
+     *
+     * @param nbrDigits number of digits of the combination
+     * @param nbrRange range of number for the combinaison
+     * @return max number range and mini number range for generate random number
+     */
+    public int[][] generateRandomRangeInitial(int nbrDigits, int nbrRange) {
+
+        int[][] randomRange = new int[2][nbrDigits];
 
         for (int i = 0; i < 2; i++) {
 
-            for (int j = 0; j < nbrCombinaison; j++) {
+            for (int j = 0; j < nbrDigits; j++) {
 
                 if (i == 0) {
 
                     // Min value limit
-                    randomLimit[i][j] = 0;
+                    randomRange[i][j] = 0;
 
                 } else {
 
                     // Max value limit
-                    randomLimit[i][j] = nbrRange;
+                    randomRange[i][j] = nbrRange;
 
                 }
 
@@ -46,20 +60,62 @@ public class Tools {
 
         }
 
-        return randomLimit;
+        return randomRange;
+
+    }
+
+    /**
+     * Random range generator function new
+     *
+     * @param result result of the comparaison function
+     * @param attac value table of the Attaquant
+     * @param randomRange random limit initial
+     * @return new random range
+     */
+    public int[][] generateRandomRangeNew(List<String> result, List<Integer> attac, int[][] randomRange) {
+
+        for (int i = 0; i < result.size(); i++) {
+            String icon = result.get(i);
+
+            switch (icon) {
+
+                case "+":
+                    randomRange[0][i] = attac.get(i);
+                    System.out.println("min + : " + randomRange[0][i]);
+//            randomRange[1][i] = 9;
+                    System.out.println("max + : " + randomRange[1][i]);
+                    break;
+                case "-":
+                    System.out.println("min - : " + randomRange[0][i]);
+                    randomRange[1][i] = attac.get(i);
+                    System.out.println("max - : " + randomRange[1][i]);
+                    break;
+                case "=":
+                    randomRange[0][i] = attac.get(i);
+                    System.out.println("min = : " + randomRange[0][i]);
+                    randomRange[1][i] = attac.get(i);
+                    System.out.println("max = : " + randomRange[1][i]);
+
+                    break;
+
+            }
+
+        }
+
+        return randomRange;
 
     }
 
     // SearchMoreOrless
     /**
-     * convert function input user to Integer ArrayList :
+     * Convert function input user to Integer List
      *
-     * @param inputUser Number value input by user
-     * @return Number value to Integer ArrayList
+     * @param inputUser mumber value input by user
+     * @return number value to Integer List
      */
-    public ArrayList<Integer> convertStringToArrayListInteger(String inputUser) {
+    public List<Integer> convertStringToListInteger(String inputUser) {
 
-        ArrayList<Integer> convert = new ArrayList<Integer>();
+        List<Integer> convert = new ArrayList<Integer>();
 
         int length = inputUser.length();
 
@@ -76,12 +132,12 @@ public class Tools {
     }
 
     /**
-     * convert function result list of the comparison to String type :
+     * Convert function result list of the comparison to String type
      *
      * @param result Result arrayList of the comparison() function
      * @return result to String
      */
-    public String convertArrayListToString(ArrayList<String> result) {
+    public String convertListToString(List<String> result) {
 
         String convert = String.join(" ", result);
 
@@ -90,12 +146,12 @@ public class Tools {
     }
 
     /**
-     * convert function machine value (Integer ArrayList) to String type :
+     * Convert function machine value (Integer List) to String type
      *
-     * @param machine Integer ArrayList
+     * @param machine Integer List
      * @return machine value to String
      */
-    public String convertArrayListIntegerToString(ArrayList<Integer> machine) {
+    public String convertListIntegerToString(List<Integer> machine) {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < machine.size(); i++) {
@@ -109,14 +165,14 @@ public class Tools {
 
     // Mastermind
     /**
-     * convert function machive value to Integer ArrayList :
+     * Convert function machive value to Integer List
      *
      * @param machine machive value
-     * @return String value to Integer ArrayList
+     * @return String value to Integer List
      */
-    public ArrayList<Integer> convertStringToArrayList(String machine) {
+    public List<Integer> convertStringToList(String machine) {
 
-        ArrayList<Integer> convert = new ArrayList<Integer>();
+        List<Integer> convert = new ArrayList<Integer>();
 
         int length = machine.length();
 

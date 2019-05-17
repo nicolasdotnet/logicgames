@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class MastermindTest {
     
+    // test comparaison, analyse du resultat, generation possible et solution sur master et recherche +/-
+    
     public MastermindTest() {
     }
     

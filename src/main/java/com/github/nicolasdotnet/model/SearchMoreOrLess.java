@@ -5,8 +5,8 @@
  */
 package com.github.nicolasdotnet.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * SearchMoreOrLess est la classe métier du jeux Recherche +/-.
@@ -16,35 +16,11 @@ import java.util.Collections;
  * @since 2019
  */
 public abstract class SearchMoreOrLess {
-    
-    /**
-     * convert function input user to Integer ArrayList :
-     *
-     * @param inputUser Number value input by user
-     * @return Number value to Integer ArrayList
-     */
-    public ArrayList<Integer> convertStringToArrayListInteger(String inputUser) {
-
-        ArrayList<Integer> convert = new ArrayList<Integer>();
-
-        int length = inputUser.length();
-
-        // Cast String to Int
-        for (int i = 0; i <= length - 1; i++) {
-
-            char car = inputUser.charAt(i);
-
-            convert.add(Character.getNumericValue(inputUser.charAt(i)));
-        }
-
-        return convert;
-
-    }
 
     /**
-     * count function the number of equals in the result string :
+     * Count function the number of equals in the result string
      *
-     * @param result Result string of the comparison() function
+     * @param result result string of the comparison() function
      * @return number of equals to int
      */
     public int equalCounter(String result) {
@@ -54,9 +30,9 @@ public abstract class SearchMoreOrLess {
         int index = result.indexOf("=");
 
         while (index >= 0) {
-            
+
             counter++;
-            System.out.println("counter while : "+counter);
+            System.out.println("counter while : " + counter);
             index = result.indexOf("=", index + 1);
 
         }
@@ -66,56 +42,24 @@ public abstract class SearchMoreOrLess {
     }
 
     /**
-     * convert function result list of the comparison to String type :
+     * Comparison function of attac value and defenseur value
      *
-     * @param result Result arrayList of the comparison() function
-     * @return result to String
-     */
-    public String convertArrayListToString(ArrayList<String> result) {
-
-        String convert = String.join(" ", result);
-
-        return convert;
-
-    }
-
-    /**
-     * convert function machine value (Integer ArrayList) to String type :
-     *
-     * @param machine Integer ArrayList
-     * @return machine value to String
-     */
-    public String convertArrayListIntegerToString(ArrayList<Integer> machine) {
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < machine.size(); i++) {
-            int num = machine.get(i);
-            sb.append(num);
-        }
-
-        return sb.toString();
-
-    }
-
-    /**
-     * comparison function of attac value and defenseur value :
-     *
-     * @param nbrCombinaison number of digts of the combination
-     * @param attac value table of the Attaquant
-     * @param def value table of the Defenseur
+     * @param nbrDigits number of digts of the combination
+     * @param attac value table of the attacker
+     * @param def value table of the defender
      * @param result result arrayList of the comparison() function for recursive
      * method
-     * @return result of the comparaison.
+     * @return result of the comparison
      */
-    public ArrayList<String> comparaison(int nbrCombinaison, ArrayList<Integer> attac, ArrayList<Integer> def, ArrayList<String> result) {
+    public List<String> comparison(int nbrDigits, List<Integer> attac, List<Integer> def, List<String> result) {
 
         int nbr;
 
-        int index = nbrCombinaison - 1;
+        int index = nbrDigits - 1;
 
         System.out.println("Index : " + index);
 
-        System.out.println("\n nbrCombinaison : " + nbrCombinaison);
+        System.out.println("\n nbrDigits : " + nbrDigits);
 
         if (index < 0) {
 
@@ -157,12 +101,20 @@ public abstract class SearchMoreOrLess {
 
         }
 
-        comparaison(index, attac, def, result);
+        comparison(index, attac, def, result);
 
         return result;
 
     }
-    
-    public abstract String generatSolution (int nbrCombinaison, int nbrRange, String saissie);
+
+    /**
+     * Generator function of solution combination
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
+    public abstract String getSolutionCombination(int nbrDigits, int nbrRange, String sizure);
 
 }

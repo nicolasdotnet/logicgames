@@ -7,139 +7,65 @@ package com.github.nicolasdotnet.controller;
 
 import com.github.nicolasdotnet.model.*;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * Controller est la classe qui vérifie la sizure du joueur humain
+ * ControllerSearchMoreOrLessChallenger est la classe controller entre la vue et
+ * le métier du jeu SearchMoreOrLess en mode Challenger
  *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
  */
-public class ControllerSearchMoreOrLessChallenger {
-    
+public class ControllerSearchMoreOrLessChallenger extends Controller {
+
     private static final Logger log = LogManager.getLogger(ControllerSearchMoreOrLessChallenger.class);
     private SearchMoreOrLessChallenger game = new SearchMoreOrLessChallenger();
 
     /**
-     * Number value input by user : test the sizure of the user for nbrCombinaison-> ToDo
+     * Controller method that calls the model get solution combination method
      *
-     * @param sizure input clavier user
-     * @param nbrCombinaison number of digts of the combination
-     * @return valid or invalid the sizure by a bolean
-     */
-    public Boolean inputError(String sizure, int nbrCombinaison) {
-
-        boolean inputUser = false;
-        int nbrTrue = 0;
-
-        if (sizure.length() != nbrCombinaison) {
-
-            nbrTrue++;
-            System.out.print("Attention taille incorrecte !");
-            log.error("Attention taille incorrecte !");
-
-        } else {
-
-            for (int i = 0; i < sizure.length(); i++) {
-
-                char c = sizure.charAt(i);
-
-                if (c >= '0' && c <= '9') {
-
-                } else {
-
-                    System.out.print("Attention saisi Alpha !! saisir un nombre !");
-
-                    nbrTrue++;
-                }
-
-            }
-        }
-
-        if (nbrTrue > 0) {
-
-            inputUser = true;
-            log.info("Saisie invalide / FALSE !");
-
-        }else{
-
-        log.info("Saisie validée / TRUE !");}
-        
-                System.out.println("false : " + inputUser);
-        System.out.println("nbrTrue++ : " + nbrTrue);
-
-        return inputUser;
-
-    }
-
-    /**
-     * Number value input by user : test the sizure of the user for nbrRange
-     * @param sizure input clavier user
+     * @param nbrDigits number of digts of the combination
      * @param nbrRange range of number for the combinaison
-     * @return valid or invalid the sizure by a bolean
+     * @param sizure value input by user
+     * @return solution combination generate
      */
-    public boolean inputErrorHome(String sizure, int nbrRange) {
-        
-        boolean inputUser = false;
-        int nbrTrue = 0;
-
-        if (sizure.length() != 1) {
-
-            nbrTrue++;
-            System.out.print("Attention taille incorrecte !");
-
-        } else {
-
-            for (int i = 0; i < sizure.length(); i++) {
-
-                char c = sizure.charAt(i);
-
-                if (c >= '0' && c <= (char)('0'+nbrRange)) {
-
-                } else {
-
-                    System.out.print("Attention saisi Alpha !! saisir un nombre !");
-                    System.out.print("nbrRange value : "+(char)('0'+nbrRange));
-
-                    nbrTrue++;
-                }
-
-            }
-        }
-
-        if (nbrTrue > 0) {
-
-            inputUser = true;
-
-        }
-        
-        System.out.println("false : " + inputUser);
-        System.out.println("nbrTrue++ : " + nbrTrue);
-
-        return inputUser;
-
-    }
-
-    public ArrayList<Integer> getGeneratSolution(int nbrCombinaison, int nbrRange, String valueInput) {
-        ArrayList<Integer> machine = new ArrayList<Integer>();
+    public List<Integer> getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
+        List<Integer> machine = new ArrayList<Integer>();
         Tools tools = new Tools();
         String temp;
-        temp = game.generatSolution(nbrCombinaison, nbrRange, valueInput);
-        machine = tools.convertStringToArrayListInteger(temp);
-        
+
+        temp = game.getSolutionCombination(nbrDigits, nbrRange, sizure);
+        machine = tools.convertStringToListInteger(temp);
+
         return machine;
     }
 
-    public ArrayList<String> getComparaison(int nbrCombinaison, ArrayList<Integer> humain, ArrayList<Integer> machine, ArrayList<String> result) {
-        return (game.comparaison(nbrCombinaison, humain, machine, result));}
-
-    public int getEqualCounter(String convertArrayListToString) {
-        return game.equalCounter(convertArrayListToString);
+    /**
+     * Controller method that calls the model comparison method
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param humain value table of the attacker
+     * @param machine value table of the defender
+     * @param result result arrayList of the comparison() function for recursive
+     * method
+     * @return result of the comparison
+     */
+    public List<String> getComparison(int nbrDigits, List<Integer> humain, List<Integer> machine, List<String> result) {
+        return game.comparison(nbrDigits, humain, machine, result);
     }
-    
-    
-    
+
+    /**
+     * Controller method that calls the model the equal count method
+     *
+     * @param result result string of the comparison() function
+     * @return number of equals to int
+     */
+    public int getEqualCounter(String result) {
+        return game.equalCounter(result);
+    }
+
 }
