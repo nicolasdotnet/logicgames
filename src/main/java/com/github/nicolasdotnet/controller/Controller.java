@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.controller;
 
 import com.github.nicolasdotnet.model.*;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -182,15 +183,34 @@ public class Controller {
     public String getConvertListIntegerToString(List<Integer> value) {
         return tools.convertListIntegerToString(value);
     }
-    
+
     /**
-     * 
+     * Controller method that calls the model instance propertie generation
+     * method
+     *
      * @return propertie objet
      */
-    public Propertie getInstancePropertie(){
+    public Propertie getInstancePropertie() {
         Propertie propertie = new Propertie();
-        return  propertie;
+        return propertie;
+
+    }
+
+    /**
+     * Controller method that calls the model parameter backup generation
+     * method
+     *
+     * @param title 
+     * @param nbrDigits number of digts of the combination
+     * @param nbrTours
+     * @param nbrRange range of number for the combination
+     * @param modeDev
+     * @return parameter backup
+     */
+    public HashMap<String, String> getParameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         
+        return tools.parameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
+
     }
 
 }

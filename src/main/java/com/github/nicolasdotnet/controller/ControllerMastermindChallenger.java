@@ -58,7 +58,7 @@ public class ControllerMastermindChallenger extends Controller {
     public List<Integer> getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
 
         List<Integer> machine = new ArrayList<Integer>();
-        Tools tools = new Tools();
+        Tools tools = Tools.getInstance();
         String temp;
 
         temp = game.getSolutionCombination(nbrDigits, nbrRange, sizure);

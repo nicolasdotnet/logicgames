@@ -6,6 +6,7 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,6 +17,12 @@ import java.util.List;
  * @since 2019
  */
 public class Tools {
+
+    /**
+     * Constructeur privé
+     */
+    private Tools() {
+    }
 
     /**
      * Instance unique pré-initialisée
@@ -185,6 +192,21 @@ public class Tools {
         }
 
         return convert;
+
+    }
+
+    public HashMap<String, String> parameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
+        
+        HashMap<String, String> backup = new HashMap<String, String>();
+        backup.put("title", title);
+        backup.put("nbrDigits", String.valueOf(nbrDigits));
+        backup.put("nbrTours", String.valueOf(nbrTours));
+        backup.put("nbrRange", String.valueOf(nbrRange));
+        backup.put("modeDev", String.valueOf(modeDev));
+        
+        System.out.println("modevback"+modeDev);
+
+        return backup;
 
     }
 

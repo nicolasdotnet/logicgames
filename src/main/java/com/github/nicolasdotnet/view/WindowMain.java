@@ -215,12 +215,12 @@ public class WindowMain extends WindowSource {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessChallengerLite run = new SearchMoreOrlessChallengerLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrLessChallenger run = new SearchMoreOrLessChallenger("Recherche +/- Challenger",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindChallengerLite run = new MastermindChallengerLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindChallenger run = new MastermindChallenger("Mastermind Challenger",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
 
@@ -238,13 +238,13 @@ public class WindowMain extends WindowSource {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessDefenseurLite run = new SearchMoreOrlessDefenseurLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur("Recherche +/- Défenseur",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
 
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindDefenseurLite run = new MastermindDefenseurLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindDefenseur run = new MastermindDefenseur("Mastermind Défenseur",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
                     }
@@ -260,12 +260,12 @@ public class WindowMain extends WindowSource {
                         if (searchMoreOrLess == 1) {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            SearchMoreOrlessDuelLite run = new SearchMoreOrlessDuelLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            SearchMoreOrLessDuel run = new SearchMoreOrLessDuel("Recherche +/- Duel",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         } else {
                             System.out.println("nbrtour Main : " + getNbrTours());
                             System.out.println("Modedev Main : " + isModeDev());
-                            MastermindDuelLite run = new MastermindDuelLite(getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            MastermindDuel run = new MastermindDuel("Mastermind Duel",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
 
                         }
                     }

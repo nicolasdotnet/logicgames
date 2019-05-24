@@ -58,7 +58,7 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess implements Searc
 
         for (int i = 0; i < nbrDigits; i++) {
 
-            inputMachine.add((int) ((1 + (randomRange[1][i] - randomRange[0][i])) * Math.random()) + randomRange[0][i]);
+            inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
             System.out.println("test A  : " + inputMachine.get(i) + " ");
 
