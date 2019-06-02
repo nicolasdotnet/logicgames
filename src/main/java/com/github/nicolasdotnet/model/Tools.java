@@ -146,7 +146,7 @@ public class Tools {
      */
     public String convertListToString(List<String> result) {
 
-        String convert = String.join(" ", result);
+        String convert = String.join("", result);
 
         return convert;
 
