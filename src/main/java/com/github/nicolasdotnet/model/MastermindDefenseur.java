@@ -9,6 +9,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -20,74 +22,9 @@ import java.util.List;
  */
 public class MastermindDefenseur extends Mastermind implements MastermindAi {
 
-    public static void main(String[] args) {
+    private static final Logger log = LogManager.getLogger(MastermindDefenseur.class);
+// methodes AI
 
-        MastermindDefenseur run = new MastermindDefenseur();
-        Tools tools = Tools.getInstance();
-
-        String def = "11";
-        int nbrDigits = 2; // de 0 a 2 inclu dc 0;1;2
-        int nbrRange = 2;
-        int nbrTests = 1;
-        String machine2;
-
-        // tour 1 : 
-        List<String> possible = run.generateAllPossible(nbrDigits, nbrRange);
-        System.out.println("taille possible : " + possible.size());
-
-        machine2 = run.getPossible(nbrTests, possible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        List<Integer> machine = tools.convertStringToList(machine2);
-
-        HashMap<String, String> result = run.comparison(def, machine);
-        System.out.println("result: " + run.displayResult(result) + "\n");
-
-        // tour 2 : 
-        List<String> bestPossible = run.generateBestPossible(possible, result, machine);
-        System.out.println("\n taille bestPossible 1 : " + bestPossible.size());
-
-        System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible : " + bestPossible.size());
-
-        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        machine = tools.convertStringToList(machine2);
-
-        result = run.comparison(def, machine);
-        System.out.println("result 2 : " + run.displayResult(result) + "\n");
-
-        // tour 3 : 
-        bestPossible = run.generateBestPossible(bestPossible, result, machine);
-        System.out.println("\n taille bestPossible 2 : " + bestPossible.size());
-
-        System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 2 : " + bestPossible.size());
-
-        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        machine = tools.convertStringToList(machine2);
-
-        result = run.comparison(def, machine);
-        System.out.println("result 3 : " + run.displayResult(result) + "\n");
-
-        // tour 4 :
-        if (Integer.parseInt(result.get("place")) != nbrDigits) {
-
-            bestPossible = run.generateBestPossible(bestPossible, result, machine);
-            System.out.println("\n taille bestPossible 3 : " + bestPossible.size());
-
-            System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 3 : " + bestPossible.size());
-
-            machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-            System.out.println("machine2 : " + machine2);
-            machine = tools.convertStringToList(machine2);
-
-            result = run.comparison(def, machine);
-            System.out.println("result 4 : " + run.displayResult(result) + "\n");
-
-        }
-
-    }
-
-    // methodes AI
     /**
      * Generator function of complete list of combination possible
      *
@@ -103,20 +40,20 @@ public class MastermindDefenseur extends Mastermind implements MastermindAi {
         for (int i = 0; i < nbrDigits; i++) {
 
             combinationFormat += 0;
-            System.out.println("combinationFormat : " + combinationFormat);
+            log.info("combinationFormat : " + combinationFormat);
         }
 
         DecimalFormat format = new DecimalFormat(combinationFormat);
 
         for (int i = 0; i <= (Math.pow(nbrRange, nbrDigits) - 1); i++) {
 
-            System.out.println("combinaison base 10 : " + i);
+            log.info("combinaison base 10 : " + i);
 
             int item = Integer.parseInt(Integer.toString(i, nbrRange));
 
             String combination = format.format(item);
 
-            System.out.println("combination base " + nbrRange + " : " + combination);
+            log.info("combination base " + nbrRange + " : " + combination);
 
             possible.add(combination);
 
@@ -144,10 +81,9 @@ public class MastermindDefenseur extends Mastermind implements MastermindAi {
         } else {
 
             int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
-            System.out.println("id : " + id);
+            log.info("id : " + id);
             combination = possible.get(id);
         }
-        System.out.println("retour get combinaison");
         return combination;
 
     }
@@ -169,18 +105,18 @@ public class MastermindDefenseur extends Mastermind implements MastermindAi {
 
             ri = comparison(possible.get(i), machine);
 
-            System.out.println("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
-            System.out.println("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
+            log.info("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
+            log.info("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
 
             if (result.get("place").equals(ri.get("place")) && result.get("present").equals(ri.get("present"))) {
 
-                System.out.println("possible.get(i) : " + possible.get(i));
+                log.info("possible.get(i) : " + possible.get(i));
                 bestPossible.add(possible.get(i));
 
             }
 
         }
-        System.out.println("retour bestpossible");
+
         return bestPossible;
 
     }

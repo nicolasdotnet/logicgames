@@ -63,41 +63,6 @@ public class Propertie {
 
     }
 
-//    public void uploadProperties() {
-//
-//        InputStream upload = null;
-//        Properties prop = null;
-//        try {
-//            prop = new Properties();
-//            upload = Propertie.class.getResourceAsStream("/config.properties");
-//            prop.load(upload);
-//            upload.close();
-//
-//            this.modeDev = Boolean.parseBoolean(prop.getProperty("modeDev"));
-//            this.nbrDigits = Integer.parseInt(prop.getProperty("nbrDigits"));
-//            this.nbrTours = Integer.parseInt(prop.getProperty("nbrTours"));
-//            this.nbrRange = Integer.parseInt(prop.getProperty("nbrRange"));
-//
-//        } catch (FileNotFoundException ex) {
-//
-//            log.debug("Fichier parametres non trouvé", ex);
-//
-//        } catch (IOException ex) {
-//
-//            log.debug("Erreur pendant l'import", ex);
-//
-//        } finally {
-//            try {
-//                upload.close();
-//            } catch (IOException ex) {
-//                log.debug("Erreur pendant la fermeture de l'import", ex);
-//            }
-//        }
-//
-//        log.info("Fichier parametres importé");
-//
-//    }
-
     public boolean isModeDev() {
         return modeDev;
     }

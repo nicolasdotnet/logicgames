@@ -55,8 +55,6 @@ public class WindowHome extends WindowSource {
 
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
-
-        System.out.println("modeDevHome " + modeDev);
     }
 
     public int getNbrRange() {
@@ -162,8 +160,6 @@ public class WindowHome extends WindowSource {
 
                 } catch (NumberFormatException nfe) {
 
-                    System.out.println("helloWorld");
-                    System.out.println("Modedev : " + modeDev);
 
                 }
             }

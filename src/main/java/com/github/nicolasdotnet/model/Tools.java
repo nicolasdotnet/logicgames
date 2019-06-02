@@ -8,6 +8,8 @@ package com.github.nicolasdotnet.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Tools est la classe utilitaire des jeux SearchMoreOrless et Mastermind.
@@ -17,6 +19,8 @@ import java.util.List;
  * @since 2019
  */
 public class Tools {
+
+    private static final Logger log = LogManager.getLogger(Tools.class);
 
     /**
      * Constructeur privé
@@ -88,20 +92,20 @@ public class Tools {
 
                 case "+":
                     randomRange[0][i] = attac.get(i);
-                    System.out.println("min + : " + randomRange[0][i]);
+                    log.info("min + : " + randomRange[0][i]);
 //            randomRange[1][i] = 9;
-                    System.out.println("max + : " + randomRange[1][i]);
+                    log.info("max + : " + randomRange[1][i]);
                     break;
                 case "-":
-                    System.out.println("min - : " + randomRange[0][i]);
+                    log.info("min - : " + randomRange[0][i]);
                     randomRange[1][i] = attac.get(i);
-                    System.out.println("max - : " + randomRange[1][i]);
+                    log.info("max - : " + randomRange[1][i]);
                     break;
                 case "=":
                     randomRange[0][i] = attac.get(i);
-                    System.out.println("min = : " + randomRange[0][i]);
+                    log.info("min = : " + randomRange[0][i]);
                     randomRange[1][i] = attac.get(i);
-                    System.out.println("max = : " + randomRange[1][i]);
+                    log.info("max = : " + randomRange[1][i]);
 
                     break;
 
@@ -196,15 +200,13 @@ public class Tools {
     }
 
     public HashMap<String, String> parameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
-        
+
         HashMap<String, String> backup = new HashMap<String, String>();
         backup.put("title", title);
         backup.put("nbrDigits", String.valueOf(nbrDigits));
         backup.put("nbrTours", String.valueOf(nbrTours));
         backup.put("nbrRange", String.valueOf(nbrRange));
         backup.put("modeDev", String.valueOf(modeDev));
-        
-        System.out.println("modevback"+modeDev);
 
         return backup;
 

@@ -40,7 +40,6 @@ public class Controller {
         if (sizure.length() != nbrDigits) {
 
             nbrTrue++;
-            System.out.print("Attention taille incorrecte !");
             log.error("Attention taille incorrecte !");
 
         } else {
@@ -53,7 +52,7 @@ public class Controller {
 
                 } else {
 
-                    System.out.print("Attention saisi Alpha !! saisir un nombre !");
+                    log.error("Attention saisi Alpha !! il faut saisir un nombre !");
 
                     nbrTrue++;
                 }
@@ -70,9 +69,6 @@ public class Controller {
 
             log.info("Saisie validée / TRUE !");
         }
-
-        System.out.println("false : " + inputUser);
-        System.out.println("nbrTrue++ : " + nbrTrue);
 
         return inputUser;
 
@@ -93,7 +89,7 @@ public class Controller {
         if (sizure.length() != 1) {
 
             nbrTrue++;
-            System.out.print("Attention taille incorrecte !");
+            log.error("Attention taille incorrecte !");
 
         } else {
 
@@ -105,8 +101,8 @@ public class Controller {
 
                 } else {
 
-                    System.out.print("Attention saisi Alpha !! saisir un nombre !");
-                    System.out.print("nbrRange value : " + (char) ('0' + nbrRange));
+                    log.error("Attention saisi Alpha !! saisir un nombre !");
+                    log.error("nbrRange value : " + (char) ('0' + nbrRange));
 
                     nbrTrue++;
                 }
@@ -117,11 +113,12 @@ public class Controller {
         if (nbrTrue > 0) {
 
             inputUser = true;
+            log.info("Saisie invalide / FALSE !");
 
+        } else {
+
+            log.info("Saisie validée / TRUE !");
         }
-
-        System.out.println("false : " + inputUser);
-        System.out.println("nbrTrue++ : " + nbrTrue);
 
         return inputUser;
 
@@ -197,10 +194,9 @@ public class Controller {
     }
 
     /**
-     * Controller method that calls the model parameter backup generation
-     * method
+     * Controller method that calls the model parameter backup generation method
      *
-     * @param title 
+     * @param title
      * @param nbrDigits number of digts of the combination
      * @param nbrTours
      * @param nbrRange range of number for the combination
@@ -208,7 +204,7 @@ public class Controller {
      * @return parameter backup
      */
     public HashMap<String, String> getParameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
-        
+
         return tools.parameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
     }

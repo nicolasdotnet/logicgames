@@ -84,7 +84,6 @@ public class WindowGame extends JFrame {
         modeDevPanel.setLayout(new BorderLayout());
 
         solution = new JLabel();
-        System.out.println("modeDev Lite : " + isModeDev());
         solution.setVisible(isModeDev());
         modeDevPanel.add(solution, BorderLayout.NORTH);
 

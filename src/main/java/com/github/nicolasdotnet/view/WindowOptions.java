@@ -17,6 +17,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -32,10 +34,11 @@ public class WindowOptions extends WindowSource {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
+    private static final Logger log = LogManager.getLogger(WindowOptions.class);
 
-    Controller checkUserInput = new Controller();
-    Boolean inputUser;
-    WindowHome windowHome;
+    private Controller checkUserInput = new Controller();
+    private Boolean inputUser;
+    private WindowHome windowHome;
 
     public WindowOptions(WindowHome windowHome) {
         this.windowHome = windowHome;
@@ -113,7 +116,7 @@ public class WindowOptions extends WindowSource {
                     try {
                         setNbrDigits(Integer.valueOf(textFieldIn.getText()));
                     } catch (NumberFormatException nfe) {
-                        System.out.println("valeur nbrDigits : " + textFieldIn.getText());
+                        log.error("valeur nbrDigits : " + textFieldIn.getText());
                     }
 
                 }
@@ -141,7 +144,7 @@ public class WindowOptions extends WindowSource {
                     try {
                         setNbrTours(Integer.valueOf(textFieldIn2.getText()));
                     } catch (NumberFormatException nfe) {
-                        System.out.println("valeur nbrTours : " + textFieldIn2.getText());
+                        log.error("valeur nbrTours : " + textFieldIn2.getText());
                     }
 
                 }
@@ -170,7 +173,7 @@ public class WindowOptions extends WindowSource {
                         setNbrRange(Integer.valueOf(textFieldIn3.getText()));
                     } catch (NumberFormatException nfe) {
 
-                        System.out.println("valeur nbrRange : " + textFieldIn3.getText());
+                        log.error("valeur nbrRange : " + textFieldIn3.getText());
 
                     }
 
@@ -195,13 +198,13 @@ public class WindowOptions extends WindowSource {
 
                 if (modeDevCheck.isSelected()) {
 
-                    System.out.println("coché !");
+                    log.info("coché !");
 
                     windowHome.setModeDev(true);
 
                 } else {
 
-                    System.out.println("décoché !");
+                    log.info("décoché !");
                     windowHome.setModeDev(false);
                 }
             }
@@ -219,7 +222,7 @@ public class WindowOptions extends WindowSource {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+
                 WindowOptions.this.dispose();
 
             }

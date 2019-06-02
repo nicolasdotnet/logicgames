@@ -44,7 +44,6 @@ public class SearchMoreOrLessDefenseurTest {
      */
     @Test
     public void testEqualCounter() {
-        System.out.println("equalCounter");
         String resultat = "==+==";
         SearchMoreOrLessDefenseur instance = new SearchMoreOrLessDefenseur();
         int expResult = 4;

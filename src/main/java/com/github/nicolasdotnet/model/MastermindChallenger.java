@@ -7,6 +7,8 @@ package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -17,6 +19,8 @@ import java.util.List;
  * @since 2019
  */
 public class MastermindChallenger extends Mastermind {
+
+    private static final Logger log = LogManager.getLogger(MastermindChallenger.class);
 
     /**
      * Generator function of solution combination
@@ -59,7 +63,7 @@ public class MastermindChallenger extends Mastermind {
 
             inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
-            System.out.println("test A  : " + inputMachine.get(i) + " ");
+            log.info("test A  : " + inputMachine.get(i) + " ");
 
         }
 

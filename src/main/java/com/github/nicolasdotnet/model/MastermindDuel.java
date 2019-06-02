@@ -8,6 +8,8 @@ package com.github.nicolasdotnet.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -20,73 +22,7 @@ import java.util.List;
 public class MastermindDuel extends Mastermind {
 
     private MastermindAi inter = new MastermindDefenseur();
-
-    public static void main(String[] args) {
-
-        MastermindDuel run = new MastermindDuel();
-        Tools tools = Tools.getInstance();
-
-        String def = "22";
-        int nbrDigits = 2;
-        int nbrRange = 3;
-        int nbrTests = 1;
-        String machine2;
-
-        // tour 1 : 
-        List<String> possible = run.generateAllPossible(nbrDigits, nbrRange);
-        System.out.println("taille possible : " + possible.size());
-
-        machine2 = run.getPossible(nbrTests, possible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        List<Integer> machine = tools.convertStringToList(machine2);
-
-        HashMap<String, String> result = run.comparison(def, machine);
-        System.out.println("result: " + run.displayResult(result) + "\n");
-
-        // tour 2 : 
-        List<String> bestPossible = run.generateBestPossible(possible, result, machine);
-        System.out.println("\n taille bestPossible 1 : " + bestPossible.size());
-
-        System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible : " + bestPossible.size());
-
-        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        machine = tools.convertStringToList(machine2);
-
-        result = run.comparison(def, machine);
-        System.out.println("result 2 : " + run.displayResult(result) + "\n");
-
-        // tour 3 : 
-        bestPossible = run.generateBestPossible(bestPossible, result, machine);
-        System.out.println("\n taille bestPossible 2 : " + bestPossible.size());
-
-        System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 2 : " + bestPossible.size());
-
-        machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-        System.out.println("machine2 : " + machine2);
-        machine = tools.convertStringToList(machine2);
-
-        result = run.comparison(def, machine);
-        System.out.println("result 3 : " + run.displayResult(result) + "\n");
-
-        // tour 4 :
-        if (Integer.parseInt(result.get("place")) != nbrDigits) {
-
-            bestPossible = run.generateBestPossible(bestPossible, result, machine);
-            System.out.println("\n taille bestPossible 3 : " + bestPossible.size());
-
-            System.out.println("\n Bilan -> taille possible : " + possible.size() + " ; taille bestPossible 3 : " + bestPossible.size());
-
-            machine2 = run.getPossible(nbrTests, bestPossible, nbrRange);
-            System.out.println("machine2 : " + machine2);
-            machine = tools.convertStringToList(machine2);
-
-            result = run.comparison(def, machine);
-            System.out.println("result 4 : " + run.displayResult(result) + "\n");
-
-        }
-
-    }
+    private static final Logger log = LogManager.getLogger(MastermindDuel.class);
 
     /**
      * Generator function of complete list of combination possible
@@ -171,7 +107,7 @@ public class MastermindDuel extends Mastermind {
 
                 inputMachine.add((int) ((randomLimit[1][i] - randomLimit[0][i]) * Math.random()) + randomLimit[0][i]);
 
-                System.out.println("test A  : " + inputMachine.get(i) + " ");
+                log.info("test A  : " + inputMachine.get(i) + " ");
 
             }
 
@@ -183,7 +119,7 @@ public class MastermindDuel extends Mastermind {
             }
 
             sizure = sb.toString();
-            System.out.println("sizure : " + sizure);
+            log.info("sizure : " + sizure);
         }
         return sizure;
     }

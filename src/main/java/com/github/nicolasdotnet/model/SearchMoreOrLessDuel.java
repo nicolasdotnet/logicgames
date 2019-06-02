@@ -7,6 +7,8 @@ package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -19,6 +21,7 @@ import java.util.List;
 public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
     private SearchMoreOrlLessAi inter = new SearchMoreOrLessDefenseur();
+    private static final Logger log = LogManager.getLogger(SearchMoreOrLessDuel.class);
 
     /**
      * Generator function of solution combination
@@ -64,7 +67,7 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
                 inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
-                System.out.println("test A  : " + inputMachine.get(i) + " ");
+                log.info("test A  : " + inputMachine.get(i) + " ");
 
             }
 
@@ -76,7 +79,7 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
             }
 
             sizure = sb.toString();
-            System.out.println("sizure : " + sizure);
+            log.info("sizure : " + sizure);
         }
         return sizure;
     }

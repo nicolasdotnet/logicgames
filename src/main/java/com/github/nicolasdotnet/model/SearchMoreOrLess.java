@@ -7,6 +7,8 @@ package com.github.nicolasdotnet.model;
 
 import java.util.Collections;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * SearchMoreOrLess est la classe métier du jeux Recherche +/-.
@@ -16,6 +18,8 @@ import java.util.List;
  * @since 2019
  */
 public abstract class SearchMoreOrLess {
+
+    private static final Logger log = LogManager.getLogger(SearchMoreOrLess.class);
 
     /**
      * Count function the number of equals in the result string
@@ -32,7 +36,7 @@ public abstract class SearchMoreOrLess {
         while (index >= 0) {
 
             counter++;
-            System.out.println("counter while : " + counter);
+            log.info("counter while : " + counter);
             index = result.indexOf("=", index + 1);
 
         }
@@ -57,9 +61,9 @@ public abstract class SearchMoreOrLess {
 
         int index = nbrDigits - 1;
 
-        System.out.println("Index : " + index);
+        log.info("Index : " + index);
 
-        System.out.println("\n nbrDigits : " + nbrDigits);
+        log.info("\n nbrDigits : " + nbrDigits);
 
         if (index < 0) {
 
@@ -72,30 +76,30 @@ public abstract class SearchMoreOrLess {
         if (attac.get(index) < def.get(index)) {
 
             result.add("+");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
+            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
 
-            System.out.print("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
+            log.info("attac : " + attac.get(index) + " ");
+            log.info("def : " + def.get(index));
 
             nbr = 0;
 
         } else if (attac.get(index) > def.get(index)) {
 
             result.add("-");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
+            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
 
-            System.out.print("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
+            log.info("attac : " + attac.get(index) + " ");
+            log.info("def : " + def.get(index));
 
             nbr = 0;
 
         } else {
 
             result.add("=");
-            System.out.print("Résultat : " + result.get(result.size() - 1) + " car ");
+            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
 
-            System.out.print("attac : " + attac.get(index) + " ");
-            System.out.println("def : " + def.get(index));
+            log.info("attac : " + attac.get(index) + " ");
+            log.info("def : " + def.get(index));
 
             nbr = 1;
 

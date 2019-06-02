@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Mastermind est la classe métier du jeux Mastermind.
@@ -19,6 +21,7 @@ import java.util.List;
  */
 public abstract class Mastermind {
 
+    private static final Logger log = LogManager.getLogger(Mastermind.class);
     private String resultKeyOne = "place";
     private String resultkeyTwo = "present";
 
@@ -43,15 +46,15 @@ public abstract class Mastermind {
         int present = 0;
 
         // place
-        System.out.println("def[] : " + charDef.toString() + " taille : " + charDef.length);
-        System.out.println("attac[] : " + attac.toString() + " taille : " + charAttac.length);
+        log.info("def[] : " + charDef.toString() + " taille : " + charDef.length);
+        log.info("attac[] : " + attac.toString() + " taille : " + charAttac.length);
 
         for (int i = 0; i < charDef.length; i++) {
 
             if (charDef[i] == charAttac[i]) {
 
                 place++;
-                System.out.println("place : " + place);
+                log.info("place : " + place);
                 result.replace("place", Integer.toString(place));
                 charDef[i] = ' ';
                 charAttac[i] = ' ';
@@ -68,10 +71,10 @@ public abstract class Mastermind {
                 if (i != j && charDef[j] != ' ' && charDef[j] == charAttac[i]) {
 
                     present++;
-                    System.out.println("present : " + present);
+                    log.info("present : " + present);
                     result.replace("present", Integer.toString(present));
-                    System.out.println("valeur Attac : " + charAttac[i] + " ; index : " + i);
-                    System.out.println("valeur Def : " + charDef[j] + " ; index : " + j);
+                    log.info("valeur Attac : " + charAttac[i] + " ; index : " + i);
+                    log.info("valeur Def : " + charDef[j] + " ; index : " + j);
 
                     charDef[j] = ' ';
 
@@ -81,7 +84,6 @@ public abstract class Mastermind {
             }
         }
 
-        System.out.println("retour compraison");
         return result;
 
     }
