@@ -5,14 +5,12 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessChallenger;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * SearchMoreOrLessChallenger est la classe qui représente la fenêtre de jeux
@@ -27,16 +25,16 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
     private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
-    private List<Integer> human;
-    private List<String> result;
-    private List<Integer> machine;
+    private String human;
+    private String result;
+    private String machine;
     private String valueInput;
     private int nbrTests;
     private int step;
     private Boolean inputUser;
     private int counter;
     private HashMap<String, String> backup;
-    private ControllerSearchMoreOrLessChallenger checkUserInput;
+    private ControllerSearchMoreOrLess checkUserInput;
 
     public SearchMoreOrLessChallenger(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
@@ -45,13 +43,10 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerSearchMoreOrLessChallenger();
+        checkUserInput = new ControllerSearchMoreOrLess("challenger");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
         counter = 0;
-        human = new ArrayList<Integer>();
-        result = new ArrayList<String>();
-        machine = new ArrayList<Integer>();
         nbrTests = 0;
         step = 0;
 
@@ -85,7 +80,7 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
             if (step == 0) {
 
                 machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
-                getSolution().setText(checkUserInput.getConvertListIntegerToString(machine));
+                getSolution().setText(machine);
 
             }
 
@@ -101,29 +96,27 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
                 nbrTours--;
                 nbrTests++;
 
-                human = checkUserInput.getConvertStringToListInteger(valueInput);
+                human = valueInput;
 
-                result.clear();
+                result = "";
                 result = (checkUserInput.getComparison(nbrDigits, human, machine, result));
-                counter = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(result));
-
-                String toString = checkUserInput.getConvertListToString(result);
+                counter = checkUserInput.getEqualCounter(result);
 
                 if (counter == nbrDigits) {
 
-                    humanWinningMessageDisplay(nbrTests, toString);
+                    humanWinningMessageDisplay(nbrTests, result);
                     getReloadButton().setVisible(true);
 
                 } else {
 
                     if (nbrTours == 0) {
 
-                        humanLoserMessageDisplay(machine.toString(), toString);
+                        humanLoserMessageDisplay(machine.toString(), result);
                         getReloadButton().setVisible(true);
 
                     } else {
 
-                        humanToBeToContinuedMessageDisplay(nbrTours, toString);
+                        humanToBeToContinuedMessageDisplay(nbrTours, result);
                     }
                 }
             }

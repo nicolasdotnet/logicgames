@@ -21,47 +21,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class MastermindDuel extends Mastermind {
 
-    private MastermindAi inter = new MastermindDefenseur();
     private static final Logger log = LogManager.getLogger(MastermindDuel.class);
-
-    /**
-     * Generator function of complete list of combination possible
-     *
-     * @param nbrDigits number of digts of the combination
-     * @param nbrRange range of number for the combination
-     * @return complete list of combination possible
-     */
-    public List<String> generateAllPossible(int nbrDigits, int nbrRange) {
-
-        return inter.generateAllPossible(nbrDigits, nbrRange);
-    }
-
-    /**
-     * Random selection of machine combination :
-     *
-     * @param nbrTests number of test of comparison
-     * @param possible list of combination possible (complete or best)
-     * @param nbrRange range of number for the combination
-     * @return machine value
-     */
-    public String getPossible(int nbrTests, List<String> possible, int nbrRange) {
-
-        return inter.getPossible(nbrTests, possible, nbrRange);
-
-    }
-
-    /**
-     * Generator function of list of best combination possible
-     *
-     * @param possible complete list of combination possible
-     * @param result result hashmap of the comparison() function
-     * @param machine machine value
-     * @return list of best combination possible
-     */
-    public List<String> generateBestPossible(List<String> possible, HashMap<String, String> result, List<Integer> machine) {
-
-        return inter.generateBestPossible(possible, result, machine);
-    }
 
     /**
      * Generator function of solution combination
@@ -120,6 +80,26 @@ public class MastermindDuel extends Mastermind {
 
             sizure = sb.toString();
             log.info("sizure : " + sizure);
+        }
+        return sizure;
+    }
+
+    @Override
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
+        
+        if (sizure == "null") {
+            
+            if (nbrTests == 1 && nbrRange == 6) {
+
+            sizure = possible.get(1122);
+
+        } else {
+
+            int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
+            log.info("id : " + id);
+            sizure = possible.get(id);
+        }
+            
         }
         return sizure;
     }

@@ -112,8 +112,11 @@ public class WindowHome extends WindowSource {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-
-                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, nbrRange, modeDev);
+                
+                // nbrRange value max : 9 (0 to 9)
+                int smolNbrRange = 9;
+                
+                WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, smolNbrRange, modeDev);
                 WindowHome.super.dispose();
             }
         });

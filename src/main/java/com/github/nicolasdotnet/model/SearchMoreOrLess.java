@@ -55,9 +55,7 @@ public abstract class SearchMoreOrLess {
      * method
      * @return result of the comparison
      */
-    public List<String> comparison(int nbrDigits, List<Integer> attac, List<Integer> def, List<String> result) {
-
-        int nbr;
+    public String comparison(int nbrDigits, String attac, String def, String result) {
 
         int index = nbrDigits - 1;
 
@@ -65,49 +63,44 @@ public abstract class SearchMoreOrLess {
 
         log.info("\n nbrDigits : " + nbrDigits);
 
-        if (index < 0) {
+        StringBuilder sb = new StringBuilder(result);
 
-            Collections.reverse(result);
+        if (index < 0) {
+            
+            result = sb.reverse().toString();
+            log.info("Retour : " + result);
 
             return result;
 
         }
 
-        if (attac.get(index) < def.get(index)) {
+        if (attac.charAt(index) < def.charAt(index)) {
 
-            result.add("+");
-            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
+            sb.append("+");
+            log.info("Résultat : " + sb.toString() + " car ");
 
-            log.info("attac : " + attac.get(index) + " ");
-            log.info("def : " + def.get(index));
+            log.info("attac : " + attac.charAt(index) + " ");
+            log.info("def : " + def.charAt(index));
 
-            nbr = 0;
+        } else if (attac.charAt(index) > def.charAt(index)) {
 
-        } else if (attac.get(index) > def.get(index)) {
+            sb.append("-");
+            log.info("Résultat : " + sb.toString() + " car ");
 
-            result.add("-");
-            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
-
-            log.info("attac : " + attac.get(index) + " ");
-            log.info("def : " + def.get(index));
-
-            nbr = 0;
+            log.info("attac : " + attac.charAt(index) + " ");
+            log.info("def : " + def.charAt(index));
 
         } else {
 
-            result.add("=");
-            log.info("Résultat : " + result.get(result.size() - 1) + " car ");
+            sb.append("=");
+            log.info("Résultat : " + sb.toString() + " car ");
 
-            log.info("attac : " + attac.get(index) + " ");
-            log.info("def : " + def.get(index));
-
-            nbr = 1;
+            log.info("attac : " + attac.charAt(index) + " ");
+            log.info("def : " + def.charAt(index));
 
         }
 
-        comparison(index, attac, def, result);
-
-        return result;
+        return comparison(index, attac, def, sb.toString());
 
     }
 
@@ -120,5 +113,7 @@ public abstract class SearchMoreOrLess {
      * @return solution combination generate
      */
     public abstract String getSolutionCombination(int nbrDigits, int nbrRange, String sizure);
+
+    public abstract String getPossible(int[][] randomRange, int nbrDigits, String sizure);
 
 }

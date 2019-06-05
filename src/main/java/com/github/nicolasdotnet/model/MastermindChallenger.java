@@ -78,4 +78,10 @@ public class MastermindChallenger extends Mastermind {
 
     }
 
+    @Override
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
+        return sizure;
+    
+    }
+
 }

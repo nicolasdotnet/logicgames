@@ -22,8 +22,6 @@ import org.apache.logging.log4j.Logger;
 public abstract class Mastermind {
 
     private static final Logger log = LogManager.getLogger(Mastermind.class);
-    private String resultKeyOne = "place";
-    private String resultkeyTwo = "present";
 
     /**
      * Comparison function of attac value and defenseur value
@@ -32,12 +30,13 @@ public abstract class Mastermind {
      * @param attac value of the attaquant
      * @return result hasmap with number place and number present
      */
-    public HashMap<String, String> comparison(String attac, List<Integer> solution) {
-
-        Tools tools = Tools.getInstance();
-        String machine = tools.convertListIntegerToString(solution);
-        char charDef[] = machine.toCharArray();
+    public static HashMap<String, String> comparison(String attac, String solution) {
+        
+        char charDef[] = solution.toCharArray();
         char charAttac[] = attac.toCharArray();
+
+        String resultKeyOne = "place";
+        String resultkeyTwo = "present";
 
         HashMap<String, String> result = new HashMap<String, String>();
         result.put(resultKeyOne, "0");
@@ -139,5 +138,7 @@ public abstract class Mastermind {
      * @return solution combination generate
      */
     public abstract String getSolutionCombination(int nbrDigits, int nbrRange, String sizure);
+
+    public abstract String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure);
 
 }

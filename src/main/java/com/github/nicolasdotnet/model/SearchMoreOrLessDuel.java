@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
-    private SearchMoreOrlLessAi inter = new SearchMoreOrLessDefenseur();
     private static final Logger log = LogManager.getLogger(SearchMoreOrLessDuel.class);
 
     /**
@@ -92,9 +91,24 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
      * @param nbrDigits number of digts of the combination
      * @return possible combination in List integer
      */
-    public List<Integer> generatePossible(int[][] randomRange, int nbrDigits) {
+    public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
 
-        return inter.generatePossible(randomRange, nbrDigits);
+        if (sizure == "null") {
+            
+            StringBuilder inputMachine = new StringBuilder();
+
+            for (int i = 0; i < nbrDigits; i++) {
+
+                inputMachine.append((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
+
+            }
+
+            log.info("getPossible : " + inputMachine + " ");
+
+            sizure = String.join("", inputMachine);
+
+        }
+        return sizure;
 
     }
 

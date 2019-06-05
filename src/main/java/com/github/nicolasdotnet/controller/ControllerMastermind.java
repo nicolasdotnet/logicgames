@@ -5,7 +5,10 @@
  */
 package com.github.nicolasdotnet.controller;
 
-import com.github.nicolasdotnet.model.*;
+import com.github.nicolasdotnet.model.Mastermind;
+import com.github.nicolasdotnet.model.MastermindChallenger;
+import com.github.nicolasdotnet.model.MastermindDefenseur;
+import com.github.nicolasdotnet.model.MastermindDuel;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -13,17 +16,28 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * ControllerMastermindDuel est la classe controller entre la vue et le
- * métier du jeu Mastermind en mode Duel
- *
- * @author nicolasdotnet
- * @version Alpha
- * @since 2019
+ * @author pi
  */
-public class ControllerMastermindDuel extends Controller {
+public class ControllerMastermind extends Controller {
 
-    private static final Logger log = LogManager.getLogger(ControllerMastermindDuel.class);
-    private MastermindDuel game = new MastermindDuel();
+    private static final Logger log = LogManager.getLogger(ControllerMastermind.class);
+    private Mastermind game;
+    private String mode;
+
+    public ControllerMastermind(String mode) {
+        this.mode = mode;
+
+        switch (mode) {
+            case "challenger":
+                game = new MastermindChallenger();
+                break;
+            case "defenseur":
+                game = new MastermindDefenseur();
+                break;
+            case "duel":
+                game = new MastermindDuel();
+        }
+    }
 
     /**
      * Controller method that calls the model comparison method
@@ -32,7 +46,7 @@ public class ControllerMastermindDuel extends Controller {
      * @param machine machive value
      * @return hasmap with number place and number present
      */
-    public HashMap<String, String> getComparison(String attac, List<Integer> machine) {
+    public HashMap<String, String> getComparison(String attac, String machine) {
         return game.comparison(attac, machine);
     }
 
@@ -58,42 +72,19 @@ public class ControllerMastermindDuel extends Controller {
 
         return game.getSolutionCombination(nbrDigits, nbrRange, sizure);
     }
-    
-    /**
-     * Controller method that calls the model generate best possible method
-     *
-     * @param possible complete list of combination possible
-     * @param result result hashmap of the comparison() function
-     * @param machine machine value
-     * @return list of best combination possible
-     */
-    public List<String> getGenerateBestPossible(List<String> possible, HashMap<String, String> result, List<Integer> machine){
-        return game.generateBestPossible(possible, result, machine);
-        
-    }
-    
+
     /**
      * Controller method that calls the model get possible method
      *
      * @param nbrTests number of test of comparison
      * @param possible list of combination possible (complete or best)
      * @param nbrRange range of number for the combination
+     * @param sizure value input by user
      * @return machine value
      */
-    public String getGetPossible(int nbrTests, List<String> possible, int nbrRange){
-        return game.getPossible(nbrTests, possible, nbrRange);
-        
-    }
-    
-    /**
-     * Controller method that calls the model generate all possible method
-     *
-     * @param nbrDigits number of digts of the combination
-     * @param nbrRange range of number for the combination
-     * @return complete list of combination possible
-     */
-    public List<String> getGenerateAllPossible(int nbrDigits, int nbrRange){
-        return game.generateAllPossible(nbrDigits, nbrRange);
+    public String getGetPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
+        return game.getPossible(nbrTests, possible, nbrRange, sizure);
+
     }
 
 }

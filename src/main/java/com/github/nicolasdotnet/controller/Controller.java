@@ -132,7 +132,7 @@ public class Controller {
      * @param randomRange
      * @return new random range
      */
-    public int[][] getGenerateRandomRangeNew(List<String> result, List<Integer> machine, int[][] randomRange) {
+    public int[][] getGenerateRandomRangeNew(String result, String machine, int[][] randomRange) {
         return tools.generateRandomRangeNew(result, machine, randomRange);
     }
 
@@ -146,39 +146,6 @@ public class Controller {
      */
     public int[][] getGenerateRandomRangeInitial(int nbrDigits, int nbrRange) {
         return tools.generateRandomRangeInitial(nbrDigits, nbrRange);
-    }
-
-    /**
-     * Controller method that calls the model convert input String to List
-     * Integer method
-     *
-     * @param value in String
-     * @return value in List Integer
-     */
-    public List<Integer> getConvertStringToListInteger(String value) {
-        return tools.convertStringToListInteger(value);
-    }
-
-    /**
-     * Controller method that calls the model convert input List String to
-     * String method
-     *
-     * @param value in List String
-     * @return value in String
-     */
-    public String getConvertListToString(List<String> value) {
-        return tools.convertListToString(value);
-    }
-
-    /**
-     * Controller method that calls the model convert input List Integer to
-     * String method
-     *
-     * @param value in List Integer
-     * @return value in String
-     */
-    public String getConvertListIntegerToString(List<Integer> value) {
-        return tools.convertListIntegerToString(value);
     }
 
     /**
@@ -206,6 +173,30 @@ public class Controller {
     public HashMap<String, String> getParameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
 
         return tools.parameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
+
+    }
+
+    /**
+     * Controller method that calls the model generate all possible method
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combination
+     * @return complete list of combination possible
+     */
+    public List<String> getGenerateAllPossible(int nbrDigits, int nbrRange) {
+        return tools.generateAllPossible(nbrDigits, nbrRange);
+    }
+
+    /**
+     * Controller method that calls the model generate best possible method
+     *
+     * @param possible complete list of combination possible
+     * @param result result hashmap of the comparison() function
+     * @param machine machine value
+     * @return list of best combination possible
+     */
+    public List<String> getGenerateBestPossible(List<String> possible, HashMap<String, String> result, String machine) {
+        return tools.generateBestPossible(possible, result, machine);
 
     }
 

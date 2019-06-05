@@ -5,7 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessChallenger;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLess;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -34,7 +34,7 @@ public class WindowGame extends JFrame {
     private JTextArea textAreaOut;
     private boolean modeDev;
     private JPanel reloadButton = reloadGame();
-    private ControllerSearchMoreOrLessChallenger checkUserInput;
+    private ControllerSearchMoreOrLess checkUserInput;
     private JButton yes;
 
     /**

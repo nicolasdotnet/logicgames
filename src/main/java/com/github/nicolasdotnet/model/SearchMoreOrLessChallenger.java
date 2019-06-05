@@ -79,4 +79,9 @@ public class SearchMoreOrLessChallenger extends SearchMoreOrLess {
 
     }
 
+    @Override
+    public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
+        return sizure;
+    }
+
 }

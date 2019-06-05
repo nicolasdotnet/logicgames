@@ -5,14 +5,12 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessDefenseur;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * SearchMoreOrLessDefenseur est la classe qui représente la fenêtre de jeux
@@ -27,9 +25,9 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
     private int nbrDigits;
     private int nbrTours;
     private int nbrRange;
-    private List<Integer> human;
-    private List<String> result;
-    private List<Integer> machine;
+    private String human;
+    private String result;
+    private String machine;
     private String valueInput;
     private int nbrTests;
     private int step;
@@ -37,7 +35,7 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
     private int counter;
     private int[][] randomRange;
     private HashMap<String, String> backup;
-    private ControllerSearchMoreOrLessDefenseur checkUserInput;
+    private ControllerSearchMoreOrLess checkUserInput;
 
     public SearchMoreOrLessDefenseur(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
@@ -45,13 +43,9 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerSearchMoreOrLessDefenseur();
+        checkUserInput = new ControllerSearchMoreOrLess("defenseur");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
-        counter = 0;
-        human = new ArrayList<Integer>();
-        result = new ArrayList<String>();
-        machine = new ArrayList<Integer>();
         nbrTests = 0;
         step = 0;
 
@@ -89,7 +83,7 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
             } else {
 
                 randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
-                human = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
+                human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
                 
                 getSolution().setText(valueInput);
                 getTextAreaIn().setEditable(false);
@@ -100,19 +94,21 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
                     // update nbrTours & nbrTest by round
                     nbrTours--;
                     nbrTests++;
+                    
+                    String sizureFake = "null";
 
-                    machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
                     getTextAreaOut().append("La proposition de la machine est : " + machine.toString() + "\n\n");
 
-                    result.clear();
+                    result = "";
                     result = (checkUserInput.getComparison(nbrDigits, machine, human, result));
 
                     counter = 0;
-                    counter = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(result));
+                    counter = checkUserInput.getEqualCounter(result);
 
                     randomRange = checkUserInput.getGenerateRandomRangeNew(result, machine, randomRange);
 
-                    String toString = checkUserInput.getConvertListToString(result);
+                    String toString = result;
 
                     if (counter == nbrDigits) {
 

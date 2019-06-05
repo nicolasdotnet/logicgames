@@ -5,12 +5,11 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerMastermindChallenger;
+import com.github.nicolasdotnet.controller.ControllerMastermind;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,13 +27,14 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
     private int nbrTours;
     private int nbrRange;
     private HashMap<String, String> result = new HashMap<String, String>();
-    private List<Integer> machine = new ArrayList<Integer>();
+    private String machine;
+    private String humain;
     private String valueInput;
     private int step;
     private int nbrTests;
     private Boolean inputUser;
     private HashMap<String, String> backup;
-    private ControllerMastermindChallenger checkUserInput;
+    private ControllerMastermind checkUserInput;
 
     public MastermindChallenger(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
@@ -42,11 +42,10 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerMastermindChallenger();
+        checkUserInput = new ControllerMastermind("challenger");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
         result = new HashMap<String, String>();
-        machine = new ArrayList<Integer>();
         step = 0;
         nbrTests = 0;
 
@@ -79,8 +78,10 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
             // Initial phase
             if (step == 0) {
 
-                machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
-                getSolution().setText(checkUserInput.getConvertListIntegerToString(machine));
+                String temp;
+                temp = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+                machine = temp;
+                getSolution().setText(machine);
 
             }
 
@@ -96,8 +97,12 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
                 nbrTours--;
                 nbrTests++;
 
+                List<String> possible = null;
+
+                humain = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, valueInput);
+
                 result.clear();
-                result = (checkUserInput.getComparison(valueInput, machine));
+                result = (checkUserInput.getComparison(humain, machine));
 
                 if (Integer.parseInt(result.get("place")) == nbrDigits) {
 
@@ -134,7 +139,7 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        
+
         String titleBackup = backup.get("title");
         int nbrDigitsBackup = Integer.parseInt(backup.get("nbrDigits"));
         int nbrToursBackup = Integer.parseInt(backup.get("nbrTours"));

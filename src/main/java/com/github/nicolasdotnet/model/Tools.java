@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,20 @@ public class Tools {
         return INSTANCE;
     }
 
+    public HashMap<String, String> parameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
+
+        HashMap<String, String> backup = new HashMap<String, String>();
+        backup.put("title", title);
+        backup.put("nbrDigits", String.valueOf(nbrDigits));
+        backup.put("nbrTours", String.valueOf(nbrTours));
+        backup.put("nbrRange", String.valueOf(nbrRange));
+        backup.put("modeDev", String.valueOf(modeDev));
+
+        return backup;
+
+    }
+
+    // SearchMoreOrless
     /**
      * Random range generator function initial
      *
@@ -83,28 +98,28 @@ public class Tools {
      * @param randomRange random limit initial
      * @return new random range
      */
-    public int[][] generateRandomRangeNew(List<String> result, List<Integer> attac, int[][] randomRange) {
+    public int[][] generateRandomRangeNew(String result, String attac, int[][] randomRange) {
 
-        for (int i = 0; i < result.size(); i++) {
-            String icon = result.get(i);
+        for (int i = 0; i < result.length(); i++) {
+            char icon = result.charAt(i);
 
             switch (icon) {
 
-                case "+":
-                    randomRange[0][i] = attac.get(i);
+                case '+':
+                    randomRange[0][i] = Character.getNumericValue(attac.charAt(i));
                     log.info("min + : " + randomRange[0][i]);
 //            randomRange[1][i] = 9;
                     log.info("max + : " + randomRange[1][i]);
                     break;
-                case "-":
+                case '-':
                     log.info("min - : " + randomRange[0][i]);
-                    randomRange[1][i] = attac.get(i);
+                    randomRange[1][i] = Character.getNumericValue(attac.charAt(i));
                     log.info("max - : " + randomRange[1][i]);
                     break;
-                case "=":
-                    randomRange[0][i] = attac.get(i);
+                case '=':
+                    randomRange[0][i] = Character.getNumericValue(attac.charAt(i));
                     log.info("min = : " + randomRange[0][i]);
-                    randomRange[1][i] = attac.get(i);
+                    randomRange[1][i] = Character.getNumericValue(attac.charAt(i));
                     log.info("max = : " + randomRange[1][i]);
 
                     break;
@@ -117,99 +132,75 @@ public class Tools {
 
     }
 
-    // SearchMoreOrless
-    /**
-     * Convert function input user to Integer List
-     *
-     * @param inputUser mumber value input by user
-     * @return number value to Integer List
-     */
-    public List<Integer> convertStringToListInteger(String inputUser) {
-
-        List<Integer> convert = new ArrayList<Integer>();
-
-        int length = inputUser.length();
-
-        // Cast String to Int
-        for (int i = 0; i <= length - 1; i++) {
-
-            char car = inputUser.charAt(i);
-
-            convert.add(Character.getNumericValue(inputUser.charAt(i)));
-        }
-
-        return convert;
-
-    }
-
-    /**
-     * Convert function result list of the comparison to String type
-     *
-     * @param result Result arrayList of the comparison() function
-     * @return result to String
-     */
-    public String convertListToString(List<String> result) {
-
-        String convert = String.join("", result);
-
-        return convert;
-
-    }
-
-    /**
-     * Convert function machine value (Integer List) to String type
-     *
-     * @param machine Integer List
-     * @return machine value to String
-     */
-    public String convertListIntegerToString(List<Integer> machine) {
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < machine.size(); i++) {
-            int num = machine.get(i);
-            sb.append(num);
-        }
-
-        return sb.toString();
-
-    }
-
     // Mastermind
     /**
-     * Convert function machive value to Integer List
+     * Generator function of list of best combination possible
      *
-     * @param machine machive value
-     * @return String value to Integer List
+     * @param possible complete list of combination possible
+     * @param result result hashmap of the comparison() function
+     * @param machine machine value
+     * @return list of best combination possible
      */
-    public List<Integer> convertStringToList(String machine) {
+    public List<String> generateBestPossible(List<String> possible, HashMap<String, String> result, String machine) {
 
-        List<Integer> convert = new ArrayList<Integer>();
+        HashMap<String, String> ri = new HashMap<String, String>();
+        List<String> bestPossible = new ArrayList<String>();
 
-        int length = machine.length();
+        for (int i = 0; i < possible.size(); i++) {
 
-        // Cast String to Int
-        for (int i = 0; i <= length - 1; i++) {
+            ri = Mastermind.comparison(possible.get(i), machine);
 
-            char car = machine.charAt(i);
+            log.info("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
+            log.info("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
 
-            convert.add(Character.getNumericValue(machine.charAt(i)));
+            if (result.get("place").equals(ri.get("place")) && result.get("present").equals(ri.get("present"))) {
+
+                log.info("possible.get(i) : " + possible.get(i));
+                bestPossible.add(possible.get(i));
+
+            }
+
         }
 
-        return convert;
+        return bestPossible;
 
     }
 
-    public HashMap<String, String> parameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
+    /**
+     * Generator function of complete list of combination possible
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combination
+     * @return complete list of combination possible
+     */
+    public List<String> generateAllPossible(int nbrDigits, int nbrRange) {
+        List<String> possible = new ArrayList<String>();
 
-        HashMap<String, String> backup = new HashMap<String, String>();
-        backup.put("title", title);
-        backup.put("nbrDigits", String.valueOf(nbrDigits));
-        backup.put("nbrTours", String.valueOf(nbrTours));
-        backup.put("nbrRange", String.valueOf(nbrRange));
-        backup.put("modeDev", String.valueOf(modeDev));
+        String combinationFormat = "";
 
-        return backup;
+        for (int i = 0; i < nbrDigits; i++) {
 
+            combinationFormat += 0;
+            log.info("combinationFormat : " + combinationFormat);
+        }
+
+        DecimalFormat format = new DecimalFormat(combinationFormat);
+
+        for (int i = 0; i <= (Math.pow(nbrRange, nbrDigits) - 1); i++) {
+
+            log.info("combinaison base 10 : " + i);
+
+            int item = Integer.parseInt(Integer.toString(i, nbrRange));
+
+            String combination = format.format(item);
+
+            log.info("combination base " + nbrRange + " : " + combination);
+
+            possible.add(combination);
+
+        }
+
+        return possible;
     }
 
 }

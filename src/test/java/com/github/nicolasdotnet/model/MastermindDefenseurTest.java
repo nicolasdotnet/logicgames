@@ -26,23 +26,6 @@ public class MastermindDefenseurTest {
     }
 
     /**
-     * Test of generateAllPossible method, of class MastermindDefenseur.
-     */
-    @Test
-    public void testGenerateAllPossible() {
-        int nbrDigits = 2;
-        int nbrRange = 2;
-        MastermindDefenseur instance = new MastermindDefenseur();
-        List<String> expResult = new ArrayList<>();
-        expResult.add("00");
-        expResult.add("01");
-        expResult.add("10");
-        expResult.add("11");
-        List<String> result = instance.generateAllPossible(nbrDigits, nbrRange);
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of getSolutionCombination method, of class MastermindDefenseur.
      */
     @Test
@@ -62,11 +45,7 @@ public class MastermindDefenseurTest {
     @Test
     public void testComparisonPlace() {
         String attac = "0000";
-        List<Integer> solution = new ArrayList<>();
-        solution.add(0);
-        solution.add(0);
-        solution.add(0);
-        solution.add(0);
+        String solution = "0000";
         MastermindDefenseur instance = new MastermindDefenseur();
         HashMap<String, String> expResult = new HashMap<String, String>();
         expResult.put("place", "4");
@@ -82,11 +61,7 @@ public class MastermindDefenseurTest {
     @Test
     public void testComparisonPresent() {
         String attac = "1234";
-        List<Integer> solution = new ArrayList<>();
-        solution.add(4);
-        solution.add(3);
-        solution.add(2);
-        solution.add(1);
+        String solution = "4321";
         MastermindDefenseur instance = new MastermindDefenseur();
         HashMap<String, String> expResult = new HashMap<String, String>();
         expResult.put("place", "0");

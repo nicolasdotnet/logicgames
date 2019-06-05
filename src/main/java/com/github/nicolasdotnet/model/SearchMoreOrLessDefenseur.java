@@ -5,8 +5,6 @@
  */
 package com.github.nicolasdotnet.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +17,7 @@ import org.apache.logging.log4j.Logger;
  * @version Alpha
  * @since 2019
  */
-public class SearchMoreOrLessDefenseur extends SearchMoreOrLess implements SearchMoreOrlLessAi {
+public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
 
     private static final Logger log = LogManager.getLogger(SearchMoreOrLessDefenseur.class);
 
@@ -45,20 +43,23 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess implements Searc
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
-     * @return possible combination in List integer
+     * @param sizure
+     * @return possible combination
      */
-    public List<Integer> generatePossible(int[][] randomRange, int nbrDigits) {
+    @Override
+    public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
 
-        List<Integer> inputMachine = new ArrayList<Integer>();
+        StringBuilder inputMachine = new StringBuilder();
 
         for (int i = 0; i < nbrDigits; i++) {
 
-            inputMachine.add((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
-
-            log.info("test A  : " + inputMachine.get(i) + " ");
+            inputMachine.append((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
 
         }
 
-        return inputMachine;
+        log.info("getPossible : " + inputMachine + " ");
+
+        return String.join("", inputMachine);
     }
+
 }

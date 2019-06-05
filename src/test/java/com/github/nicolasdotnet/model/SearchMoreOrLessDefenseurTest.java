@@ -49,7 +49,6 @@ public class SearchMoreOrLessDefenseurTest {
         int expResult = 4;
         int result = instance.equalCounter(resultat);
         assertEquals(expResult, result);
-
     }
 
     /**
@@ -58,24 +57,13 @@ public class SearchMoreOrLessDefenseurTest {
     @Test
     public void testComparisonAll() {
         int nbrDigits = 4;
-        List<Integer> attac = new ArrayList<>();
-        attac.add(0);
-        attac.add(1);
-        attac.add(0);
-        attac.add(1);
-        List<Integer> def = new ArrayList<>();
-        def.add(0);
-        def.add(1);
-        def.add(1);
-        def.add(0);
-        List<String> result = new ArrayList<>();
+        String attac = "0101";
+        String def = "0110";
+        String resultIni = "";
+        String result;
         SearchMoreOrLessDefenseur instance = new SearchMoreOrLessDefenseur();
-        List<String> expResult = new ArrayList<>();
-        expResult.add("=");
-        expResult.add("=");
-        expResult.add("+");
-        expResult.add("-");
-        result = instance.comparison(nbrDigits, attac, def, result);
+        String expResult = "==+-";
+        result = instance.comparison(nbrDigits, attac, def, resultIni);
         assertEquals(expResult, result);
 
     }

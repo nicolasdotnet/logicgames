@@ -5,12 +5,11 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerMastermindDuel;
+import com.github.nicolasdotnet.controller.ControllerMastermind;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,8 +31,8 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
     private String humanIni;
     private HashMap<String, String> resultH;
     private String toStringH;
-    private List<Integer> machine;
-    private List<Integer> machineIni;
+    private String machine;
+    private String machineIni;
     private HashMap<String, String> resultM;
     private String machine2;
     private String toStringM;
@@ -45,7 +44,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
     private List<String> bestPossible;
     private Boolean inputUser;
     private HashMap<String, String> backup;
-    private ControllerMastermindDuel checkUserInput;
+    private ControllerMastermind checkUserInput;
 
     public MastermindDuel(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
@@ -53,13 +52,11 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerMastermindDuel();
+        checkUserInput = new ControllerMastermind("duel");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
         resultH = new HashMap<String, String>();
         toStringH = "null";
-        machine = new ArrayList<Integer>();
-        machineIni = new ArrayList<Integer>();
         resultM = new HashMap<String, String>();
         resultM.put("place", "0");
         resultM.put("present", "0");
@@ -106,7 +103,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                     randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
                     valueInput = "null";
-                    machineIni = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
+                    machineIni = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
 
                     getSolution().setText("votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
 
@@ -133,7 +130,10 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                 } else {
 
-                    human = valueInput;
+                    String sizureFake = "null";
+                    List<String> possibleFake = null;
+
+                    human = checkUserInput.getGetPossible(nbrTestsM, possibleFake, nbrRange, valueInput);
                     getTextAreaOut().append("Votre proposition  : " + human + "\n");
 
                     // Generate possible for the machine
@@ -141,20 +141,20 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                         case 1:
 
                             possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange);
-                            machine = checkUserInput.getConvertStringToListInteger(machine2);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, sizureFake);
+                            machine = machine2;
                             break;
                         case 2:
 
                             bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange);
-                            machine = checkUserInput.getConvertStringToListInteger(machine2);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                            machine = machine2;
                             break;
                         default:
 
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange);
-                            machine = checkUserInput.getConvertStringToListInteger(machine2);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                            machine = machine2;
                             break;
                     }
 
@@ -211,14 +211,14 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                             if (nbrTestsM == 2) {
 
                                 bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
-                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange);
-                                machine = checkUserInput.getConvertStringToListInteger(machine2);
+                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                                machine = machine2;
 
                             } else {
 
                                 bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
-                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange);
-                                machine = checkUserInput.getConvertStringToListInteger(machine2);
+                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                                machine = machine2;
                             }
 
                             // Machine play
@@ -256,7 +256,6 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                         getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
 
                         // Human
-
                         if (nbrTours == 0) {
 
                             humanLoserMessageDisplay(machineIni.toString(), toStringH);
@@ -305,7 +304,9 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                 } else {
 
-                    human = valueInput;
+                    possible = null;
+
+                    human = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, valueInput);
                     getTextAreaOut().append("Votre proposition : " + human + "\n");
 
                     resultH.clear();

@@ -24,34 +24,19 @@ public class ToolsTest {
     }
 
     /**
-     * Test of convertStringToListInteger method, of class Tools.
+     * Test of generateAllPossible method, of class Tools.
      */
     @Test
-    public void testConvertStringToListInteger() {
-        String inputUser = "1234";
+    public void testGenerateAllPossible() {
+        int nbrDigits = 2;
+        int nbrRange = 2;
         Tools instance = Tools.getInstance();
-        List<Integer> expResult = new ArrayList<>();
-        expResult.add(1);
-        expResult.add(2);
-        expResult.add(3);
-        expResult.add(4);
-        List<Integer> result = instance.convertStringToListInteger(inputUser);
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of convertListToString method, of class Tools.
-     */
-    @Test
-    public void testConvertListToString() {
-        List<String> result_2 = new ArrayList<>();
-        result_2.add("1");
-        result_2.add("2");
-        result_2.add("3");
-        result_2.add("4");
-        Tools instance = Tools.getInstance();
-        String expResult = "1234";
-        String result = instance.convertListToString(result_2);
+        List<String> expResult = new ArrayList<>();
+        expResult.add("00");
+        expResult.add("01");
+        expResult.add("10");
+        expResult.add("11");
+        List<String> result = instance.generateAllPossible(nbrDigits, nbrRange);
         assertEquals(expResult, result);
     }
 }

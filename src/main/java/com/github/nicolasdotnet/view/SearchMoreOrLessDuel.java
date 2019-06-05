@@ -5,14 +5,12 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLessDuel;
+import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * SearchMoreOrLessDuel est la classe qui représente la fenêtre de jeux
@@ -29,12 +27,12 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
     private int nbrRange;
     private int counterH;
     private int counterM;
-    private List<Integer> humanIni;
-    private List<Integer> machineIni;
-    private List<Integer> human;
-    private List<Integer> machine;
-    private List<String> resultM;
-    private List<String> resultH;
+    private String humanIni;
+    private String machineIni;
+    private String human;
+    private String machine;
+    private String resultM;
+    private String resultH;
     private String toStringM;
     private String toStringH;
     private int nbrTestsM;
@@ -44,7 +42,7 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
     private int[][] randomRange;
     private Boolean inputUser;
     private HashMap<String, String> backup;
-    private ControllerSearchMoreOrLessDuel checkUserInput;
+    private ControllerSearchMoreOrLess checkUserInput;
 
     public SearchMoreOrLessDuel(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
@@ -52,17 +50,12 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerSearchMoreOrLessDuel();
+        checkUserInput = new ControllerSearchMoreOrLess("duel");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
         counterH = 0;
         counterM = 0;
-        humanIni = new ArrayList<Integer>();
-        machineIni = new ArrayList<Integer>();
-        human = new ArrayList<Integer>();
-        machine = new ArrayList<Integer>();
-        resultM = new ArrayList<String>();
-        resultH = new ArrayList<String>();
+
         toStringM = "null";
         toStringH = "null";
         nbrTestsM = 0;
@@ -76,7 +69,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
         getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine : ");
 
     }
-    
 
     @Override
     public void keyReleased(KeyEvent event) {
@@ -106,13 +98,13 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                 } else {
 
-                    humanIni = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
+                    humanIni = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
 
+                    String sizureFake = "null";
                     randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
-                    valueInput = "null";
-                    machineIni = checkUserInput.getConvertStringToListInteger(checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput));
+                    machineIni = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, sizureFake);
 
-                    getSolution().setText("votre combinaison : " + checkUserInput.getConvertListIntegerToString(humanIni) + " ; La combinaison de la machine : " + checkUserInput.getConvertListIntegerToString(machineIni));
+                    getSolution().setText("votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
 
                     getTextAreaOut().append("La machine a choisit sa combinaison secréte \n");
                     getTextAreaOut().append("Entrez une proposition : \n");
@@ -136,31 +128,33 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                 } else {
 
-                    human = checkUserInput.getConvertStringToListInteger(valueInput);
+                    String sizureFake = "null";
+
+                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, valueInput);
                     getTextAreaOut().append("Votre proposition : " + human.toString() + "\n");
 
-                    machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
                     getTextAreaOut().append("La proposition de la machine : " + machine.toString() + "\n");
 
                     // Human play
-                    resultH.clear();
+                    resultH = "";
                     getTextAreaOut().append("Vous jouez ! \n");
 
                     resultH = (checkUserInput.getComparison(nbrDigits, human, machineIni, resultH));
-                    counterH = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultH));
+                    counterH = checkUserInput.getEqualCounter(resultH);
 
-                    toStringH = checkUserInput.getConvertListToString(resultH);
+                    toStringH = resultH;
 
                     // Machine play
-                    resultM.clear();
+                    resultM = "";
                     getTextAreaOut().append("La machine joue ! \n");
 
                     resultM = (checkUserInput.getComparison(nbrDigits, machine, humanIni, resultM));
-                    counterM = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultM));
+                    counterM = checkUserInput.getEqualCounter(resultM);
 
                     randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                    toStringM = checkUserInput.getConvertListToString(resultM);
+                    toStringM = resultM;
 
                     // machine and human winners
                     if (counterM == nbrDigits && counterH == nbrDigits) {
@@ -180,7 +174,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                     } else if (counterH == nbrDigits) {
 
                         // Human only winner
-                        
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours.\n");
                         getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
@@ -199,16 +192,16 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                             nbrTours--;
                             nbrTestsM++;
 
-                            machine = checkUserInput.getGeneratePossible(randomRange, nbrDigits);
+                            machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
                             getTextAreaOut().append("La proposition de la machine : " + machine.toString() + "\n");
 
-                            resultM.clear();
+                            resultM = "";
                             resultM = (checkUserInput.getComparison(nbrDigits, machine, humanIni, resultM));
-                            counterM = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultM));
+                            counterM = checkUserInput.getEqualCounter(resultM);
 
                             randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                            toStringM = checkUserInput.getConvertListToString(resultM);
+                            toStringM = resultM;
 
                             if (counterM == nbrDigits) {
 
@@ -233,7 +226,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                     } else if (counterM == nbrDigits) {
 
                         // Machine only winner 
-                        
                         //Machine 
                         getTextAreaOut().append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
                         getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
@@ -251,7 +243,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                     } else if (counterM != nbrDigits && counterH != nbrDigits) {
 
                         // machine and human losers
-                        
                         getTextAreaOut().append("Personne n'a gagné !\n");
                         getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
 
@@ -274,9 +265,8 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                 }
 
             } else if (step > 0 && counterM == nbrDigits) {
-                
-                // Machine only winner
 
+                // Machine only winner
                 // Update nbrTours & nbrTest human by round
                 nbrTestsH++;
                 nbrTours--;
@@ -287,14 +277,14 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                 } else {
 
-                    human = checkUserInput.getConvertStringToListInteger(valueInput);
+                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, valueInput);
                     getTextAreaOut().append("Votre proposition : " + human.toString() + "\n");
 
-                    resultH.clear();
+                    resultH = "";
                     resultH = (checkUserInput.getComparison(nbrDigits, human, machineIni, resultH));
-                    counterH = checkUserInput.getEqualCounter(checkUserInput.getConvertListToString(resultH));
+                    counterH = checkUserInput.getEqualCounter(resultH);
 
-                    String toString = checkUserInput.getConvertListToString(resultH);
+                    String toString = resultH;
 
                     if (counterH == nbrDigits) {
 
