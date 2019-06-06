@@ -25,14 +25,14 @@ public class Controller {
     private Tools tools = Tools.getInstance();
 
     /**
-     * Number value input by user : test the sizure of the user for nbrDigits->
-     * ToDo
+     * Number value input by user : test the sizure of the user
      *
      * @param sizure input clavier user
      * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
      * @return valid or invalid the sizure by a bolean
      */
-    public Boolean inputError(String sizure, int nbrDigits) {
+    public Boolean inputError(String sizure, int nbrDigits, int nbrRange) {
 
         boolean inputUser = false;
         int nbrTrue = 0;
@@ -40,56 +40,7 @@ public class Controller {
         if (sizure.length() != nbrDigits) {
 
             nbrTrue++;
-            log.error("Attention taille incorrecte !");
-
-        } else {
-
-            for (int i = 0; i < sizure.length(); i++) {
-
-                char c = sizure.charAt(i);
-
-                if (c >= '0' && c <= '9') {
-
-                } else {
-
-                    log.error("Attention saisi Alpha !! il faut saisir un nombre !");
-
-                    nbrTrue++;
-                }
-
-            }
-        }
-
-        if (nbrTrue > 0) {
-
-            inputUser = true;
-            log.info("Saisie invalide / FALSE !");
-
-        } else {
-
-            log.info("Saisie validée / TRUE !");
-        }
-
-        return inputUser;
-
-    }
-
-    /**
-     * Number value input by user : test the sizure of the user for nbrRange
-     *
-     * @param sizure input clavier user
-     * @param nbrRange range of number for the combinaison
-     * @return valid or invalid the sizure by a bolean
-     */
-    public boolean inputErrorHome(String sizure, int nbrRange) {
-
-        boolean inputUser = false;
-        int nbrTrue = 0;
-
-        if (sizure.length() != 1) {
-
-            nbrTrue++;
-            log.error("Attention taille incorrecte !");
+            log.error("Attention taille incorrecte !/ TRUE");
 
         } else {
 
@@ -101,8 +52,8 @@ public class Controller {
 
                 } else {
 
-                    log.error("Attention saisi Alpha !! saisir un nombre !");
-                    log.error("nbrRange value : " + (char) ('0' + nbrRange));
+                    log.error("Attention les caractères du nombre invalide !! / TRUE");
+                    log.error("Valeur max des caractères permit : " + (char) ('0' + nbrRange));
 
                     nbrTrue++;
                 }
@@ -113,11 +64,55 @@ public class Controller {
         if (nbrTrue > 0) {
 
             inputUser = true;
-            log.info("Saisie invalide / FALSE !");
 
         } else {
+            
+            log.info("Saisie validée / False !");
 
-            log.info("Saisie validée / TRUE !");
+        }
+
+        return inputUser;
+
+    }
+
+    /**
+     * Number value input by user : test the sizure of the user for Options
+     *
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param nbrTours
+     * @return valid or invalid the sizure by a bolean
+     */
+    public boolean inputErrorOptions(int nbrDigits, int nbrRange, int nbrTours) {
+
+        boolean inputUser = false;
+        int nbrTrue = 0;
+
+        if (nbrDigits < 2 || nbrDigits > 9) {
+
+            nbrTrue++;
+            log.info("Taille invalide / TRUE !");
+
+        } else if (nbrRange < 4 || nbrRange > 10) {
+
+            nbrTrue++;
+            log.info("Nombre de couleur invalide / TRUE !");
+
+        } else if (nbrTours < 1) {
+
+            nbrTrue++;
+            log.info("Nombre de Tours invalide / TRUE !");
+
+        }
+
+        if (nbrTrue > 0) {
+
+            inputUser = true;
+
+        } else {
+            
+            log.info("Saisie validée / False !");
+
         }
 
         return inputUser;

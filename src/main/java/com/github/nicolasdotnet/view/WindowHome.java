@@ -35,8 +35,6 @@ public class WindowHome extends WindowSource {
 
     public WindowHome() {
 
-//        Propertie para = new Propertie();
-//        para.uploadProperties();
         Propertie para = checkUserInput.getInstancePropertie();
 
         this.nbrDigits = para.getNbrDigits();
@@ -57,24 +55,12 @@ public class WindowHome extends WindowSource {
         this.modeDev = modeDev;
     }
 
-    public int getNbrRange() {
-        return nbrRange;
-    }
-
     public void setNbrRange(int nbrRange) {
         this.nbrRange = nbrRange;
     }
 
-    public int getNbrTours() {
-        return nbrTours;
-    }
-
     public void setNbrTours(int nbrTours) {
         this.nbrTours = nbrTours;
-    }
-
-    public int getNbrDigits() {
-        return nbrDigits;
     }
 
     public void setNbrDigits(int nbrDigits) {
@@ -112,11 +98,14 @@ public class WindowHome extends WindowSource {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+
                 // nbrRange value max : 9 (0 to 9)
                 int smolNbrRange = 9;
-                
+
                 WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, smolNbrRange, modeDev);
+
+                System.out.println("param : " + nbrDigits + nbrTours + modeDev);
+
                 WindowHome.super.dispose();
             }
         });
@@ -157,14 +146,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                try {
-
-                    WindowOptions windowOptions = new WindowOptions(WindowHome.this);
-
-                } catch (NumberFormatException nfe) {
-
-
-                }
+                    WindowOptions windowOptions = new WindowOptions(nbrDigits, nbrTours, nbrRange, modeDev, WindowHome.this);
             }
         });
 

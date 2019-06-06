@@ -21,12 +21,12 @@ public class NewClass {
 
         System.out.println("r : " + r);
         System.out.println("char : " + a.charAt(1) + " " + a.charAt(2));
-        
+
         NewClass root = new NewClass();
         Tools tools = Tools.getInstance();
         int[][] randomRange = tools.generateRandomRangeInitial(4, 9);
         String possible = root.getPossible(randomRange, 4, a);
-        System.out.println("possible : "+possible);
+        System.out.println("possible : " + possible);
 
     }
 
@@ -41,6 +41,40 @@ public class NewClass {
         }
 
         return String.join("", inputMachine);
+    }
+
+    public boolean inputErrorOptions(int nbrDigits, int nbrRange, int nbrTours) {
+        
+        boolean inputUser = false;
+        int nbrTrue = 0;
+
+        if (nbrDigits < 2 || nbrDigits > 9) {
+
+            nbrTrue++;
+            //            log.info("Taille invalide / FALSE !");
+        } else if (nbrRange < 4 || nbrRange > 10) {
+
+            nbrTrue++;
+            //            log.info("Nombre de couleur invalide / FALSE !");
+
+        } else if (nbrTours < 1) {
+
+            nbrTrue++;
+            //            log.info("Nombre de Tours invalide / FALSE !");
+
+        }
+
+        if (nbrTrue == 0) {
+
+            inputUser = true;
+
+        } else {
+
+//            log.info("Saisie validée / TRUE !");
+        }
+
+        return inputUser;
+
     }
 
 }

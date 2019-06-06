@@ -88,7 +88,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
             getTextAreaOut().append("\n");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits);
+            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
             // Initial phase
             if (step == 0) {

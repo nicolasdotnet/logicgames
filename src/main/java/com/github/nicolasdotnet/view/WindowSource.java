@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  * @version Alpha
  * @since 2019
  */
-public class WindowSource extends JFrame {
+public abstract class WindowSource extends JFrame {
 
     public WindowSource() {
         super("Jeux de logique");

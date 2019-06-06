@@ -73,7 +73,7 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
 
             getTextAreaOut().append("\n");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits);
+            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
             // Initial phase
             if (inputUser) {
@@ -84,7 +84,7 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
 
                 randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
                 human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
-                
+
                 getSolution().setText(valueInput);
                 getTextAreaIn().setEditable(false);
 
@@ -94,7 +94,7 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
                     // update nbrTours & nbrTest by round
                     nbrTours--;
                     nbrTests++;
-                    
+
                     String sizureFake = "null";
 
                     machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);

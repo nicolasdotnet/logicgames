@@ -73,7 +73,7 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
 
             getTextAreaOut().append("\n");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits);
+            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
             // Initial phase
             if (step == 0) {

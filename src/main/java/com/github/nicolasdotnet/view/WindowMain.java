@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,20 +35,8 @@ public class WindowMain extends WindowSource {
     private int nbrRange;
     private boolean modeDev;
 
-    public int getNbrRange() {
-        return nbrRange;
-    }
-
     public void setNbrRange(int nbrRange) {
         this.nbrRange = nbrRange;
-    }
-
-    public int getNbrDigits() {
-        return nbrDigits;
-    }
-
-    public int getNbrTours() {
-        return nbrTours;
     }
 
     public void setNbrTours(int nbrTours) {
@@ -58,32 +47,16 @@ public class WindowMain extends WindowSource {
         this.nbrDigits = nbrcombinaison;
     }
 
-    public int getSearchMoreOrLess() {
-        return searchMoreOrLess;
-    }
-
     public void setSearchMoreOrLess(int searchMoreOrLess) {
         this.searchMoreOrLess = searchMoreOrLess;
     }
-
-    public int getMastermind() {
-        return mastermind;
-    }
-
+    
     public void setMastermind(int mastermind) {
         this.mastermind = mastermind;
     }
 
-    public String getBreadcrumb() {
-        return breadcrumb;
-    }
-
     public void setBreadcrumb(String breadcrumb) {
         this.breadcrumb = breadcrumb;
-    }
-
-    public boolean isModeDev() {
-        return modeDev;
     }
 
     public void setModeDev(boolean modeDev) {
@@ -104,10 +77,8 @@ public class WindowMain extends WindowSource {
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
 
-//        contentPanel.add(gamesMenu(), BorderLayout.WEST);
         contentPanel.add(breadcrumbPanel(), BorderLayout.NORTH);
         contentPanel.add(gamePanel(), BorderLayout.CENTER);
-//        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
 
         this.setVisible(true);
     }
@@ -174,8 +145,8 @@ public class WindowMain extends WindowSource {
         JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new GridLayout(2, 1, 5, 5));
 
-        JTextArea instructional = new JTextArea("Sélectionnez un mode de jeu parmis les 3 modes proposés ci-dessous : ");
-        instructional.setEditable(false);
+        JLabel instructional = new JLabel("Sélectionnez un mode de jeu parmis les 3 modes proposés ci-dessous : ");
+//        instructional.setEditable(false);
         gamePanel.add(instructional);
 
         gamePanel.add(gamesOptions());
@@ -204,64 +175,62 @@ public class WindowMain extends WindowSource {
 
             JButton button = (JButton) component[i];
 
-            if (button.getText().equals("Challenger")) {
+            switch (button.getText()) {
+                case "Challenger":
+                    button.addActionListener(new ActionListener() {
 
-                button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent ae) {
 
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {
+                            if (searchMoreOrLess == 1) {
 
-                        if (searchMoreOrLess == 1) {
+                                SearchMoreOrLessChallenger run = new SearchMoreOrLessChallenger("Recherche +/- Challenger", nbrDigits, nbrTours, nbrRange, modeDev);
 
-                            SearchMoreOrLessChallenger run = new SearchMoreOrLessChallenger("Recherche +/- Challenger",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            } else {
 
-                        } else {
+                                MastermindChallenger run = new MastermindChallenger("Mastermind Challenger", nbrDigits, nbrTours, nbrRange, modeDev);
 
-                            MastermindChallenger run = new MastermindChallenger("Mastermind Challenger",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
-
-                        }
-
-                    }
-                });
-
-            } else if (button.getText().equals("Défenseur")) {
-
-                button.addActionListener(new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {
-
-                        if (searchMoreOrLess == 1) {
-
-                            SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur("Recherche +/- Défenseur",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
-
-                        } else {
-
-                            MastermindDefenseur run = new MastermindDefenseur("Mastermind Défenseur",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                            }
 
                         }
-                    }
-                });
+                    });
+                    break;
+                case "Défenseur":
+                    button.addActionListener(new ActionListener() {
 
-            } else {
+                        @Override
+                        public void actionPerformed(ActionEvent ae) {
 
-                button.addActionListener(new ActionListener() {
+                            if (searchMoreOrLess == 1) {
 
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {
+                                SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur("Recherche +/- Défenseur", nbrDigits, nbrTours, nbrRange, modeDev);
 
-                        if (searchMoreOrLess == 1) {
+                            } else {
 
-                            SearchMoreOrLessDuel run = new SearchMoreOrLessDuel("Recherche +/- Duel",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
+                                MastermindDefenseur run = new MastermindDefenseur("Mastermind Défenseur", nbrDigits, nbrTours, nbrRange, modeDev);
 
-                        } else {
-
-                            MastermindDuel run = new MastermindDuel("Mastermind Duel",getNbrDigits(), getNbrTours(), getNbrRange(), isModeDev());
-
+                            }
                         }
-                    }
-                });
+                    });
+                    break;
+                default:
+                    button.addActionListener(new ActionListener() {
 
+                        @Override
+                        public void actionPerformed(ActionEvent ae) {
+
+                            if (searchMoreOrLess == 1) {
+
+                                SearchMoreOrLessDuel run = new SearchMoreOrLessDuel("Recherche +/- Duel", nbrDigits, nbrTours, nbrRange, modeDev);
+
+                            } else {
+
+                                MastermindDuel run = new MastermindDuel("Mastermind Duel", nbrDigits, nbrTours, nbrRange, modeDev);
+
+                            }
+                        }
+                    });
+                    break;
             }
 
         }
@@ -286,21 +255,6 @@ public class WindowMain extends WindowSource {
     }
 
     /**
-     * Create options panel.
-     *
-     * @return panel with Options Button.
-     */
-//    private JPanel optionsPanel() {
-//
-//        JPanel optionPanel = new JPanel();
-//        optionPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//        optionPanel.add(new JButton("Options"));
-//
-//        return optionPanel;
-//
-//    }
-
-    /**
      * Create games options description panel.
      *
      * @return panel with games options description.
@@ -312,8 +266,10 @@ public class WindowMain extends WindowSource {
 
 //        Option description challenger
         optionsDescription.add(new JTextArea("En mode challenger, vous devez trouver\nla combinaison secrète de l'ordinateur."));
+
 //        Option description Défenseur
         optionsDescription.add(new JTextArea("En mode défenseur, c'est à l'ordinateur\nde trouver votre combinaison secrète."));
+
 //        Option description Duel
         optionsDescription.add(new JTextArea("En mode duel, l'ordinateur et vous jouez\ntour à tour. Le premier à trouver la\ncombinaison secrète de l'autre a gagné !"));
 

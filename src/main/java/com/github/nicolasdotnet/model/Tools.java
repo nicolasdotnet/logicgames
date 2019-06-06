@@ -134,39 +134,6 @@ public class Tools {
 
     // Mastermind
     /**
-     * Generator function of list of best combination possible
-     *
-     * @param possible complete list of combination possible
-     * @param result result hashmap of the comparison() function
-     * @param machine machine value
-     * @return list of best combination possible
-     */
-    public List<String> generateBestPossible(List<String> possible, HashMap<String, String> result, String machine) {
-
-        HashMap<String, String> ri = new HashMap<String, String>();
-        List<String> bestPossible = new ArrayList<String>();
-
-        for (int i = 0; i < possible.size(); i++) {
-
-            ri = Mastermind.comparison(possible.get(i), machine);
-
-            log.info("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
-            log.info("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
-
-            if (result.get("place").equals(ri.get("place")) && result.get("present").equals(ri.get("present"))) {
-
-                log.info("possible.get(i) : " + possible.get(i));
-                bestPossible.add(possible.get(i));
-
-            }
-
-        }
-
-        return bestPossible;
-
-    }
-
-    /**
      * Generator function of complete list of combination possible
      *
      * @param nbrDigits number of digts of the combination
@@ -201,6 +168,39 @@ public class Tools {
         }
 
         return possible;
+    }
+
+    /**
+     * Generator function of list of best combination possible
+     *
+     * @param possible complete list of combination possible
+     * @param result result hashmap of the comparison() function
+     * @param machine machine value
+     * @return list of best combination possible
+     */
+    public List<String> generateBestPossible(List<String> possible, HashMap<String, String> result, String machine) {
+
+        HashMap<String, String> ri = new HashMap<String, String>();
+        List<String> bestPossible = new ArrayList<String>();
+
+        for (int i = 0; i < possible.size(); i++) {
+
+            ri = Mastermind.comparison(possible.get(i), machine);
+
+            log.info("display resultat -> place : " + result.get("place") + " ; present : " + result.get("present"));
+            log.info("display ri -> place : " + ri.get("place") + " ; present : " + ri.get("present"));
+
+            if (result.get("place").equals(ri.get("place")) && result.get("present").equals(ri.get("present"))) {
+
+                log.info("possible.get(i) : " + possible.get(i));
+                bestPossible.add(possible.get(i));
+
+            }
+
+        }
+
+        return bestPossible;
+
     }
 
 }

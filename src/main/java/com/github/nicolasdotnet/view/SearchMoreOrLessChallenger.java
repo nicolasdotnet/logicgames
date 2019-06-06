@@ -74,7 +74,7 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
 
             getTextAreaOut().append("\n");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits);
+            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
             // Initial phase
             if (step == 0) {

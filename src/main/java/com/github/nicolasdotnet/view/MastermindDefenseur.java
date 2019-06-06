@@ -74,7 +74,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
 
             getTextAreaOut().append("\n");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits);
+            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
             // Initial phase
             if (inputUser) {
@@ -96,7 +96,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                     // update nbrTours & nbrTest by round
                     nbrTours--;
                     nbrTests++;
-                    
+
                     String sizure = "null";
 
                     // Generate Possible
@@ -104,7 +104,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         case 1: {
 
                             possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange,sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
@@ -113,7 +113,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         case 2: {
 
                             bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange,sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
@@ -122,7 +122,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         default: {
 
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange,sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");

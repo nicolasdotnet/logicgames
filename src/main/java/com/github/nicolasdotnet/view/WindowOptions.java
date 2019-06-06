@@ -10,10 +10,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -35,49 +35,38 @@ public class WindowOptions extends WindowSource {
     private int nbrRange;
     private boolean modeDev;
     private static final Logger log = LogManager.getLogger(WindowOptions.class);
-
     private Controller checkUserInput = new Controller();
     private Boolean inputUser;
     private WindowHome windowHome;
 
-    public WindowOptions(WindowHome windowHome) {
+    public WindowOptions(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev, WindowHome windowHome) {
+        this.nbrDigits = nbrDigits;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
+        this.modeDev = modeDev;
         this.windowHome = windowHome;
         this.setTitle("Options");
+        
+        System.out.println("contruc : "+nbrDigits + modeDev);
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
 
-        contentPanel.add(choiceGames(), BorderLayout.CENTER);
+        contentPanel.add(optionsChoice(), BorderLayout.CENTER);
 
         this.setVisible(true);
-    }
-
-    public int getNbrDigits() {
-        return nbrDigits;
     }
 
     public void setNbrDigits(int nbrDigits) {
         this.nbrDigits = nbrDigits;
     }
 
-    public int getNbrTours() {
-        return nbrTours;
-    }
-
     public void setNbrTours(int nbrTours) {
         this.nbrTours = nbrTours;
     }
 
-    public int getNbrRange() {
-        return nbrRange;
-    }
-
     public void setNbrRange(int nbrRange) {
         this.nbrRange = nbrRange;
-    }
-
-    public boolean isModeDev() {
-        return modeDev;
     }
 
     public void setModeDev(boolean modeDev) {
@@ -89,7 +78,7 @@ public class WindowOptions extends WindowSource {
      *
      * @return panel with the buttons game.
      */
-    private JPanel choiceGames() {
+    private JPanel optionsChoice() {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1, 10, 10));
@@ -98,98 +87,48 @@ public class WindowOptions extends WindowSource {
         param.setLayout(new GridLayout(4, 2, 0, 0));
 
         // nbrDigits Label instructions
-        JTextArea textAreaOut = new JTextArea("1) Tapez un N° entre 1 et 4 pour définir le N°\nde cases des combinaisons");
-        textAreaOut.setEditable(false);
+        JLabel textAreaOut = new JLabel("1) Tapez un N° entre 1 et 4 pour définir le N°\nde cases des combinaisons");
+//        textAreaOut.setEditable(false);
         param.add(textAreaOut);
 
         // Field input value nbrDigits
-        JTextField textFieldIn = new JTextField();
-        param.add(textFieldIn);
-
-        textFieldIn.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyReleased(KeyEvent event) {
-
-                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-
-                    try {
-                        setNbrDigits(Integer.valueOf(textFieldIn.getText()));
-                    } catch (NumberFormatException nfe) {
-                        log.error("valeur nbrDigits : " + textFieldIn.getText());
-                    }
-
-                }
-
-            }
-
-        });
+        JTextField textFieldNbrDigits = new JTextField(Integer.toString(nbrDigits));
+        param.add(textFieldNbrDigits);
 
         // nbrTours Label instructions
-        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 9 pour définir le N°\nde tours.");
+        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 9 pour définir le N°\nde tours possibles.");
         textAreaOut2.setEditable(false);
         param.add(textAreaOut2);
 
         // Field input value nbrTours
-        JTextField textFieldIn2 = new JTextField();
-        param.add(textFieldIn2);
-
-        textFieldIn2.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyReleased(KeyEvent event) {
-
-                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-
-                    try {
-                        setNbrTours(Integer.valueOf(textFieldIn2.getText()));
-                    } catch (NumberFormatException nfe) {
-                        log.error("valeur nbrTours : " + textFieldIn2.getText());
-                    }
-
-                }
-
-            }
-
-        });
+        JTextField textFieldNbrTours = new JTextField(Integer.toString(nbrTours));
+        param.add(textFieldNbrTours);
 
         // nbrRange Label instructions
-        JTextArea textAreaOut3 = new JTextArea("3) Tapez un N° entre 4 et 9 pour définir \nl'amplitude maximal des nombres.\nPuis sélectionnez le jeu");
+        JTextArea textAreaOut3 = new JTextArea("3) Tapez un N° entre 4 et 9 pour définir \nl'amplitude maximal des nombres.");
         textAreaOut3.setEditable(false);
         param.add(textAreaOut3);
 
         // Field input value nbrRange
-        JTextField textFieldIn3 = new JTextField();
-        param.add(textFieldIn3);
-
-        textFieldIn3.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyReleased(KeyEvent event) {
-
-                if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-
-                    try {
-                        setNbrRange(Integer.valueOf(textFieldIn3.getText()));
-                    } catch (NumberFormatException nfe) {
-
-                        log.error("valeur nbrRange : " + textFieldIn3.getText());
-
-                    }
-
-                }
-
-            }
-
-        });
+        JTextField textFieldNbrRange = new JTextField(Integer.toString(nbrRange));
+        param.add(textFieldNbrRange);
 
         // nbrRange Label instructions
-        JTextArea textAreaOut4 = new JTextArea("4) Activation de l'option Développeur \nl'amplitude maximal des nombres.\nPuis sélectionnez le jeu");
+        JTextArea textAreaOut4 = new JTextArea("4) Activation de l'option Développeur \npour voir la solution.");
         textAreaOut3.setEditable(false);
         param.add(textAreaOut4);
 
         // Input modeDev option
         JCheckBox modeDevCheck = new JCheckBox("DevMode");
+        
+        if (modeDev) {
+
+            log.info("coché !");
+
+            modeDevCheck.isSelected();
+
+        }
+        
         param.add(modeDevCheck);
 
         modeDevCheck.addActionListener(new ActionListener() {
@@ -212,13 +151,13 @@ public class WindowOptions extends WindowSource {
 
         panel.add(param);
 
-        // Choice games buttons
-        JPanel choiceGames = new JPanel();
+        // Options choice buttons
+        JPanel optionsChoice = new JPanel();
 
-        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
-        JButton mastermind = new JButton("Annuler");
+        optionsChoice.setLayout(new GridLayout(1, 2, 10, 10));
+        JButton cancel = new JButton("Annuler");
 
-        mastermind.addActionListener(new ActionListener() {
+        cancel.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -228,39 +167,62 @@ public class WindowOptions extends WindowSource {
             }
         });
 
-        choiceGames.add(mastermind);
+        optionsChoice.add(cancel);
 
-        JButton searchMoreOrless = new JButton("Valider");
+        JButton save = new JButton("Valider");
 
-        searchMoreOrless.addActionListener(new ActionListener() {
+        save.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                boolean inputDigits = checkUserInput.inputErrorHome(textFieldIn.getText(), 4);
-                boolean inputTours = checkUserInput.inputErrorHome(textFieldIn2.getText(), 9);
-                boolean inputRange = checkUserInput.inputErrorHome(textFieldIn3.getText(), 9);
+                // Exception if JtextField = "" because no user sizure""
+                try {
 
-                if (inputDigits || inputTours || inputRange) {
-                    textFieldIn.setText("");
-                    textFieldIn2.setText("");
-                    textFieldIn3.setText("");
+                    nbrDigits = Integer.valueOf(textFieldNbrDigits.getText());
+                    nbrRange = Integer.valueOf(textFieldNbrRange.getText());
+                    nbrTours = Integer.valueOf(textFieldNbrTours.getText());
 
-                } else {
+                } catch (NumberFormatException nfe) {
 
-                    windowHome.setNbrRange(Integer.valueOf(textFieldIn3.getText()));
-                    windowHome.setNbrTours(Integer.valueOf(textFieldIn2.getText()));
-                    windowHome.setNbrDigits(Integer.valueOf(textFieldIn.getText()));
-                    WindowOptions.this.dispose();
+                    log.info("valeur Digit, Range & Tours non modifiées");
+
+                } finally {
+
+                    if (nbrDigits == 0 || nbrRange == 0 || nbrTours == 0) {
+
+                        WindowOptions.this.dispose();
+
+                    } else {
+
+                        inputUser = checkUserInput.inputErrorOptions(nbrDigits, nbrRange, nbrTours);
+                        System.out.println("check" + inputUser);
+
+                        if (inputUser) {
+
+                            textFieldNbrDigits.setText("");
+                            textFieldNbrRange.setText("");
+                            textFieldNbrTours.setText("");
+                            JOptionPane.showMessageDialog(WindowOptions.this, "Valeurs non valide","Erreur",JOptionPane.ERROR_MESSAGE);
+                        } else {
+
+                            windowHome.setNbrRange(nbrRange);
+                            windowHome.setNbrTours(nbrTours);
+                            windowHome.setNbrDigits(nbrDigits);
+                            WindowOptions.this.dispose();
+
+                        }
+
+                    }
 
                 }
 
             }
         });
 
-        choiceGames.add(searchMoreOrless);
+        optionsChoice.add(save);
 
-        panel.add(choiceGames);
+        panel.add(optionsChoice);
 
         return panel;
     }
