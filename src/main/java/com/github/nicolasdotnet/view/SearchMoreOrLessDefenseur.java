@@ -13,8 +13,8 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 /**
- * SearchMoreOrLessDefenseur est la classe qui représente la fenêtre de jeux
- * Recherche +/- en mode Défenseur.
+ * SearchMoreOrLessDefender is the class that represents the Search +/- game
+ * window in Defender mode.
  *
  * @author nicolasdotnet
  * @version Alpha

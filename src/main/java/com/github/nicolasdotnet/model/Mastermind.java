@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Mastermind est la classe métier du jeux Mastermind.
+ * Mastermind is the mastermind game model class.
  *
  * @author nicolasdotnet
  * @version Draft
@@ -31,7 +31,7 @@ public abstract class Mastermind {
      * @return result hasmap with number place and number present
      */
     public static HashMap<String, String> comparison(String attac, String solution) {
-        
+
         char charDef[] = solution.toCharArray();
         char charAttac[] = attac.toCharArray();
 
@@ -139,6 +139,16 @@ public abstract class Mastermind {
      */
     public abstract String getSolutionCombination(int nbrDigits, int nbrRange, String sizure);
 
-    public abstract String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure);
+    /**
+     * Generator function of possible combination
+     *
+     * @param nbrTests number of test of comparison
+     * @param possible complete list of combination possible
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
+    public abstract String getPossible(int nbrTests, List<String> possible, int nbrRange, int nbrDigits, String sizure);
 
 }

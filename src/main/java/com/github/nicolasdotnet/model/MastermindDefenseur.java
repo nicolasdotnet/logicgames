@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * MastermindDefenseur est la classe du jeux Mastermind en mode Defenseur
+ * MastermindDefender is the class of the Mastermind game in Defender mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -22,22 +22,23 @@ public class MastermindDefenseur extends Mastermind {
     private static final Logger log = LogManager.getLogger(MastermindDefenseur.class);
 
     /**
-     * Random selection of machine combination :
+     * Generator function of possible combination
      *
      * @param nbrTests number of test of comparison
      * @param possible list of combination possible (complete or best)
      * @param nbrRange range of number for the combination
+     * @param nbrDigits number of digts of the combination
      * @param sizure value input by user
      * @return machine value
      */
     @Override
-    public String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange, int nbrDigits, String sizure) {
 
         String combination;
 
-        if (nbrTests == 1 && nbrRange == 6) {
+        if (nbrTests == 1 && nbrRange == 6 && nbrDigits == 4) {
 
-            combination = possible.get(1122);
+            combination = Integer.toString(1122);
 
         } else {
 

@@ -21,8 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * WindowsGame est la classe mére qui représente la fenêtre de jeux Recherche
- * +/- et Mastermind.
+ * Windows Game is the parent class that represents the Search +/- and
+ * Mastermind games window.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -38,9 +38,6 @@ public class WindowGame extends JFrame {
     private ControllerSearchMoreOrLess checkUserInput;
     private JButton yes;
 
-    /**
-     *
-     */
     public WindowGame(String title, boolean modeDev) {
 
         this.modeDev = modeDev;

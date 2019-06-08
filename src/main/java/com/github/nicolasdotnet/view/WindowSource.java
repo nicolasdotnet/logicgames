@@ -9,7 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
- * WindowSource est la classe qui représente le squelette d'un fenêtre
+ * WindowSource is the class that represents the skeleton of a window.
+ *
  * @author nicolasdotnet
  * @version Alpha
  * @since 2019
@@ -24,10 +25,9 @@ public abstract class WindowSource extends JFrame {
         ImageIcon icon = new ImageIcon("./src/main/resources/fav-icon.png");
         this.setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
-        
+
         // param to enable WindowSource visibility 
-//        this.setVisible(true);
-        
+        // this.setVisible(true);
     }
 
 }

@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * SearchMoreOrLessDefenseur est la classe du jeux Recherche +/- en mode
- * Defenseur
+ * SearchMoreOrLessDefender is the class of the game Search +/- in Defender
+ * mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -21,7 +21,6 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
 
     private static final Logger log = LogManager.getLogger(SearchMoreOrLessDefenseur.class);
 
-    // methodes Ai
     /**
      * Generator function of solution combination
      *
@@ -43,7 +42,7 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
-     * @param sizure
+     * @param sizure value input by user
      * @return possible combination
      */
     @Override
@@ -53,7 +52,7 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
 
         for (int i = 0; i < nbrDigits; i++) {
 
-            inputMachine.append(randomRange[0][i]+(int) (Math.random()*((randomRange[1][i] - randomRange[0][i]) +1)));
+            inputMachine.append(randomRange[0][i] + (int) (Math.random() * ((randomRange[1][i] - randomRange[0][i]) + 1)));
 
         }
 

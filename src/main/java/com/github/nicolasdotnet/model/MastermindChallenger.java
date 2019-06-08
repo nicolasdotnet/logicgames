@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * MastermindChallenger est la classe du jeux Mastermind en mode Challenger
+ * MastermindChallenger is the class of the game Mastermind in Challenger mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -78,10 +78,20 @@ public class MastermindChallenger extends Mastermind {
 
     }
 
+    /**
+     * Generator function of possible combination
+     *
+     * @param nbrTests number of test of comparison
+     * @param possible complete list of combination possible (complete or best)
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
     @Override
-    public String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange, int nbrDigits, String sizure) {
         return sizure;
-    
+
     }
 
 }

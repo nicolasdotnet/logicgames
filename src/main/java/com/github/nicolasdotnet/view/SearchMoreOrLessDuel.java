@@ -13,8 +13,8 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 /**
- * SearchMoreOrLessDuel est la classe qui représente la fenêtre de jeux
- * Recherche +/- en mode Duel.
+ * SearchMoreOrLessDuel is the class that represents the Search +/- game window
+ * in Duel mode.
  *
  * @author nicolasdotnet
  * @version Alpha

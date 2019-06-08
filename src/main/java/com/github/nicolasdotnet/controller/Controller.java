@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * Controller est la super classe controlleur
+ * Controller is the super class controller
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -124,7 +124,7 @@ public class Controller {
      *
      * @param result result of the comparison function
      * @param machine value table of the machine attaquant
-     * @param randomRange
+     * @param randomRange random limit initial
      * @return new random range
      */
     public int[][] getGenerateRandomRangeNew(String result, String machine, int[][] randomRange) {
@@ -158,11 +158,11 @@ public class Controller {
     /**
      * Controller method that calls the model parameter backup generation method
      *
-     * @param title
+     * @param title title window/JFrame
      * @param nbrDigits number of digts of the combination
-     * @param nbrTours
+     * @param nbrTours number of turns possible for one match
      * @param nbrRange range of number for the combination
-     * @param modeDev
+     * @param modeDev modeDev option activate or no
      * @return parameter backup
      */
     public HashMap<String, String> getParameterBackup(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {

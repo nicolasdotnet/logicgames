@@ -16,7 +16,12 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author pi
+ * ControllerMastermind is the controller class between the view and the
+ * model of the Mastermind game
+ *
+ * @author nicolasdotnet
+ * @version Alpha
+ * @since 2019
  */
 public class ControllerMastermind extends Controller {
 
@@ -79,11 +84,12 @@ public class ControllerMastermind extends Controller {
      * @param nbrTests number of test of comparison
      * @param possible list of combination possible (complete or best)
      * @param nbrRange range of number for the combination
+     * @param nbrDigits number of digts of the combination
      * @param sizure value input by user
      * @return machine value
      */
-    public String getGetPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
-        return game.getPossible(nbrTests, possible, nbrRange, sizure);
+    public String getGetPossible(int nbrTests, List<String> possible, int nbrRange, int nbrDigits, String sizure) {
+        return game.getPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
 
     }
 

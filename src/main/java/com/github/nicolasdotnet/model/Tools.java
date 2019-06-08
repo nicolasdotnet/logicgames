@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Tools est la classe utilitaire des jeux SearchMoreOrless et Mastermind.
+ * Tools is the utility class for SearchMoreOrless and Mastermind games.
  *
  * @author nicolasdotnet
  * @version Draft
@@ -30,12 +30,12 @@ public class Tools {
     }
 
     /**
-     * Instance unique pré-initialisée
+     * Single instance pre-initialized
      */
     private static Tools INSTANCE = new Tools();
 
     /**
-     * Point d'accès pour l'instance unique du singleton
+     * Access point for singleton single instance
      */
     public static Tools getInstance() {
         return INSTANCE;
@@ -54,7 +54,8 @@ public class Tools {
 
     }
 
-    // SearchMoreOrless
+    // SearchMoreOrless methods
+    
     /**
      * Random range generator function initial
      *
@@ -132,7 +133,8 @@ public class Tools {
 
     }
 
-    // Mastermind
+    // Mastermind methods
+    
     /**
      * Generator function of complete list of combination possible
      *
@@ -141,9 +143,9 @@ public class Tools {
      * @return complete list of combination possible
      */
     public List<String> generateAllPossible(int nbrDigits, int nbrRange) {
-        
-        nbrRange ++;
-        
+
+        nbrRange++;
+
         List<String> possible = new ArrayList<String>();
 
         String combinationFormat = "";

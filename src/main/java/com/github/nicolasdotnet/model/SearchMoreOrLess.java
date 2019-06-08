@@ -5,13 +5,11 @@
  */
 package com.github.nicolasdotnet.model;
 
-import java.util.Collections;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * SearchMoreOrLess est la classe métier du jeux Recherche +/-.
+ * SearchMoreOrLess is the business class of the Search +/- game.
  *
  * @author nicolasdotnet
  * @version Draft
@@ -66,7 +64,7 @@ public abstract class SearchMoreOrLess {
         StringBuilder sb = new StringBuilder(result);
 
         if (index < 0) {
-            
+
             result = sb.reverse().toString();
             log.info("Retour : " + result);
 
@@ -114,6 +112,15 @@ public abstract class SearchMoreOrLess {
      */
     public abstract String getSolutionCombination(int nbrDigits, int nbrRange, String sizure);
 
+    /**
+     * Generator function of possible combination
+     *
+     * @param randomRange max number limit and mini number limit for generate
+     * random number
+     * @param nbrDigits number of digts of the combination
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
     public abstract String getPossible(int[][] randomRange, int nbrDigits, String sizure);
 
 }

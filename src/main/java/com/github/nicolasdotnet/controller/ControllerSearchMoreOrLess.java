@@ -6,15 +6,13 @@
 package com.github.nicolasdotnet.controller;
 
 import com.github.nicolasdotnet.model.*;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * ControllerSearchMoreOrLess est la classe controller entre la vue et
- le métier du jeu SearchMoreOrLess en mode Challenger
+ * ControllerSearchMoreOrLess is the controller class between the view and the
+ * model of the SearchMoreOrLess game
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -56,9 +54,9 @@ public class ControllerSearchMoreOrLess extends Controller {
     /**
      * Controller method that calls the model get possible method
      *
-     * @param nbrTests number of test of comparison
-     * @param possible list of combination possible (complete or best)
-     * @param nbrRange range of number for the combination
+     * @param randomRange max number limit and mini number limit for generate
+     * random number
+     * @param nbrDigits number of digts of the combination
      * @param sizure value input by user
      * @return machine value
      */

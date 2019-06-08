@@ -14,12 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
- * WindowHome est la classe qui représente la fenêtre d'ouverture
+ * WindowHome is the class that represents the opening window of the game.
  *
  * @author nicolasdotnet
  * @version Alpha

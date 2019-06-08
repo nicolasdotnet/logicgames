@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * WindowMain est la classe qui représente la fenêtre principale
+ * WindowMain is the class that represents the main window.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -50,7 +50,7 @@ public class WindowMain extends WindowSource {
     public void setSearchMoreOrLess(int searchMoreOrLess) {
         this.searchMoreOrLess = searchMoreOrLess;
     }
-    
+
     public void setMastermind(int mastermind) {
         this.mastermind = mastermind;
     }

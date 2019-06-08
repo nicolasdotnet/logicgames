@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 
 /**
  *
- * Propertie est la classe qui importe le fichier config.properties.
+ * Propertie is the class that imports the config.properties file.
  *
  * @author nicolasdotnet
  * @version Alpha

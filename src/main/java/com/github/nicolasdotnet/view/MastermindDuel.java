@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * MastermindDuel est la classe qui représente la fenêtre de jeux mastermind en
- * mode Duel.
+ * MastermindDuel is the class that represents the mastermind game window in
+ * Duel mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -133,7 +133,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     String sizureFake = "null";
                     List<String> possibleFake = null;
 
-                    human = checkUserInput.getGetPossible(nbrTestsM, possibleFake, nbrRange, valueInput);
+                    human = checkUserInput.getGetPossible(nbrTestsM, possibleFake, nbrRange, nbrDigits, valueInput);
                     getTextAreaOut().append("Votre proposition  : " + human + "\n");
 
                     // Generate possible for the machine
@@ -141,19 +141,19 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                         case 1:
 
                             possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, sizureFake);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         case 2:
 
                             bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         default:
 
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
-                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                            machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                     }
@@ -211,13 +211,13 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                             if (nbrTestsM == 2) {
 
                                 bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
-                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                                 machine = machine2;
 
                             } else {
 
                                 bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
-                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, sizureFake);
+                                machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                                 machine = machine2;
                             }
 
@@ -306,7 +306,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                     possible = null;
 
-                    human = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, valueInput);
+                    human = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, nbrDigits, valueInput);
                     getTextAreaOut().append("Votre proposition : " + human + "\n");
 
                     resultH.clear();

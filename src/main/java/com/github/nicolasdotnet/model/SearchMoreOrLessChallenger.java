@@ -12,8 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * SearchMoreOrLessChallenger est la classe du jeux Recherche +/- en mode
- * Challenger
+ * SearchMoreOrLessChallenger is the class of the game Search +/- in Challenger
+ * mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -79,6 +79,15 @@ public class SearchMoreOrLessChallenger extends SearchMoreOrLess {
 
     }
 
+    /**
+     * Generator function of possible combination
+     *
+     * @param randomRange max number limit and mini number limit for generate
+     * random number
+     * @param nbrDigits number of digts of the combination
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
     @Override
     public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
         return sizure;

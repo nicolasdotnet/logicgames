@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  *
- * SearchMoreOrLessDuel est la classe du jeux Recherche +/- en mode Duel
+ * SearchMoreOrLessDuel is the class of the game Search +/- in Duel mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -89,8 +89,10 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
-     * @return possible combination in List integer
+     * @param sizure value input by user
+     * @return possible combination
      */
+    @Override
     public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
 
         if (sizure == "null") {

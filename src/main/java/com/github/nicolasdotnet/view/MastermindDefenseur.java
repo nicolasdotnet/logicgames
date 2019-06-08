@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * MastermindDefenseur est la classe qui représente la fenêtre de jeux
- * mastermind en mode Défenseur.
+ * MastermindDefender is the class that represents the mastermind game window in
+ * Defender mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -104,7 +104,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         case 1: {
 
                             possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
@@ -113,7 +113,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         case 2: {
 
                             bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
@@ -122,7 +122,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                         default: {
 
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, sizure);
+                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
                             machine = machine2;
 
                             getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");

@@ -6,14 +6,13 @@
 package com.github.nicolasdotnet.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
- * MastermindDefenseur est la classe du jeux Mastermind en mode Defenseur
+ * MastermindDefender is the class of the Mastermind game in Defender mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -84,22 +83,32 @@ public class MastermindDuel extends Mastermind {
         return sizure;
     }
 
+    /**
+     * Generator function of possible combination
+     *
+     * @param nbrTests number of test of comparison
+     * @param possible complete list of combination possible
+     * @param nbrDigits number of digts of the combination
+     * @param nbrRange range of number for the combinaison
+     * @param sizure value input by user
+     * @return solution combination generate
+     */
     @Override
-    public String getPossible(int nbrTests, List<String> possible, int nbrRange, String sizure) {
-        
+    public String getPossible(int nbrTests, List<String> possible, int nbrRange, int nbrDigits, String sizure) {
+
         if (sizure == "null") {
-            
-            if (nbrTests == 1 && nbrRange == 6) {
 
-            sizure = possible.get(1122);
+            if (nbrTests == 1 && nbrRange == 6 && nbrDigits == 4) {
 
-        } else {
+                sizure = Integer.toString(1122);
 
-            int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
-            log.info("id : " + id);
-            sizure = possible.get(id);
-        }
-            
+            } else {
+
+                int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
+                log.info("id : " + id);
+                sizure = possible.get(id);
+            }
+
         }
         return sizure;
     }

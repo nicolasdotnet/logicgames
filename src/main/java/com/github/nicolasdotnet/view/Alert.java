@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * Alert est la classe qui représente le pop up d'alerte
+ * Alert is the class that represents the alert pop up.
  *
  * @author nicolasdotnet
  * @version Alpha

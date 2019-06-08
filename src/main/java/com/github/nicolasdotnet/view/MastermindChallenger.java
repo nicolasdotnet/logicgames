@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * MasterminChallenger est la classe qui représente la fenêtre de jeux
- * Mastermind en mode Challenger.
+ * MasterminChallenger is the class that represents the Mastermind game window
+ * in Challenger mode.
  *
  * @author nicolasdotnet
  * @version Alpha
@@ -99,7 +99,7 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
 
                 List<String> possible = null;
 
-                humain = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, valueInput);
+                humain = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, valueInput);
 
                 result.clear();
                 result = (checkUserInput.getComparison(humain, machine));

@@ -13,8 +13,8 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 /**
- * SearchMoreOrLessChallenger est la classe qui représente la fenêtre de jeux
- * Recherche +/- en mode Challenger.
+ * SearchMoreOrLessChallenger is the class that represents the Search +/- games
+ * window in Challenger mode.
  *
  * @author nicolasdotnet
  * @version Alpha
