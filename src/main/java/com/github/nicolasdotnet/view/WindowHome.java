@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -48,6 +49,14 @@ public class WindowHome extends WindowSource {
         contentPanel.add(choiceGames(), BorderLayout.CENTER);
         contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
         this.setVisible(true);
+
+        // check import para
+        Boolean r = checkUserInput.inputErrorOptions(nbrDigits, nbrRange, nbrTours);
+        if (r) {
+
+            Alert.error(WindowHome.this, "Erreur ! Paramètres non conformes. Cliquer sur Options");
+
+        }
 
     }
 
@@ -146,7 +155,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                    WindowOptions windowOptions = new WindowOptions(nbrDigits, nbrTours, nbrRange, modeDev, WindowHome.this);
+                WindowOptions windowOptions = new WindowOptions(nbrDigits, nbrTours, nbrRange, modeDev, WindowHome.this);
             }
         });
 

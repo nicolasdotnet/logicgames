@@ -93,7 +93,7 @@ public class Controller {
             nbrTrue++;
             log.info("Taille invalide / TRUE !");
 
-        } else if (nbrRange < 4 || nbrRange > 10) {
+        } else if (nbrRange < 3 || nbrRange > 9) {
 
             nbrTrue++;
             log.info("Nombre de couleur invalide / TRUE !");

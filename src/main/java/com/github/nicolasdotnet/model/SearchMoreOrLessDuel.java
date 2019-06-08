@@ -99,7 +99,7 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
 
             for (int i = 0; i < nbrDigits; i++) {
 
-                inputMachine.append((int) ((randomRange[1][i] - randomRange[0][i]) * Math.random()) + randomRange[0][i]);
+                inputMachine.append(randomRange[0][i]+(int) (Math.random()*((randomRange[1][i] - randomRange[0][i]) +1)));
 
             }
 

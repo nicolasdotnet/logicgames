@@ -41,7 +41,7 @@ public class MastermindDefenseur extends Mastermind {
 
         } else {
 
-            int id = 0 + (int) (Math.random() * (possible.size() - 0)); // +1 ? ou -1 ?
+            int id = 0 + (int) (Math.random() * (possible.size() - 0));
             log.info("id : " + id);
             combination = possible.get(id);
         }

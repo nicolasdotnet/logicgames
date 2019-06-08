@@ -29,7 +29,7 @@ public class ToolsTest {
     @Test
     public void testGenerateAllPossible() {
         int nbrDigits = 2;
-        int nbrRange = 2;
+        int nbrRange = 1;
         Tools instance = Tools.getInstance();
         List<String> expResult = new ArrayList<>();
         expResult.add("00");

@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,6 +47,9 @@ public class WindowGame extends JFrame {
         this.setTitle(title);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(450, 450);
+        // ImageIcon(URL)
+        ImageIcon icon = new ImageIcon("./src/main/resources/fav-icon.png");
+        this.setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
         add(JScrollTextArea(), BorderLayout.CENTER);
 
@@ -169,10 +173,10 @@ public class WindowGame extends JFrame {
         getTextAreaIn().setEditable(false);
     }
 
-    public void machineToBeToContinuedMessageDisplay(int nbrTours,String result ) {
+    public void machineToBeToContinuedMessageDisplay(int nbrTours, String result) {
 
         getTextAreaOut().append("Le résulat de la machine : " + result + "\n");
-        
+
         if (nbrTours == 1) {
 
             String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Dernier tour !)\n";
@@ -188,10 +192,10 @@ public class WindowGame extends JFrame {
 
     }
 
-    public void humanToBeToContinuedMessageDisplay(int nbrTours,String result) {
+    public void humanToBeToContinuedMessageDisplay(int nbrTours, String result) {
 
         getTextAreaOut().append("Votre résulat : " + result + "\n");
-        
+
         if (nbrTours == 1) {
 
             String message = "Désolez ! il faut essayer une nouvelle combinaison (Attention dernier tour !)\n";

@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.view;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -19,6 +20,9 @@ public abstract class WindowSource extends JFrame {
         super("Jeux de logique");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(580, 500);
+        // ImageIcon(URL)
+        ImageIcon icon = new ImageIcon("./src/main/resources/fav-icon.png");
+        this.setIconImage(icon.getImage());
         this.setLocationRelativeTo(null);
         
         // param to enable WindowSource visibility 

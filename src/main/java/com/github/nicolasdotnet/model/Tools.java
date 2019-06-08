@@ -141,6 +141,9 @@ public class Tools {
      * @return complete list of combination possible
      */
     public List<String> generateAllPossible(int nbrDigits, int nbrRange) {
+        
+        nbrRange ++;
+        
         List<String> possible = new ArrayList<String>();
 
         String combinationFormat = "";
