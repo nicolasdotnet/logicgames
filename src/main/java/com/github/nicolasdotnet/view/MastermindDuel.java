@@ -176,11 +176,11 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
-                        getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
+                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
 
                         // Machine
                         getTextAreaOut().append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n\n");
                         getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
 
                         getTextAreaIn().setEditable(false);
@@ -191,12 +191,12 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                         // Human only winner
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
-                        getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
+                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
                         getTextAreaIn().setEditable(false);
 
                         // Machine
                         message = "Et encore félicitation ! La machine doit essayer une nouvelle combinaison (Tour N°" + nbrTours + ").\n";
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
                         getTextAreaOut().append(message);
                         getTextAreaOut().append("La machine joue ! \n");
 
@@ -253,7 +253,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                         //Machine 
                         getTextAreaOut().append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
 
                         // Human
                         if (nbrTours == 0) {
@@ -269,8 +269,8 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     } else if (Integer.parseInt(resultM.get("place")) != nbrDigits && Integer.parseInt(resultH.get("place")) != nbrDigits) {
 
                         getTextAreaOut().append("Personne n'a gagné !\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
-                        getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
+                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
 
                         if (nbrTours == 0) {
 

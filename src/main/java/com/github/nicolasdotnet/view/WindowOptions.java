@@ -37,12 +37,12 @@ public class WindowOptions extends WindowSource {
     private Boolean inputUser;
     private WindowHome windowHome;
 
-    public WindowOptions(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev, WindowHome windowHome) {
-        this.nbrDigits = nbrDigits;
-        this.nbrTours = nbrTours;
-        this.nbrRange = nbrRange;
-        this.modeDev = modeDev;
+    public WindowOptions(WindowHome windowHome) {
         this.windowHome = windowHome;
+        this.nbrDigits = windowHome.getNbrDigits();
+        this.nbrTours = windowHome.getNbrTours();
+        this.nbrRange = windowHome.getNbrRange();
+        this.modeDev = windowHome.isModeDev();
         this.setTitle("Options");
 
         JPanel contentPanel = (JPanel) this.getContentPane();
@@ -207,7 +207,7 @@ public class WindowOptions extends WindowSource {
                             windowHome.setNbrDigits(nbrDigits);
 
                             WindowOptions.this.dispose();
-                            
+
                         }
 
                     }

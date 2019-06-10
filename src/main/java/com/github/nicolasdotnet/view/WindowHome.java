@@ -91,12 +91,28 @@ public class WindowHome extends WindowSource {
         this.nbrRange = nbrRange;
     }
 
+    public int getNbrRange() {
+        return nbrRange;
+    }
+
+    public boolean isModeDev() {
+        return modeDev;
+    }
+
     public void setNbrTours(int nbrTours) {
         this.nbrTours = nbrTours;
     }
 
+    public int getNbrTours() {
+        return nbrTours;
+    }
+
     public void setNbrDigits(int nbrDigits) {
         this.nbrDigits = nbrDigits;
+    }
+
+    public int getNbrDigits() {
+        return nbrDigits;
     }
 
     /**
@@ -176,7 +192,7 @@ public class WindowHome extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowOptions windowOptions = new WindowOptions(nbrDigits, nbrTours, nbrRange, modeDev, WindowHome.this);
+                WindowOptions windowOptions = new WindowOptions(WindowHome.this);
             }
         });
 

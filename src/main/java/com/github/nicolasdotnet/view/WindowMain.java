@@ -314,6 +314,6 @@ public class WindowMain extends WindowSource {
      */
     public String getTitle(String gameName, int nbrDigits, int nbrTours) {
 
-        return gameName + " nombre de chiffre : " + nbrDigits + " nombre de tours : " + nbrTours;
+        return gameName + " : Trouver " + nbrDigits + " chiffres en "+ nbrTours+" tours";
     }
 }

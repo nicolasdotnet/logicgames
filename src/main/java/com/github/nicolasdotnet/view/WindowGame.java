@@ -43,7 +43,7 @@ public class WindowGame extends JFrame {
         this.modeDev = modeDev;
         this.setTitle(title);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(450, 450);
+        this.setSize(600, 600);
         // ImageIcon(URL)
         ImageIcon icon = new ImageIcon("./src/main/resources/fav-icon.png");
         this.setIconImage(icon.getImage());
@@ -137,7 +137,7 @@ public class WindowGame extends JFrame {
     public void humanWinningMessageDisplay(int nbrTests, String result) {
 
         getTextAreaOut().append("Félicitation ! mission accomplie en " + nbrTests + " tours.\n");
-        getTextAreaOut().append("Le résulat est : " + result + "\n\n");
+        getTextAreaOut().append("Le résultat est : " + result + "\n\n");
         getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
     }
@@ -145,7 +145,7 @@ public class WindowGame extends JFrame {
     public void humanLoserMessageDisplay(String solution, String result) {
 
         getTextAreaOut().append("GAME OVER !\n");
-        getTextAreaOut().append("Le résulat est : " + result + "\n");
+        getTextAreaOut().append("Le résultat est : " + result + "\n");
         getTextAreaOut().append("La solution est : " + solution + "\n\n");
         getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
@@ -154,7 +154,7 @@ public class WindowGame extends JFrame {
     public void machineWinningMessageDisplay(int nbrTests, String result, String def, String attac) {
 
         getTextAreaOut().append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
-        getTextAreaOut().append("Son résulat est : " + result + "\n");
+        getTextAreaOut().append("Son résultat est : " + result + "\n");
         getTextAreaOut().append("Rappel, votre combinaison était : " + def + "\n");
         getTextAreaOut().append("La dernière proposition de la machine est : " + attac + "\n\n");
         getTextAreaIn().setEditable(false);
@@ -163,7 +163,7 @@ public class WindowGame extends JFrame {
     public void machineLoserMessageDisplay(String solution, String result, String machine) {
 
         getTextAreaOut().append("GAME OVER ! la machine est Out\n");
-        getTextAreaOut().append("Son résulat est : " + result + "\n");
+        getTextAreaOut().append("Son résultat est : " + result + "\n");
         getTextAreaOut().append("Rappel, votre combinaison était : " + solution + "\n");
         getTextAreaOut().append("La dernière proposition de la machine est : " + machine + "\n\n");
         getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
@@ -172,7 +172,7 @@ public class WindowGame extends JFrame {
 
     public void machineToBeToContinuedMessageDisplay(int nbrTours, String result) {
 
-        getTextAreaOut().append("Le résulat de la machine : " + result + "\n");
+        getTextAreaOut().append("Le résultat de la machine : " + result + "\n");
 
         if (nbrTours == 1) {
 
@@ -191,7 +191,7 @@ public class WindowGame extends JFrame {
 
     public void humanToBeToContinuedMessageDisplay(int nbrTours, String result) {
 
-        getTextAreaOut().append("Votre résulat : " + result + "\n");
+        getTextAreaOut().append("Votre résultat : " + result + "\n");
 
         if (nbrTours == 1) {
 

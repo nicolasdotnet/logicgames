@@ -161,11 +161,11 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
-                        getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
+                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
 
                         // Machine
                         getTextAreaOut().append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n\n");
                         getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
 
                         getTextAreaIn().setEditable(false);
@@ -176,12 +176,12 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                         // Human only winner
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours.\n");
-                        getTextAreaOut().append("Votre Résulat : " + toStringH + "\n");
+                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
                         getTextAreaIn().setEditable(false);
 
                         // Machine
                         message = "Et encore félicitation ! La machine doit essayer une nouvelle combinaison (Tour N°" + nbrTours + ").\n\n";
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
                         getTextAreaOut().append(message);
                         getTextAreaOut().append("La machine joue ! \n");
 
@@ -228,7 +228,7 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                         // Machine only winner 
                         //Machine 
                         getTextAreaOut().append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
 
                         if (nbrTours == 0) {
 
@@ -244,7 +244,7 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                         // machine and human losers
                         getTextAreaOut().append("Personne n'a gagné !\n");
-                        getTextAreaOut().append("Son Résulat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
 
                         if (nbrTours == 0) {
 
