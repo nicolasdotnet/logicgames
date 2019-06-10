@@ -206,9 +206,8 @@ public class WindowOptions extends WindowSource {
                             windowHome.setNbrTours(nbrTours);
                             windowHome.setNbrDigits(nbrDigits);
 
-                            // actif bouton game
                             WindowOptions.this.dispose();
-
+                            
                         }
 
                     }

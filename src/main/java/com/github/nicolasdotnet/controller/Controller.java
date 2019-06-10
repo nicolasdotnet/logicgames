@@ -80,7 +80,7 @@ public class Controller {
      *
      * @param nbrDigits number of digts of the combination
      * @param nbrRange range of number for the combinaison
-     * @param nbrTours
+     * @param nbrTours number of turns possible for one match
      * @return valid or invalid the sizure by a bolean
      */
     public boolean inputErrorOptions(int nbrDigits, int nbrRange, int nbrTours) {

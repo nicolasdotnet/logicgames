@@ -184,11 +184,11 @@ public class WindowMain extends WindowSource {
 
                             if (searchMoreOrLess == 1) {
 
-                                SearchMoreOrLessChallenger run = new SearchMoreOrLessChallenger("Recherche +/- Challenger", nbrDigits, nbrTours, nbrRange, modeDev);
+                                SearchMoreOrLessChallenger run = new SearchMoreOrLessChallenger(getTitle("Recherche +/- Challenger", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             } else {
 
-                                MastermindChallenger run = new MastermindChallenger("Mastermind Challenger", nbrDigits, nbrTours, nbrRange, modeDev);
+                                MastermindChallenger run = new MastermindChallenger(getTitle("Mastermind Challenger", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             }
 
@@ -203,11 +203,11 @@ public class WindowMain extends WindowSource {
 
                             if (searchMoreOrLess == 1) {
 
-                                SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur("Recherche +/- Défenseur", nbrDigits, nbrTours, nbrRange, modeDev);
+                                SearchMoreOrLessDefenseur run = new SearchMoreOrLessDefenseur(getTitle("Recherche +/- Défenseur", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             } else {
 
-                                MastermindDefenseur run = new MastermindDefenseur("Mastermind Défenseur", nbrDigits, nbrTours, nbrRange, modeDev);
+                                MastermindDefenseur run = new MastermindDefenseur(getTitle("Mastermind Défenseur", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             }
                         }
@@ -221,11 +221,11 @@ public class WindowMain extends WindowSource {
 
                             if (searchMoreOrLess == 1) {
 
-                                SearchMoreOrLessDuel run = new SearchMoreOrLessDuel("Recherche +/- Duel", nbrDigits, nbrTours, nbrRange, modeDev);
+                                SearchMoreOrLessDuel run = new SearchMoreOrLessDuel(getTitle("Recherche +/- Duel", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             } else {
 
-                                MastermindDuel run = new MastermindDuel("Mastermind Duel", nbrDigits, nbrTours, nbrRange, modeDev);
+                                MastermindDuel run = new MastermindDuel(getTitle("Mastermind Duel", nbrDigits, nbrTours), nbrDigits, nbrTours, nbrRange, modeDev);
 
                             }
                         }
@@ -292,7 +292,7 @@ public class WindowMain extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowHome windowHome = new WindowHome();
+                WindowHome windowHome = new WindowHome(nbrDigits, nbrTours, nbrRange, modeDev);
                 WindowMain.super.dispose();
 
             }
@@ -302,5 +302,18 @@ public class WindowMain extends WindowSource {
 
         return breadcrumbPanel;
 
+    }
+
+    /**
+     * Create title for game window .
+     *
+     * @param gameName game name + mode game 
+     * @param nbrDigits number of digts of the combination
+     * @param nbrTours number of turns possible for one match
+     * @return title for game window.
+     */
+    public String getTitle(String gameName, int nbrDigits, int nbrTours) {
+
+        return gameName + " nombre de chiffre : " + nbrDigits + " nombre de tours : " + nbrTours;
     }
 }

@@ -59,6 +59,30 @@ public class WindowHome extends WindowSource {
 
     }
 
+    public WindowHome(int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
+
+        this.nbrDigits = nbrDigits;
+        this.nbrRange = nbrRange;
+        this.nbrTours = nbrTours;
+        this.modeDev = modeDev;
+
+        JPanel contentPanel = (JPanel) this.getContentPane();
+        contentPanel.setLayout(new BorderLayout());
+        contentPanel.add(welcomeMessage(), BorderLayout.NORTH);
+        contentPanel.add(choiceGames(), BorderLayout.CENTER);
+        contentPanel.add(optionsPanel(), BorderLayout.SOUTH);
+        this.setVisible(true);
+
+        // check import para
+        Boolean r = checkUserInput.inputErrorOptions(nbrDigits, nbrRange, nbrTours);
+        if (r) {
+
+            Alert.error(WindowHome.this, "Erreur ! Paramètres non conformes. Cliquer sur Options");
+
+        }
+
+    }
+
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
     }
@@ -111,8 +135,6 @@ public class WindowHome extends WindowSource {
                 int smolNbrRange = 9;
 
                 WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, smolNbrRange, modeDev);
-
-                System.out.println("param : " + nbrDigits + nbrTours + modeDev);
 
                 WindowHome.super.dispose();
             }

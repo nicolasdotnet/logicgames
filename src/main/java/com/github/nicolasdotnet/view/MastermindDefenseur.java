@@ -34,6 +34,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
     private List<String> bestPossible;
     private int[][] randomRange;
     private int nbrTests;
+    private int step;
     private Boolean inputUser;
     private HashMap<String, String> backup;
     private ControllerMastermind checkUserInput;
@@ -48,6 +49,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
 
         result = new HashMap<String, String>();
+        step = 0;
         nbrTests = 0;
 
         getTextAreaIn().addKeyListener(this);
@@ -65,96 +67,100 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
-            valueInput = getTextAreaIn().getText();
+            if (step == 0) {
 
-            getTextAreaOut().insert(valueInput + " ", message.length());
+                valueInput = getTextAreaIn().getText();
 
-            // user input cleared
-            getTextAreaIn().setText("");
+                getTextAreaOut().insert(valueInput + " ", message.length());
 
-            getTextAreaOut().append("\n");
+                // user input cleared
+                getTextAreaIn().setText("");
 
-            inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
+                getTextAreaOut().append("\n");
 
-            // Initial phase
-            if (inputUser) {
+                inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
-                getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                // Initial phase
+                if (inputUser) {
+
+                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+
+                } else {
+
+                    randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
+
+                    human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+
+                    getSolution().setText(human);
+                    getTextAreaIn().setEditable(false);
+                }
+            }
+
+            // Gaming machine
+//                do {
+            // update nbrTours & nbrTest by round
+            nbrTours--;
+            nbrTests++;
+
+            String sizure = "null";
+
+            // Generate Possible
+            switch (nbrTests) {
+                case 1: {
+
+                    possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
+                    String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
+                    machine = machine2;
+
+                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
+                    break;
+                }
+                case 2: {
+
+                    bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
+                    String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
+                    machine = machine2;
+
+                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
+                    break;
+                }
+                default: {
+
+                    bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
+                    String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
+                    machine = machine2;
+
+                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
+                    break;
+                }
+            }
+
+            // Machine play
+            result.clear();
+            result = (checkUserInput.getComparison(human, machine));
+
+            if (Integer.parseInt(result.get("place")) == nbrDigits) {
+
+                machineWinningMessageDisplay(nbrTests, checkUserInput.getDisplayResult(result), human, machine.toString());
+                getReloadButton().setVisible(true);
 
             } else {
 
-                randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
+                if (nbrTours == 0) {
 
-                human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+                    machineLoserMessageDisplay(human, checkUserInput.getDisplayResult(result), machine.toString());
+                    getReloadButton().setVisible(true);
 
-                getSolution().setText(human);
-                getTextAreaIn().setEditable(false);
+                } else {
 
-                // Gaming machine
-                do {
-
-                    // update nbrTours & nbrTest by round
-                    nbrTours--;
-                    nbrTests++;
-
-                    String sizure = "null";
-
-                    // Generate Possible
-                    switch (nbrTests) {
-                        case 1: {
-
-                            possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
-                            machine = machine2;
-
-                            getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                            break;
-                        }
-                        case 2: {
-
-                            bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
-                            machine = machine2;
-
-                            getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                            break;
-                        }
-                        default: {
-
-                            bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
-                            String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
-                            machine = machine2;
-
-                            getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                            break;
-                        }
-                    }
-
-                    // Machine play
-                    result.clear();
-                    result = (checkUserInput.getComparison(human, machine));
-
-                    if (Integer.parseInt(result.get("place")) == nbrDigits) {
-
-                        machineWinningMessageDisplay(nbrTests, checkUserInput.getDisplayResult(result), human, machine.toString());
-                        getReloadButton().setVisible(true);
-
-                    } else {
-
-                        if (nbrTours == 0) {
-
-                            machineLoserMessageDisplay(human, checkUserInput.getDisplayResult(result), machine.toString());
-                            getReloadButton().setVisible(true);
-
-                        } else {
-
-                            machineToBeToContinuedMessageDisplay(nbrTours, checkUserInput.getDisplayResult(result));
-                        }
-                    }
-
-                } while (Integer.parseInt(result.get("place")) != nbrDigits && nbrTours != 0);
+                    machineToBeToContinuedMessageDisplay(nbrTours, checkUserInput.getDisplayResult(result));
+                }
             }
 
+            step++;
+            getTextAreaOut().append("\nTaper entrer !!\n");
+
+//                } while (Integer.parseInt(result.get("place")) != nbrDigits && nbrTours != 0);
         }
 
     }
