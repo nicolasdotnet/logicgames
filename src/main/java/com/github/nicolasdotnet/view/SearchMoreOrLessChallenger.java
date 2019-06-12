@@ -49,19 +49,22 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
         counter = 0;
         nbrTests = 0;
         step = 0;
+        machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+        
+        getSolution().setText("combinaison secrète -> " + machine);
 
         getTextAreaIn().addKeyListener(this);
         getYes().addActionListener(this);
 
         // Display first message : 
-        getTextAreaOut().setText("Entrer une combinaison -> ");
+        getTextAreaOut().setText("Entrer une proposition -> ");
 
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
 
-        String message = "Entrer une combinaison -> ";
+        String message = "Entrer une proposition -> ";
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -76,18 +79,11 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
 
             inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
-            // Initial phase
-            if (step == 0) {
-
-                machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
-                getSolution().setText(machine);
-
-            }
-
             if (inputUser) {
 
                 nbrTours--;
-                getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                nbrTests++;
+                inputErrorMessage(nbrDigits, nbrRange);
                 getTextAreaOut().append("Attention, il vous reste " + nbrTours + " tours\n");
 
             } else {
@@ -111,7 +107,7 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
 
                     if (nbrTours == 0) {
 
-                        humanLoserMessageDisplay(machine.toString(), result);
+                        humanLoserMessageDisplay(machine, result);
                         getReloadButton().setVisible(true);
 
                     } else {
@@ -120,8 +116,6 @@ public class SearchMoreOrLessChallenger extends WindowGame implements KeyListene
                     }
                 }
             }
-
-            step++;
 
         }
 

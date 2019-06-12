@@ -39,4 +39,18 @@ public class ToolsTest {
         List<String> result = instance.generateAllPossible(nbrDigits, nbrRange);
         assertEquals(expResult, result);
     }
+    
+//        /**
+//     * Test of generateRandomRangeNew method, of class Tools.
+//     */
+//    @Test
+//    public void testGenerateRandomRangeNew() {
+//        String result = "--=+";
+//        String attac = "3738";
+//        int[][] randomRange = {{0,0,0,0},{9,9,9,9}};
+//        Tools instance = Tools.getInstance();
+//        int[][] expResult = {{0,0,3,8},{3,7,3,9}};
+//        int[][] rangeNew = instance.generateRandomRangeNew(result, attac, randomRange);
+//        assertEquals(expResult, rangeNew);
+//    }
 }

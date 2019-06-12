@@ -53,14 +53,14 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
         getYes().addActionListener(this);
 
         // Display first message : 
-        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine : ");
+        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine -> ");
 
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
 
-        String message = "Entrer une combinaison secrète que doit trouver la machine : ";
+        String message = "Entrer une combinaison secrète que doit trouver la machine -> ";
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -78,14 +78,14 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
             // Initial phase
             if (inputUser) {
 
-                getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                inputErrorMessage(nbrDigits, nbrRange);
 
             } else {
 
                 randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
                 human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
 
-                getSolution().setText(valueInput);
+                getSolution().setText("combinaison secrète -> " + valueInput);
                 getTextAreaIn().setEditable(false);
 
                 // Gaming machine
@@ -97,8 +97,8 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
 
                     String sizureFake = "null";
 
-                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
-                    getTextAreaOut().append("La proposition de la machine est : " + machine.toString() + "\n\n");
+                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, result, machine, sizureFake);
+                    getTextAreaOut().append("\nLa proposition de la machine est : " + machine + "\n\n");
 
                     result = "";
                     result = (checkUserInput.getComparison(nbrDigits, machine, human, result));
@@ -108,23 +108,21 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
 
                     randomRange = checkUserInput.getGenerateRandomRangeNew(result, machine, randomRange);
 
-                    String toString = result;
-
                     if (counter == nbrDigits) {
 
-                        machineWinningMessageDisplay(nbrTests, toString, human.toString(), machine.toString());
+                        machineWinningMessageDisplay(nbrTests, result, human);
                         getReloadButton().setVisible(true);
 
                     } else {
 
                         if (nbrTours == 0) {
 
-                            machineLoserMessageDisplay(human.toString(), toString, machine.toString());
+                            machineLoserMessageDisplay(human, result);
                             getReloadButton().setVisible(true);
 
                         } else {
 
-                            machineToBeToContinuedMessageDisplay(nbrTours, toString);
+                            machineToBeToContinuedMessageDisplay(nbrTours, result);
 
                         }
                     }
@@ -135,14 +133,12 @@ public class SearchMoreOrLessDefenseur extends WindowGame implements KeyListener
     }
 
     @Override
-    public void keyTyped(KeyEvent ke
-    ) {
+    public void keyTyped(KeyEvent ke) {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent ke
-    ) {
+    public void keyPressed(KeyEvent ke) {
 
     }
 

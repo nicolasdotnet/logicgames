@@ -66,4 +66,23 @@ public class SearchMoreOrLessDefenseurTest {
 
     }
 
+    /**
+     * Test of getPossible method, of class SearchMoreOrLessDefenseur.
+     */
+    @Test
+    public void testGetPossible() {
+        // solution = 1234;
+        int nbrDigits = 4;
+        String result = "--=+";
+        String attac = "9431";
+        int[][] randomRange = {{0, 0, 3, 1}, {9, 4, 3, 9}};
+        String possible;
+        String sizure = null;
+        SearchMoreOrLessDefenseur instance = new SearchMoreOrLessDefenseur();
+        String expResult = "4235";
+        possible = instance.getPossible(randomRange, nbrDigits, result, attac, sizure);
+        assertEquals(expResult, possible);
+
+    }
+
 }

@@ -134,7 +134,6 @@ public class WindowHome extends WindowSource {
             public void actionPerformed(ActionEvent ae) {
 
                 WindowMain windowMain = new WindowMain(0, 1, "Mastermind", nbrDigits, nbrTours, nbrRange, modeDev);
-                WindowHome.super.dispose();
 
             }
         });
@@ -152,7 +151,6 @@ public class WindowHome extends WindowSource {
 
                 WindowMain windowMain = new WindowMain(1, 0, "Recherche +/-", nbrDigits, nbrTours, smolNbrRange, modeDev);
 
-                WindowHome.super.dispose();
             }
         });
 

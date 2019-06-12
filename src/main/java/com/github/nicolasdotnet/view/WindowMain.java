@@ -5,12 +5,14 @@
  */
 package com.github.nicolasdotnet.view;
 
+import com.github.nicolasdotnet.controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,6 +36,26 @@ public class WindowMain extends WindowSource {
     private int nbrTours;
     private int nbrRange;
     private boolean modeDev;
+
+    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
+
+        this.searchMoreOrLess = searchMoreOrLess;
+        this.mastermind = mastermind;
+        this.breadcrumb = breadcrumb;
+        this.nbrDigits = nbrDigits;
+        this.nbrTours = nbrTours;
+        this.nbrRange = nbrRange;
+        this.modeDev = modeDev;
+        this.setTitle("Jeux de logique -> " + breadcrumb);
+
+        JPanel contentPanel = (JPanel) this.getContentPane();
+        contentPanel.setLayout(new BorderLayout());
+
+        contentPanel.add(breadcrumbPanel(), BorderLayout.NORTH);
+        contentPanel.add(gamePanel(), BorderLayout.CENTER);
+
+        this.setVisible(true);
+    }
 
     public void setNbrRange(int nbrRange) {
         this.nbrRange = nbrRange;
@@ -61,26 +83,6 @@ public class WindowMain extends WindowSource {
 
     public void setModeDev(boolean modeDev) {
         this.modeDev = modeDev;
-    }
-
-    public WindowMain(int searchMoreOrLess, int mastermind, String breadcrumb, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
-
-        this.searchMoreOrLess = searchMoreOrLess;
-        this.mastermind = mastermind;
-        this.breadcrumb = breadcrumb;
-        this.nbrDigits = nbrDigits;
-        this.nbrTours = nbrTours;
-        this.nbrRange = nbrRange;
-        this.modeDev = modeDev;
-        this.setTitle("Jeux de logique -> " + breadcrumb);
-
-        JPanel contentPanel = (JPanel) this.getContentPane();
-        contentPanel.setLayout(new BorderLayout());
-
-        contentPanel.add(breadcrumbPanel(), BorderLayout.NORTH);
-        contentPanel.add(gamePanel(), BorderLayout.CENTER);
-
-        this.setVisible(true);
     }
 
     /**
@@ -292,7 +294,6 @@ public class WindowMain extends WindowSource {
             @Override
             public void actionPerformed(ActionEvent ae) {
 
-                WindowHome windowHome = new WindowHome(nbrDigits, nbrTours, nbrRange, modeDev);
                 WindowMain.super.dispose();
 
             }
@@ -307,13 +308,13 @@ public class WindowMain extends WindowSource {
     /**
      * Create title for game window .
      *
-     * @param gameName game name + mode game 
+     * @param gameName game name + mode game
      * @param nbrDigits number of digts of the combination
      * @param nbrTours number of turns possible for one match
      * @return title for game window.
      */
     public String getTitle(String gameName, int nbrDigits, int nbrTours) {
 
-        return gameName + " : Trouver " + nbrDigits + " chiffres en "+ nbrTours+" tours";
+        return gameName + " : Trouver " + nbrDigits + " chiffres en " + nbrTours + " tours";
     }
 }

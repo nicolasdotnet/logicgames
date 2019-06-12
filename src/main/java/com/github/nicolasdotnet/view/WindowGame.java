@@ -5,12 +5,14 @@
  */
 package com.github.nicolasdotnet.view;
 
+import com.github.nicolasdotnet.controller.Controller;
 import com.github.nicolasdotnet.controller.ControllerSearchMoreOrLess;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Windows Game is the parent class that represents the Search +/- and
@@ -30,6 +34,7 @@ import javax.swing.JTextField;
  */
 public class WindowGame extends JFrame {
 
+    private static final Logger log = LogManager.getLogger(Controller.class);
     private JTextField textAreaIn;
     private JLabel solution;
     private JTextArea textAreaOut;
@@ -134,39 +139,53 @@ public class WindowGame extends JFrame {
 
     }
 
+    public void testGeneratePossible(List<String> possible) {
+
+        if (possible == null) {
+            try {
+                
+                Thread.sleep(9000);
+
+            } catch (InterruptedException ex) {
+                log.debug("testGeneratePossible", ex);
+
+            }
+        }
+
+    }
+
     public void humanWinningMessageDisplay(int nbrTests, String result) {
 
         getTextAreaOut().append("Félicitation ! mission accomplie en " + nbrTests + " tours.\n");
-        getTextAreaOut().append("Le résultat est : " + result + "\n\n");
-        getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
+        getTextAreaOut().append("Votre résultat est : " + result + "\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
     }
 
     public void humanLoserMessageDisplay(String solution, String result) {
 
         getTextAreaOut().append("GAME OVER !\n");
-        getTextAreaOut().append("Le résultat est : " + result + "\n");
-        getTextAreaOut().append("La solution est : " + solution + "\n\n");
-        getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
+        getTextAreaOut().append("Votre résultat est : " + result + "\n");
+        getTextAreaOut().append("La solution est : " + solution + "\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
     }
 
-    public void machineWinningMessageDisplay(int nbrTests, String result, String def, String attac) {
+    public void machineWinningMessageDisplay(int nbrTests, String result, String solution) {
 
         getTextAreaOut().append("Désolez ! mission accomplie en " + nbrTests + " tours ;)\n");
         getTextAreaOut().append("Son résultat est : " + result + "\n");
-        getTextAreaOut().append("Rappel, votre combinaison était : " + def + "\n");
-        getTextAreaOut().append("La dernière proposition de la machine est : " + attac + "\n\n");
+        getTextAreaOut().append("Rappel, votre combinaison secrète était : " + solution + "\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
     }
 
-    public void machineLoserMessageDisplay(String solution, String result, String machine) {
+    public void machineLoserMessageDisplay(String solution, String result) {
 
         getTextAreaOut().append("GAME OVER ! la machine est Out\n");
         getTextAreaOut().append("Son résultat est : " + result + "\n");
-        getTextAreaOut().append("Rappel, votre combinaison était : " + solution + "\n");
-        getTextAreaOut().append("La dernière proposition de la machine est : " + machine + "\n\n");
-        getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
+        getTextAreaOut().append("Rappel, votre combinaison secrète était : " + solution + "\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
         getTextAreaIn().setEditable(false);
     }
 
@@ -182,7 +201,7 @@ public class WindowGame extends JFrame {
 
         } else {
 
-            String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n\n";
+            String message = "Félicitation ! La machine doit  essayer une nouvelle combinaison (Tour N°" + nbrTours + ")\n";
 
             getTextAreaOut().append(message);
         }
@@ -206,5 +225,32 @@ public class WindowGame extends JFrame {
             getTextAreaOut().append(message);
         }
 
+    }
+
+    public void allLoser(String resultM, String resultH, String solutionM, String solutionH) {
+
+        getTextAreaOut().append("GAME OVER for all !\n\n");
+        getTextAreaOut().append("Son résultat : " + resultM + "\n");
+        getTextAreaOut().append("Votre résultat : " + resultH + "\n");
+        getTextAreaOut().append("La combinaison secrète de la machine était : " + solutionM + "\n");
+        getTextAreaOut().append("La machine n'a pas trouvée également votre combinaison (" + solutionH + ")\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
+    }
+
+    public void allWinning(int nbrTestsH, String resultH, int nbrTestsM, String resultM) {
+
+        // Human
+        getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
+        getTextAreaOut().append("Votre résultat : " + resultH + "\n");
+
+        // Machine
+        getTextAreaOut().append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
+        getTextAreaOut().append("Son résultat : " + resultM + "\n");
+        getTextAreaOut().append("\nVoulez-vous rejouer une nouvelle partie ?\n");
+    }
+
+    public void inputErrorMessage(int nbrDigits, int nbrRange) {
+
+        getTextAreaOut().append("Erreur de saisie, veuillez entrer " + nbrDigits + " chiffres entre 0 et " + nbrRange + "\n");
     }
 }

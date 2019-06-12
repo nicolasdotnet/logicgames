@@ -33,8 +33,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
     private String machine;
     private String resultM;
     private String resultH;
-    private String toStringM;
-    private String toStringH;
     private int nbrTestsM;
     private int nbrTestsH;
     private int step;
@@ -56,8 +54,6 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
         counterH = 0;
         counterM = 0;
 
-        toStringM = "null";
-        toStringH = "null";
         nbrTestsM = 0;
         nbrTestsH = 0;
         step = 0;
@@ -94,7 +90,7 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                 if (inputUser) {
 
                     step--;
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                    inputErrorMessage(nbrDigits, nbrRange);
 
                 } else {
 
@@ -104,10 +100,10 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                     randomRange = checkUserInput.getGenerateRandomRangeInitial(nbrDigits, nbrRange);
                     machineIni = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, sizureFake);
 
-                    getSolution().setText("votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
+                    getSolution().setText("Votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
 
-                    getTextAreaOut().append("La machine a choisit sa combinaison secréte \n");
-                    getTextAreaOut().append("Entrez une proposition : \n");
+                    getTextAreaOut().append("La machine a choisit sa combinaison secréte !\n");
+                    getTextAreaOut().append("\nEntrez une proposition : \n");
                 }
 
             }
@@ -121,53 +117,41 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                 nbrTours--;
 
                 if (inputUser) {
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                    inputErrorMessage(nbrDigits, nbrRange);
 
                     // cancel update
                     nbrTours++;
+                    nbrTestsM--;
+                    nbrTestsH--;
 
                 } else {
 
                     String sizureFake = "null";
 
-                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, valueInput);
-                    getTextAreaOut().append("Votre proposition : " + human.toString() + "\n");
+                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, resultM, machine, valueInput);
+                    getTextAreaOut().append("Votre proposition : " + human + "\n");
 
-                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
-                    getTextAreaOut().append("La proposition de la machine : " + machine.toString() + "\n");
+                    machine = checkUserInput.getGetPossible(randomRange, nbrDigits, resultM, machine, sizureFake);
+                    getTextAreaOut().append("La proposition de la machine : " + machine + "\n");
 
                     // Human play
                     resultH = "";
-                    getTextAreaOut().append("Vous jouez ! \n");
 
                     resultH = (checkUserInput.getComparison(nbrDigits, human, machineIni, resultH));
                     counterH = checkUserInput.getEqualCounter(resultH);
 
-                    toStringH = resultH;
-
                     // Machine play
                     resultM = "";
-                    getTextAreaOut().append("La machine joue ! \n");
 
                     resultM = (checkUserInput.getComparison(nbrDigits, machine, humanIni, resultM));
                     counterM = checkUserInput.getEqualCounter(resultM);
 
                     randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                    toStringM = resultM;
-
-                    // machine and human winners
                     if (counterM == nbrDigits && counterH == nbrDigits) {
 
-                        // Human
-                        getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
-                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
-
-                        // Machine
-                        getTextAreaOut().append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n\n");
-                        getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
-
+                        // machine and human winners
+                        allWinning(nbrTestsH, resultH, nbrTestsM, resultM);
                         getTextAreaIn().setEditable(false);
                         getReloadButton().setVisible(true);
 
@@ -176,24 +160,24 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                         // Human only winner
                         // Human
                         getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours.\n");
-                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
+                        getTextAreaOut().append("Votre résultat : " + resultH + "\n");
                         getTextAreaIn().setEditable(false);
 
                         // Machine
                         message = "Et encore félicitation ! La machine doit essayer une nouvelle combinaison (Tour N°" + nbrTours + ").\n\n";
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + resultM + "\n");
                         getTextAreaOut().append(message);
-                        getTextAreaOut().append("La machine joue ! \n");
 
-                        // Machine play
+                        // Machine only play
                         do {
 
                             // Update nbrTours & nbrTest machine by round
                             nbrTours--;
                             nbrTestsM++;
 
-                            machine = checkUserInput.getGetPossible(randomRange, nbrDigits, sizureFake);
-                            getTextAreaOut().append("La proposition de la machine : " + machine.toString() + "\n");
+                            machine = checkUserInput.getGetPossible(randomRange, nbrDigits, resultM, machine, sizureFake);
+                            getTextAreaOut().append("\nLa machine joue ! \n");
+                            getTextAreaOut().append("La proposition de la machine : " + machine + "\n");
 
                             resultM = "";
                             resultM = (checkUserInput.getComparison(nbrDigits, machine, humanIni, resultM));
@@ -201,23 +185,21 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
                             randomRange = checkUserInput.getGenerateRandomRangeNew(resultM, machine, randomRange);
 
-                            toStringM = resultM;
-
                             if (counterM == nbrDigits) {
 
-                                machineWinningMessageDisplay(nbrTestsM, toStringM, humanIni.toString(), machine.toString());
+                                machineWinningMessageDisplay(nbrTestsM, resultM, humanIni);
                                 getReloadButton().setVisible(true);
 
                             } else {
 
                                 if (nbrTours == 0) {
 
-                                    machineLoserMessageDisplay(humanIni.toString(), toStringM, machine.toString());
+                                    machineLoserMessageDisplay(humanIni, resultM);
                                     getReloadButton().setVisible(true);
 
                                 } else {
 
-                                    machineToBeToContinuedMessageDisplay(nbrTours, toStringM);
+                                    machineToBeToContinuedMessageDisplay(nbrTours, resultM);
                                 }
                             }
 
@@ -228,37 +210,33 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
                         // Machine only winner 
                         //Machine 
                         getTextAreaOut().append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
+                        getTextAreaOut().append("Son résultat : " + resultM + "\n");
 
+                        // Human
                         if (nbrTours == 0) {
 
-                            humanLoserMessageDisplay(machineIni.toString(), toStringH);
+                            humanLoserMessageDisplay(machineIni, resultH);
                             getReloadButton().setVisible(true);
 
                         } else {
 
-                            humanToBeToContinuedMessageDisplay(nbrTours, toStringH);
+                            humanToBeToContinuedMessageDisplay(nbrTours, resultH);
                         }
 
                     } else if (counterM != nbrDigits && counterH != nbrDigits) {
 
                         // machine and human losers
-                        getTextAreaOut().append("Personne n'a gagné !\n");
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
-
                         if (nbrTours == 0) {
 
-                            // revoir le message : ajout votre combi était : ....
-//                            getTextAreaOut().append("GAME OVER for all !\n");
-                            getTextAreaOut().append("La combinaison de la machine : " + machineIni + "\n");
-//                            getTextAreaOut().append("Machine est Out également\n\n");
-                            getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
+                            allLoser(resultM, resultH, humanIni, humanIni);
                             getTextAreaIn().setEditable(false);
                             getReloadButton().setVisible(true);
 
                         } else {
 
-                            humanToBeToContinuedMessageDisplay(nbrTours, toStringH);
+                            getTextAreaOut().append("Personne n'a gagné !\n");
+                            getTextAreaOut().append("Son résultat : " + resultM + "\n");
+                            humanToBeToContinuedMessageDisplay(nbrTours, resultH);
                         }
 
                     }
@@ -266,41 +244,43 @@ public class SearchMoreOrLessDuel extends WindowGame implements KeyListener, Act
 
             } else if (step > 0 && counterM == nbrDigits) {
 
-                // Machine only winner
+                // Human only play
                 // Update nbrTours & nbrTest human by round
                 nbrTestsH++;
                 nbrTours--;
 
                 if (inputUser) {
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
-                    getTextAreaOut().append("Attention, il vous reste " + nbrTours + " tours\n");
+
+                    inputErrorMessage(nbrDigits, nbrRange);
+
+                    // cancel update
+                    nbrTours++;
+                    nbrTestsH--;
 
                 } else {
 
-                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, valueInput);
-                    getTextAreaOut().append("Votre proposition : " + human.toString() + "\n");
+                    human = checkUserInput.getGetPossible(randomRange, nbrDigits, resultM, machine, valueInput);
+                    getTextAreaOut().append("Votre proposition : " + human + "\n");
 
                     resultH = "";
                     resultH = (checkUserInput.getComparison(nbrDigits, human, machineIni, resultH));
                     counterH = checkUserInput.getEqualCounter(resultH);
 
-                    String toString = resultH;
-
                     if (counterH == nbrDigits) {
 
-                        humanWinningMessageDisplay(nbrTestsH, toString);
+                        humanWinningMessageDisplay(nbrTestsH, resultH);
                         getReloadButton().setVisible(true);
 
                     } else {
 
                         if (nbrTours == 0) {
 
-                            humanLoserMessageDisplay(machineIni.toString(), toString);
+                            humanLoserMessageDisplay(machineIni, resultH);
                             getReloadButton().setVisible(true);
 
                         } else {
 
-                            humanToBeToContinuedMessageDisplay(nbrTours, toString);
+                            humanToBeToContinuedMessageDisplay(nbrTours, resultH);
 
                         }
 

@@ -60,8 +60,8 @@ public class ControllerSearchMoreOrLess extends Controller {
      * @param sizure value input by user
      * @return machine value
      */
-    public String getGetPossible(int[][] randomRange, int nbrDigits, String sizure) {
-        return game.getPossible(randomRange, nbrDigits, sizure);
+    public String getGetPossible(int[][] randomRange, int nbrDigits, String result, String attac, String sizure) {
+        return game.getPossible(randomRange, nbrDigits, result, attac, sizure);
     }
 
     /**

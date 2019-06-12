@@ -5,6 +5,7 @@
  */
 package com.github.nicolasdotnet.model;
 
+import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,16 +47,44 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
      * @return possible combination
      */
     @Override
-    public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
+    public String getPossible(int[][] randomRange, int nbrDigits, String result, String attac, String sizure) {
 
         StringBuilder inputMachine = new StringBuilder();
 
-        for (int i = 0; i < nbrDigits; i++) {
+        if (result == null) {
 
-            inputMachine.append(randomRange[0][i] + (int) (Math.random() * ((randomRange[1][i] - randomRange[0][i]) + 1)));
+            for (int i = 0; i < nbrDigits; i++) {
+                inputMachine.append(randomRange[0][i] + (int) (Math.random() * ((randomRange[1][i] - randomRange[0][i]) + 1)));
+            }
 
+        } else {
+
+            for (int i = 0; i < nbrDigits; i++) {
+                char icon = result.charAt(i);
+
+                switch (icon) {
+
+                    case '+':
+                        if ((randomRange[1][i] + randomRange[0][i]) % 2 == 1) {
+
+                            inputMachine.append(((randomRange[1][i] + randomRange[0][i]) / 2) + 1);
+                        } else {
+                            inputMachine.append((randomRange[1][i] + randomRange[0][i]) / 2);
+                        }
+                        break;
+                    case '-':
+                        inputMachine.append((randomRange[1][i] + randomRange[0][i]) / 2);
+                        break;
+                    case '=':
+                        inputMachine.append(attac.charAt(i));
+
+                        break;
+
+                }
+
+            }
         }
-
+        
         log.info("getPossible : " + inputMachine + " ");
 
         return String.join("", inputMachine);

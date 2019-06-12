@@ -121,6 +121,6 @@ public abstract class SearchMoreOrLess {
      * @param sizure value input by user
      * @return solution combination generate
      */
-    public abstract String getPossible(int[][] randomRange, int nbrDigits, String sizure);
+    public abstract String getPossible(int[][] randomRange, int nbrDigits, String result, String attac, String sizure);
 
 }

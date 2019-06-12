@@ -48,21 +48,24 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
         result = new HashMap<String, String>();
         step = 0;
         nbrTests = 0;
+        machine = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
+
+        getSolution().setText("combinaison secrète -> " + machine);
+
+        // Display first message :
+        getTextAreaOut().setText("Entrer une proposition -> ");
 
         getTextAreaIn().addKeyListener(this);
         getYes().addActionListener(this);
-
-        // Display first message :
-        getTextAreaOut().setText("Entrer une combinaison -> ");
 
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
 
-        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+        String message = "Entrer une proposition -> ";
 
-            String message = "Entrer une combinaison -> ";
+        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
             valueInput = getTextAreaIn().getText();
 
@@ -75,20 +78,11 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
 
             inputUser = checkUserInput.inputError(valueInput, nbrDigits, nbrRange);
 
-            // Initial phase
-            if (step == 0) {
-
-                String temp;
-                temp = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
-                machine = temp;
-                getSolution().setText(machine);
-
-            }
-
             if (inputUser) {
 
                 nbrTours--;
-                getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                nbrTests++;
+                inputErrorMessage(nbrDigits, nbrRange);
                 getTextAreaOut().append("Attention, il vous reste " + nbrTours + " tours\n");
 
             } else {
@@ -113,7 +107,7 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
 
                     if (nbrTours == 0) {
 
-                        humanLoserMessageDisplay(machine.toString(), checkUserInput.getDisplayResult(result));
+                        humanLoserMessageDisplay(machine, checkUserInput.getDisplayResult(result));
                         getReloadButton().setVisible(true);
 
                     } else {
@@ -122,7 +116,6 @@ public class MastermindChallenger extends WindowGame implements KeyListener, Act
                     }
                 }
             }
-            step++;
         }
 
     }

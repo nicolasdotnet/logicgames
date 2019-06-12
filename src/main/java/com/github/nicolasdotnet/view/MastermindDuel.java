@@ -21,7 +21,7 @@ import java.util.List;
  * @version Alpha
  * @since 2019
  */
-public class MastermindDuel extends WindowGame implements KeyListener, ActionListener {
+public class MastermindDuel extends WindowGame implements KeyListener, ActionListener, Runnable {
 
     private int nbrDigits;
     private int nbrTours;
@@ -46,15 +46,25 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
     private HashMap<String, String> backup;
     private ControllerMastermind checkUserInput;
 
+    /**
+     *
+     * run method for a new thread
+     */
+    @Override
+    public void run() {
+
+        possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
+    }
+
     public MastermindDuel(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
+        checkUserInput = new ControllerMastermind("duel");
+        (new Thread(this)).start();
         this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerMastermind("duel");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
-
         resultH = new HashMap<String, String>();
         toStringH = "null";
         resultM = new HashMap<String, String>();
@@ -69,14 +79,14 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
         getYes().addActionListener(this);
 
         // Display first message :
-        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine : -> ");
+        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine -> ");
 
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
 
-        String message = "Entrer une combinaison secrète que doit trouver la machine : -> ";
+        String message = "Entrer une combinaison secrète que doit trouver la machine -> ";
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -94,8 +104,9 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
             if (step == 0) {
 
                 if (inputUser) {
+
                     step--;
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                    inputErrorMessage(nbrDigits, nbrRange);
 
                 } else {
 
@@ -105,10 +116,10 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     valueInput = "null";
                     machineIni = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
 
-                    getSolution().setText("votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
+                    getSolution().setText("Votre combinaison : " + humanIni + " ; La combinaison de la machine : " + machineIni);
 
-                    getTextAreaOut().append("La machine a choisit sa combinaison secréte : " + machineIni.toString() + " \n");
-                    getTextAreaOut().append("Entrez une proposition : \n");
+                    getTextAreaOut().append("La machine a choisit sa combinaison secréte !\n");
+                    getTextAreaOut().append("\nEntrez une proposition : \n");
                 }
 
             }
@@ -123,10 +134,12 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                 if (inputUser) {
 
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                    inputErrorMessage(nbrDigits, nbrRange);
 
                     // cancel update
                     nbrTours++;
+                    nbrTestsM--;
+                    nbrTestsH--;
 
                 } else {
 
@@ -140,18 +153,19 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     switch (nbrTestsM) {
                         case 1:
 
-                            possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
+                            testGeneratePossible(bestPossible);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         case 2:
 
-                            bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
+                            testGeneratePossible(bestPossible);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         default:
 
+                            testGeneratePossible(bestPossible);
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
@@ -159,14 +173,12 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     }
 
                     // Human play
-                    getTextAreaOut().append("Vous jouez ! \n");
                     resultH.clear();
                     resultH = (checkUserInput.getComparison(human, machineIni));
                     toStringH = checkUserInput.getDisplayResult(resultH);
 
                     // Machine play
-                    getTextAreaOut().append("La machine joue ! \n");
-                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n");
+                    getTextAreaOut().append("La proposition de la machine : " + machine + "\n");
                     resultM.clear();
                     resultM = (checkUserInput.getComparison(humanIni, machine));
                     toStringM = checkUserInput.getDisplayResult(resultM);
@@ -174,15 +186,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     // machine and human winners
                     if (Integer.parseInt(resultM.get("place")) == nbrDigits && Integer.parseInt(resultH.get("place")) == nbrDigits) {
 
-                        // Human
-                        getTextAreaOut().append("Félicitation ! Votre mission est accomplie en " + nbrTestsH + " tours :)\n");
-                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
-
-                        // Machine
-                        getTextAreaOut().append("Mais désolez ! la machine a également accomplie sa mission en " + nbrTestsM + " tours ;)\n");
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n\n");
-                        getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
-
+                        allWinning(nbrTestsH, toStringH, nbrTestsM, toStringM);
                         getTextAreaIn().setEditable(false);
                         getReloadButton().setVisible(true);
 
@@ -198,9 +202,8 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                         message = "Et encore félicitation ! La machine doit essayer une nouvelle combinaison (Tour N°" + nbrTours + ").\n";
                         getTextAreaOut().append("Son résultat : " + toStringM + "\n");
                         getTextAreaOut().append(message);
-                        getTextAreaOut().append("La machine joue ! \n");
 
-                        // Machine play
+                        // Machine only play
                         do {
 
                             // Update nbrTours & nbrTest machine by round
@@ -222,22 +225,22 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                             }
 
                             // Machine play
-                            getTextAreaOut().append("La machine joue ! \n");
-                            getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n");
+                            getTextAreaOut().append("\nLa machine joue ! \n");
+                            getTextAreaOut().append("La proposition de la machine : " + machine + "\n");
                             resultM.clear();
                             resultM = (checkUserInput.getComparison(humanIni, machine));
                             toStringM = checkUserInput.getDisplayResult(resultM);
 
                             if (Integer.parseInt(resultM.get("place")) == nbrDigits) {
 
-                                machineWinningMessageDisplay(nbrTestsM, toStringM, humanIni, machine.toString());
+                                machineWinningMessageDisplay(nbrTestsM, toStringM, humanIni);
                                 getReloadButton().setVisible(true);
 
                             } else {
 
                                 if (nbrTours == 0) {
 
-                                    machineLoserMessageDisplay(humanIni, toStringM, machine.toString());
+                                    machineLoserMessageDisplay(humanIni, toStringM);
                                     getReloadButton().setVisible(true);
 
                                 } else {
@@ -251,14 +254,15 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                     } else if (Integer.parseInt(resultM.get("place")) == nbrDigits) {
 
-                        //Machine 
+                        // Machine only winner 
+                        //Machine                         
                         getTextAreaOut().append("Désolez ! la machine a accomplie sa mission en " + nbrTestsM + " tours ;)\n");
                         getTextAreaOut().append("Son résultat : " + toStringM + "\n");
 
                         // Human
                         if (nbrTours == 0) {
 
-                            humanLoserMessageDisplay(machineIni.toString(), toStringH);
+                            humanLoserMessageDisplay(machineIni, toStringH);
                             getReloadButton().setVisible(true);
 
                         } else {
@@ -268,22 +272,31 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                     } else if (Integer.parseInt(resultM.get("place")) != nbrDigits && Integer.parseInt(resultH.get("place")) != nbrDigits) {
 
-                        getTextAreaOut().append("Personne n'a gagné !\n");
-                        getTextAreaOut().append("Son résultat : " + toStringM + "\n");
-                        getTextAreaOut().append("Votre résultat : " + toStringH + "\n");
-
+                        // machine and human losers
                         if (nbrTours == 0) {
 
-                            getTextAreaOut().append("GAME OVER for all !\n");
-                            getTextAreaOut().append("La combinaison de la machine : " + machineIni + "\n");
-                            getTextAreaOut().append("Machine est Out également\n\n");
-                            getTextAreaOut().append("Voulez-vous rejouer une nouvelle partie ?\n");
-
+                            allLoser(toStringM, toStringH, machineIni, humanIni);
                             getTextAreaIn().setEditable(false);
                             getReloadButton().setVisible(true);
 
                         } else {
 
+                            if (nbrTestsM == 1) {
+                                Thread thread = new Thread() {
+
+                                    @Override
+                                    public void run() {
+
+                                        bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
+
+                                    }
+                                };
+
+                                thread.start();
+                            }
+
+                            getTextAreaOut().append("Personne n'a gagné !\n");
+                            getTextAreaOut().append("Son résultat : " + toStringM + "\n");
                             humanToBeToContinuedMessageDisplay(nbrTours, toStringH);
                         }
 
@@ -292,15 +305,18 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
             } else if (step > 0 && Integer.parseInt(resultM.get("place")) == nbrDigits) {
 
-                // Machine only winner
+                // Human only play
                 // Update nbrTours & nbrTest human by round
                 nbrTestsH++;
                 nbrTours--;
 
                 if (inputUser) {
 
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
-                    getTextAreaOut().append("Attention, il vous reste " + nbrTours + " tours\n");
+                    inputErrorMessage(nbrDigits, nbrRange);
+
+                    // cancel update
+                    nbrTours++;
+                    nbrTestsH--;
 
                 } else {
 
@@ -322,7 +338,7 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                         if (nbrTours == 0) {
 
-                            humanLoserMessageDisplay(machineIni.toString(), toString);
+                            humanLoserMessageDisplay(machineIni, toString);
                             getReloadButton().setVisible(true);
 
                         } else {

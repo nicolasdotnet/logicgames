@@ -89,7 +89,7 @@ public class SearchMoreOrLessChallenger extends SearchMoreOrLess {
      * @return solution combination generate
      */
     @Override
-    public String getPossible(int[][] randomRange, int nbrDigits, String sizure) {
+    public String getPossible(int[][] randomRange, int nbrDigits, String result, String attac, String sizure) {
         return sizure;
     }
 

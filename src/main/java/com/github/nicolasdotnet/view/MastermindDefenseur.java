@@ -21,7 +21,7 @@ import java.util.List;
  * @version Alpha
  * @since 2019
  */
-public class MastermindDefenseur extends WindowGame implements KeyListener, ActionListener {
+public class MastermindDefenseur extends WindowGame implements KeyListener, ActionListener, Runnable {
 
     private int nbrDigits;
     private int nbrTours;
@@ -39,15 +39,26 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
     private HashMap<String, String> backup;
     private ControllerMastermind checkUserInput;
 
+    /**
+     *
+     * run method for a new thread
+     */
+    @Override
+    public void run() {
+
+        possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
+
+    }
+
     public MastermindDefenseur(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
+        checkUserInput = new ControllerMastermind("defenseur");
+        (new Thread(this)).start();
         this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
-        checkUserInput = new ControllerMastermind("defenseur");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
-
         result = new HashMap<String, String>();
         step = 0;
         nbrTests = 0;
@@ -56,14 +67,14 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
         getYes().addActionListener(this);
 
         // Display first message :
-        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine : -> ");
+        getTextAreaOut().setText("Entrer une combinaison secrète que doit trouver la machine -> ");
 
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
 
-        String message = "Entrer une combinaison secrète que doit trouver la machine : -> ";
+        String message = "Entrer une combinaison secrète que doit trouver la machine -> ";
 
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -83,7 +94,8 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                 // Initial phase
                 if (inputUser) {
 
-                    getTextAreaOut().append("Erreur de saisie, veuillez entrer un nombre positif,\nsans virgule et de " + nbrDigits + " chiffres\n");
+                    step--;
+                    inputErrorMessage(nbrDigits, nbrRange);
 
                 } else {
 
@@ -91,76 +103,93 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
 
                     human = checkUserInput.getSolutionCombination(nbrDigits, nbrRange, valueInput);
 
-                    getSolution().setText(human);
+                    getSolution().setText("combinaison secrète -> " + human);
                     getTextAreaIn().setEditable(false);
+
+                    step++;
                 }
             }
 
-            // Gaming machine
-//                do {
-            // update nbrTours & nbrTest by round
-            nbrTours--;
-            nbrTests++;
+            if (step > 0) {
 
-            String sizure = "null";
+                // Gaming machine
+                // update nbrTours & nbrTest by round
+                nbrTours--;
+                nbrTests++;
 
-            // Generate Possible
-            switch (nbrTests) {
-                case 1: {
+                String sizure = "null";
 
-                    possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-                    String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
-                    machine = machine2;
+                // Generate Possible
+                switch (nbrTests) {
+                    case 1: {
 
-                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                    break;
+                        testGeneratePossible(possible);
+                        String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
+                        machine = machine2;
+
+                        getTextAreaOut().append("\nLa proposition de la machine est : " + machine + "\n\n");
+                        break;
+                    }
+                    case 2: {
+
+                        testGeneratePossible(bestPossible);
+                        String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
+                        machine = machine2;
+
+                        getTextAreaOut().append("\nLa proposition de la machine est : " + machine + "\n\n");
+                        break;
+                    }
+                    default: {
+
+                        testGeneratePossible(bestPossible);
+                        bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
+                        String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
+                        machine = machine2;
+
+                        getTextAreaOut().append("\nLa proposition de la machine est : " + machine + "\n\n");
+                        break;
+                    }
                 }
-                case 2: {
 
-                    bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
-                    String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
-                    machine = machine2;
+                // Machine play
+                result.clear();
+                result = (checkUserInput.getComparison(human, machine));
 
-                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                    break;
-                }
-                default: {
+                if (Integer.parseInt(result.get("place")) == nbrDigits) {
 
-                    bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
-                    String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
-                    machine = machine2;
-
-                    getTextAreaOut().append("Proposition de la machine : " + machine.toString() + "\n\n");
-                    break;
-                }
-            }
-
-            // Machine play
-            result.clear();
-            result = (checkUserInput.getComparison(human, machine));
-
-            if (Integer.parseInt(result.get("place")) == nbrDigits) {
-
-                machineWinningMessageDisplay(nbrTests, checkUserInput.getDisplayResult(result), human, machine.toString());
-                getReloadButton().setVisible(true);
-
-            } else {
-
-                if (nbrTours == 0) {
-
-                    machineLoserMessageDisplay(human, checkUserInput.getDisplayResult(result), machine.toString());
+                    machineWinningMessageDisplay(nbrTests, checkUserInput.getDisplayResult(result), human);
                     getReloadButton().setVisible(true);
 
                 } else {
 
-                    machineToBeToContinuedMessageDisplay(nbrTours, checkUserInput.getDisplayResult(result));
+                    if (nbrTours == 0) {
+
+                        machineLoserMessageDisplay(human, checkUserInput.getDisplayResult(result));
+                        getReloadButton().setVisible(true);
+
+                    } else {
+
+                        if (nbrTests == 1) {
+
+                            Runnable thread = new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
+
+                                }
+                            };
+
+                            new Thread(thread).start();
+                        }
+
+                        machineToBeToContinuedMessageDisplay(nbrTours, checkUserInput.getDisplayResult(result));
+                        getTextAreaOut().append("\nTaper sur la touche Entrée pour continuer !!\n");
+                    }
                 }
             }
-
             step++;
-            getTextAreaOut().append("\nTaper entrer !!\n");
-
-//                } while (Integer.parseInt(result.get("place")) != nbrDigits && nbrTours != 0);
         }
 
     }
