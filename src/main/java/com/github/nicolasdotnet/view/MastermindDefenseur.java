@@ -21,7 +21,7 @@ import java.util.List;
  * @version Alpha
  * @since 2019
  */
-public class MastermindDefenseur extends WindowGame implements KeyListener, ActionListener, Runnable {
+public class MastermindDefenseur extends WindowGame implements KeyListener, ActionListener {
 
     private int nbrDigits;
     private int nbrTours;
@@ -39,25 +39,13 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
     private HashMap<String, String> backup;
     private ControllerMastermind checkUserInput;
 
-    /**
-     *
-     * run method for a new thread
-     */
-    @Override
-    public void run() {
-
-        possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-
-    }
-
     public MastermindDefenseur(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
-        checkUserInput = new ControllerMastermind("defenseur");
-        (new Thread(this)).start();
         this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
+        checkUserInput = new ControllerMastermind("defenseur");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
         result = new HashMap<String, String>();
         step = 0;
@@ -123,7 +111,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                 switch (nbrTests) {
                     case 1: {
 
-                        testGeneratePossible(possible);
+                        possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
                         String machine2 = checkUserInput.getGetPossible(nbrTests, possible, nbrRange, nbrDigits, sizure);
                         machine = machine2;
 
@@ -132,7 +120,7 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                     }
                     case 2: {
 
-                        testGeneratePossible(bestPossible);
+                        bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
                         String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
                         machine = machine2;
 
@@ -141,7 +129,6 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
                     }
                     default: {
 
-                        testGeneratePossible(bestPossible);
                         bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, result, machine);
                         String machine2 = checkUserInput.getGetPossible(nbrTests, bestPossible, nbrRange, nbrDigits, sizure);
                         machine = machine2;

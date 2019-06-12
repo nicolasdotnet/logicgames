@@ -21,7 +21,7 @@ import java.util.List;
  * @version Alpha
  * @since 2019
  */
-public class MastermindDuel extends WindowGame implements KeyListener, ActionListener, Runnable {
+public class MastermindDuel extends WindowGame implements KeyListener, ActionListener {
 
     private int nbrDigits;
     private int nbrTours;
@@ -45,25 +45,15 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
     private Boolean inputUser;
     private HashMap<String, String> backup;
     private ControllerMastermind checkUserInput;
-
-    /**
-     *
-     * run method for a new thread
-     */
-    @Override
-    public void run() {
-
-        possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
-    }
+    
 
     public MastermindDuel(String title, int nbrDigits, int nbrTours, int nbrRange, boolean modeDev) {
         super(title, modeDev);
-        checkUserInput = new ControllerMastermind("duel");
-        (new Thread(this)).start();
         this.nbrDigits = nbrDigits;
         this.nbrTours = nbrTours;
         this.nbrRange = nbrRange;
 
+        checkUserInput = new ControllerMastermind("duel");
         backup = checkUserInput.getParameterBackup(title, nbrDigits, nbrTours, nbrRange, modeDev);
         resultH = new HashMap<String, String>();
         toStringH = "null";
@@ -152,20 +142,20 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
                     // Generate possible for the machine
                     switch (nbrTestsM) {
                         case 1:
-
-                            testGeneratePossible(bestPossible);
+                            
+                            possible = checkUserInput.getGenerateAllPossible(nbrDigits, nbrRange);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, possible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         case 2:
 
-                            testGeneratePossible(bestPossible);
+                            bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;
                             break;
                         default:
 
-                            testGeneratePossible(bestPossible);
+                            
                             bestPossible = checkUserInput.getGenerateBestPossible(bestPossible, resultM, machine);
                             machine2 = checkUserInput.getGetPossible(nbrTestsM, bestPossible, nbrRange, nbrDigits, sizureFake);
                             machine = machine2;

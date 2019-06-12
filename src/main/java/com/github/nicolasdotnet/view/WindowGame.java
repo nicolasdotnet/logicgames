@@ -12,7 +12,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -136,21 +135,6 @@ public class WindowGame extends JFrame {
         choiceButtons.add(no);
 
         return choiceButtons;
-
-    }
-
-    public void testGeneratePossible(List<String> possible) {
-
-        if (possible == null) {
-            try {
-                
-                Thread.sleep(9000);
-
-            } catch (InterruptedException ex) {
-                log.debug("testGeneratePossible", ex);
-
-            }
-        }
 
     }
 
