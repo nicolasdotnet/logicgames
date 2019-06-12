@@ -79,7 +79,7 @@ public class MastermindChallenger extends Mastermind {
     }
 
     /**
-     * Generator function of possible combination
+     * Generator function of possible combination for the machine
      *
      * @param nbrTests number of test of comparison
      * @param possible complete list of combination possible (complete or best)

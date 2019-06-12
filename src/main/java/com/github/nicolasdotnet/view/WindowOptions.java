@@ -44,6 +44,8 @@ public class WindowOptions extends WindowSource {
         this.nbrRange = windowHome.getNbrRange();
         this.modeDev = windowHome.isModeDev();
         this.setTitle("Options");
+        this.setSize(500, 500);
+        this.setLocationRelativeTo(this.windowHome);
 
         JPanel contentPanel = (JPanel) this.getContentPane();
         contentPanel.setLayout(new BorderLayout());
@@ -77,23 +79,26 @@ public class WindowOptions extends WindowSource {
     private JPanel optionsChoice() {
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1, 10, 10));
+        panel.setLayout(new BorderLayout());
 
         JPanel param = new JPanel();
-        param.setLayout(new GridLayout(4, 2, 0, 0));
+        param.setLayout(new GridLayout(5, 2, 0, 10));
 
         // nbrDigits Label instructions
-        JTextArea textAreaOut = new JTextArea("1) Tapez un N° entre 2 et 9 pour définir le N°\nde cases des combinaisons");
-//        textAreaOut.setEditable(false);
+        JTextArea textAreaOut = new JTextArea("Entrez un N° entre 2 et 9 pour définir\nle N° de chiffre de la combinaison");
+        textAreaOut.setEditable(false);
+        textAreaOut.setFocusable(false);
         param.add(textAreaOut);
 
         // Field input value nbrDigits
         JTextField textFieldNbrDigits = new JTextField(Integer.toString(nbrDigits));
+        textFieldNbrDigits.setFocusable(true);
         param.add(textFieldNbrDigits);
 
         // nbrTours Label instructions
-        JTextArea textAreaOut2 = new JTextArea("2) Tapez un N° entre 1 et 9 pour définir le N°\nde tours possibles.");
+        JTextArea textAreaOut2 = new JTextArea("Entrez un N° entre 1 et 9 pour définir\nle N° de tours possibles");
         textAreaOut2.setEditable(false);
+        textAreaOut.setFocusable(false);
         param.add(textAreaOut2);
 
         // Field input value nbrTours
@@ -101,8 +106,9 @@ public class WindowOptions extends WindowSource {
         param.add(textFieldNbrTours);
 
         // nbrRange Label instructions
-        JTextArea textAreaOut3 = new JTextArea("3) Tapez un N° entre 3 et 9 pour définir \nl'amplitude maximal des nombres.");
+        JTextArea textAreaOut3 = new JTextArea("Entrez un N° entre 3 et 9 pour définir \nl'amplitude maximal des nombres");
         textAreaOut3.setEditable(false);
+        textAreaOut.setFocusable(false);
         param.add(textAreaOut3);
 
         // Field input value nbrRange
@@ -110,22 +116,23 @@ public class WindowOptions extends WindowSource {
         param.add(textFieldNbrRange);
 
         // nbrRange Label instructions
-        JTextArea textAreaOut4 = new JTextArea("4) Activation de l'option Développeur \npour voir la solution.");
+        JTextArea textAreaOut4 = new JTextArea("Cliquez pour activer l'option\nDéveloppeur. Permet de voir la\ncombinaison secrète");
         textAreaOut3.setEditable(false);
+        textAreaOut.setFocusable(false);
         param.add(textAreaOut4);
 
         // Input modeDev option
-        JCheckBox modeDevCheck = new JCheckBox("DevMode");
+        JCheckBox modeDevCheck = new JCheckBox("Mode Développeur");
+
+        param.add(modeDevCheck);
 
         if (modeDev) {
 
             log.info("coché !");
 
-            modeDevCheck.isSelected();
+            modeDevCheck.setSelected(true);
 
         }
-
-        param.add(modeDevCheck);
 
         modeDevCheck.addActionListener(new ActionListener() {
             @Override
@@ -145,7 +152,7 @@ public class WindowOptions extends WindowSource {
             }
         });
 
-        panel.add(param);
+        panel.add(param, BorderLayout.CENTER);
 
         // Options choice buttons
         JPanel optionsChoice = new JPanel();
@@ -195,9 +202,9 @@ public class WindowOptions extends WindowSource {
 
                         if (inputUser) {
 
-                            textFieldNbrDigits.setText("");
-                            textFieldNbrRange.setText("");
-                            textFieldNbrTours.setText("");
+                            textFieldNbrDigits.setText(Integer.toString(windowHome.getNbrDigits()));
+                            textFieldNbrRange.setText(Integer.toString(windowHome.getNbrRange()));
+                            textFieldNbrTours.setText(Integer.toString(windowHome.getNbrTours()));
                             Alert.error(WindowOptions.this, "Ooops les valeurs ne sont pas valide ! Veuillez les vérifier.");
 
                         } else {
@@ -219,7 +226,7 @@ public class WindowOptions extends WindowSource {
 
         optionsChoice.add(save);
 
-        panel.add(optionsChoice);
+        panel.add(optionsChoice, BorderLayout.SOUTH);
 
         return panel;
     }

@@ -271,20 +271,6 @@ public class MastermindDuel extends WindowGame implements KeyListener, ActionLis
 
                         } else {
 
-                            if (nbrTestsM == 1) {
-                                Thread thread = new Thread() {
-
-                                    @Override
-                                    public void run() {
-
-                                        bestPossible = checkUserInput.getGenerateBestPossible(possible, resultM, machine);
-
-                                    }
-                                };
-
-                                thread.start();
-                            }
-
                             getTextAreaOut().append("Personne n'a gagné !\n");
                             getTextAreaOut().append("Son résultat : " + toStringM + "\n");
                             humanToBeToContinuedMessageDisplay(nbrTours, toStringH);

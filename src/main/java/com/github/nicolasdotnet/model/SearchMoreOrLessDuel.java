@@ -84,7 +84,7 @@ public class SearchMoreOrLessDuel extends SearchMoreOrLess {
     }
 
     /**
-     * Generator function of possible combination for the machine
+     * Generator function of possible combination for the machine and the human
      *
      * @param randomRange max number limit and mini number limit for generate
      * random number

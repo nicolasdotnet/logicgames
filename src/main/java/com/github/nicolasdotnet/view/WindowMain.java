@@ -5,14 +5,12 @@
  */
 package com.github.nicolasdotnet.view;
 
-import com.github.nicolasdotnet.controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -147,8 +145,8 @@ public class WindowMain extends WindowSource {
         JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new GridLayout(2, 1, 5, 5));
 
-        JLabel instructional = new JLabel("Sélectionnez un mode de jeu parmis les 3 modes proposés ci-dessous : ");
-//        instructional.setEditable(false);
+        JLabel instructional = new JLabel("Sélectionnez un mode de jeu parmi les 3 modes proposés ci-dessous : ");
+
         gamePanel.add(instructional);
 
         gamePanel.add(gamesOptions());

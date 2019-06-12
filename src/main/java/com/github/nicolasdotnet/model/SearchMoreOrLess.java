@@ -49,8 +49,7 @@ public abstract class SearchMoreOrLess {
      * @param nbrDigits number of digts of the combination
      * @param attac value table of the attacker
      * @param def value table of the defender
-     * @param result result arrayList of the comparison() function for recursive
-     * method
+     * @param result result of the comparison() function for recursive method
      * @return result of the comparison
      */
     public String comparison(int nbrDigits, String attac, String def, String result) {
@@ -118,6 +117,8 @@ public abstract class SearchMoreOrLess {
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
+     * @param result result of the comparison() function for recursive method
+     * @param attac value of the attacker
      * @param sizure value input by user
      * @return solution combination generate
      */

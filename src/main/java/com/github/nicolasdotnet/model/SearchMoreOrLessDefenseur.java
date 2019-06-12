@@ -5,7 +5,6 @@
  */
 package com.github.nicolasdotnet.model;
 
-import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,8 +42,10 @@ public class SearchMoreOrLessDefenseur extends SearchMoreOrLess {
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
+     * @param result result of the comparison() function for recursive method
+     * @param attac value of the attacker
      * @param sizure value input by user
-     * @return possible combination
+     * @return solution combination generate
      */
     @Override
     public String getPossible(int[][] randomRange, int nbrDigits, String result, String attac, String sizure) {

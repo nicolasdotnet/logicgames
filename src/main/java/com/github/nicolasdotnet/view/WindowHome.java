@@ -124,10 +124,11 @@ public class WindowHome extends WindowSource {
 
         // Choice games buttons
         JPanel choiceGames = new JPanel();
-//        choiceGames.setLayout(new GridLayout(1, 2, 10, 10));
-        choiceGames.setLayout(new FlowLayout());
+        choiceGames.setLayout(null);
 
         JButton mastermind = new JButton("MasterMind");
+        mastermind.setBounds(125, 150, 160, 40);
+        mastermind.setFocusPainted(false);
         mastermind.addActionListener(new ActionListener() {
 
             @Override
@@ -141,6 +142,7 @@ public class WindowHome extends WindowSource {
         choiceGames.add(mastermind);
 
         JButton searchMoreOrless = new JButton("Recherche +/-");
+        searchMoreOrless.setBounds(285, 150, 160, 40);
         searchMoreOrless.addActionListener(new ActionListener() {
 
             @Override
@@ -166,7 +168,7 @@ public class WindowHome extends WindowSource {
      */
     private JLabel welcomeMessage() {
 
-        JLabel welcomeMessage = new JLabel("Bienvenue dans les Jeux de logiques");
+        JLabel welcomeMessage = new JLabel("Bienvenue dans les Jeux de logique");
         Font police = new Font("Tahoma", Font.BOLD, 15);
         welcomeMessage.setFont(police);
         welcomeMessage.setHorizontalAlignment(JLabel.CENTER);

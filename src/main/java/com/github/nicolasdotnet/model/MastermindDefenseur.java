@@ -22,7 +22,7 @@ public class MastermindDefenseur extends Mastermind {
     private static final Logger log = LogManager.getLogger(MastermindDefenseur.class);
 
     /**
-     * Generator function of possible combination
+     * Generator function of possible combination for the machine
      *
      * @param nbrTests number of test of comparison
      * @param possible list of combination possible (complete or best)

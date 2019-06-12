@@ -156,21 +156,6 @@ public class MastermindDefenseur extends WindowGame implements KeyListener, Acti
 
                     } else {
 
-                        if (nbrTests == 1) {
-
-                            Runnable thread = new Runnable() {
-
-                                @Override
-                                public void run() {
-
-                                    bestPossible = checkUserInput.getGenerateBestPossible(possible, result, machine);
-
-                                }
-                            };
-
-                            new Thread(thread).start();
-                        }
-
                         machineToBeToContinuedMessageDisplay(nbrTours, checkUserInput.getDisplayResult(result));
                         getTextAreaOut().append("\nTaper sur la touche Entrée pour continuer !!\n");
                     }

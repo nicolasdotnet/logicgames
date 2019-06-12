@@ -24,7 +24,7 @@ public class Tools {
     private static final Logger log = LogManager.getLogger(Tools.class);
 
     /**
-     * Constructeur privé
+     * private Constructor
      */
     private Tools() {
     }

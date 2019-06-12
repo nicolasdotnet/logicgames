@@ -57,6 +57,8 @@ public class ControllerSearchMoreOrLess extends Controller {
      * @param randomRange max number limit and mini number limit for generate
      * random number
      * @param nbrDigits number of digts of the combination
+     * @param result result of the comparison() function for recursive method
+     * @param attac value of the attacker
      * @param sizure value input by user
      * @return machine value
      */

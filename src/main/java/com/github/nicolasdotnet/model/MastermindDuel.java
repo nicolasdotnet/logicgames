@@ -33,7 +33,6 @@ public class MastermindDuel extends Mastermind {
     @Override
     public String getSolutionCombination(int nbrDigits, int nbrRange, String sizure) {
 
-        // "null"
         if (sizure == "null") {
 
             // randomLimit
@@ -84,7 +83,7 @@ public class MastermindDuel extends Mastermind {
     }
 
     /**
-     * Generator function of possible combination
+     * Generator function of possible combination for the machine and the human
      *
      * @param nbrTests number of test of comparison
      * @param possible complete list of combination possible
