@@ -8,7 +8,7 @@ Chaque jeux peut être joué sous 3 modes :
 -> Défenseur   
 -> Duel
 
-Un bouton Option sur la fenêtre d'acceuil permet de modigier les paramétres des jeux.  
+Un bouton Option sur la fenêtre d'acceuil permet de modifier les paramétres des jeux.  
 
 
 # Prérequis
@@ -19,9 +19,7 @@ Un bouton Option sur la fenêtre d'acceuil permet de modigier les paramétres de
 # Etapes de déploiement
 
 <code>git clone https://github.com/nicolasdotnet/logicgames.git</code>  
-<code>cd logicgames</code>   
-<code>git branch -a</code>   
-<code>git checkout realise_02</code>   
+<code>cd logicgames</code>    
 <code>mvn clean install</code>   
 <code>cd target</code>   
 <code>java -jar LogicGames-1.0-SNAPSHOT.jar</code>   
