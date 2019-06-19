@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    
+    <Properties>
+        <Property name="basePath">resources/logs</Property>
+        <!-- resources/all.log ; ../Log4j2Example/logs(error) ; ./Log4j2Example/logs (googler racine du projet) -->
+    </Properties>
+    
+    <Appenders>
+        <!-- RollingFile Appender -->
+        <RollingFile name ="ROLLINGFILE" fileName="${basePath}/logfile.log" filePattern="${basePath}/logfile.%i.log.gz">
+            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size ="100 KB"/>
+            </Policies> 
+        </RollingFile> 
+    </Appenders>
+    
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ROLLINGFILE" />
+        </Root>
+    </Loggers>
+
+</Configuration>
